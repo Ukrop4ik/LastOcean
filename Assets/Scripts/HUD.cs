@@ -6,18 +6,53 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour {
 
+    [System.Serializable]
+    public struct WeaponsOnSids
+    {
+        public List<Weapon> left_weapons;
+        public List<Weapon> rith_weapons;
+        public List<Weapon> front_weapons;
+        public List<Weapon> back_weapons;
+
+        public WeaponsOnSids(List<Weapon> weapons_on_left, List<Weapon> weapons_on_rith, List<Weapon> weapons_on_front, List<Weapon> weapons_on_back)
+        {
+            left_weapons = weapons_on_left;
+            rith_weapons = weapons_on_rith;
+            front_weapons = weapons_on_front;
+            back_weapons = weapons_on_back;
+        }
+    }
+    private string consolestring = "";
+
+    [SerializeField]
+    private Text consoletext;
     private ShipManager _shipManager;
     [SerializeField]
     private ShipMain _playerShip;
     [SerializeField]
     private Scrollbar _engineScrollbar;
+    private MoveController _moveController;
 
-	private void Start ()
+    public WeaponsOnSids weaponsOnSides = new WeaponsOnSids();
+
+    public void ClickLeftButton()
     {
+        _moveController.RotationFromButtons(0);
+    }
+    public void ClickRightButton()
+    {
+        _moveController.RotationFromButtons(1);
+    }
 
-        _shipManager = GameObject.FindGameObjectWithTag("Context").GetComponent<ShipManager>();
+    private void OnEnable ()
+    {
         StartCoroutine(StartSetup());
        _engineScrollbar.onValueChanged.AddListener(delegate { EngineValueChange(); });
+    }
+
+    private void OnDisable()
+    {
+        _engineScrollbar.onValueChanged.RemoveListener(delegate { EngineValueChange(); });
     }
 
     private void EngineValueChange()
@@ -28,6 +63,42 @@ public class HUD : MonoBehaviour {
     private void Update()
     {
         _engineScrollbar.value += Input.GetAxis("Vertical") * Time.deltaTime;
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            if (weaponsOnSides.left_weapons.Count > 0)
+            foreach(Weapon we in weaponsOnSides.left_weapons)
+            {
+              we.GetMySlot().SetUse(true);
+            }
+        }
+        else if (_playerShip)
+        {
+            if (weaponsOnSides.left_weapons.Count > 0)
+            foreach (Weapon we in weaponsOnSides.left_weapons)
+            {
+                we.GetMySlot().SetUse(false);
+            }
+        }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            if (weaponsOnSides.rith_weapons.Count > 0)
+                foreach (Weapon we in weaponsOnSides.rith_weapons)
+                {
+                    we.GetMySlot().SetUse(true);
+                }
+        }
+        else if (_playerShip)
+        {
+            if (weaponsOnSides.rith_weapons.Count > 0)
+            foreach (Weapon we in weaponsOnSides.rith_weapons)
+            {
+                we.GetMySlot().SetUse(false);
+            }
+        }
+
+        consoletext.text = consolestring;
     }
 
     private IEnumerator StartSetup()
@@ -36,20 +107,68 @@ public class HUD : MonoBehaviour {
 
         if (_playerShip == null)
         {
-            Debug.Log("Wait.....");
-            _playerShip = _shipManager.GetPlayerShip();
+            consolestring += "Wait..... \n";
+            if (!_shipManager)
+            {
+                _shipManager = GameObject.FindGameObjectWithTag("Context").GetComponent<ShipManager>();
+            }
+            else
+            {
+                _playerShip = _shipManager.GetPlayerShip();
+                _moveController = _playerShip.GetMoveController();
+            }
             StartCoroutine(StartSetup());
         }
         else
         {
+            consolestring += "Player Ship Found \n";
+            consolestring += "Controller Found \n";
+
+            int weaponcount = 0;
+
+            foreach (Weapon w in _playerShip.GetWeaponOnSide(ShipSide.Left))
+            {
+                if (w)
+                {
+                    weaponsOnSides.left_weapons.Add(w);
+                    weaponcount++;
+                }
+                    
+            }
+            foreach (Weapon w in _playerShip.GetWeaponOnSide(ShipSide.Rith))
+            {
+                if (w)
+                {
+                    weaponsOnSides.rith_weapons.Add(w);
+                    weaponcount++;
+                }
+                    
+            }
+            foreach (Weapon w in _playerShip.GetWeaponOnSide(ShipSide.Forward))
+            {
+                if (w)
+                {
+                    weaponsOnSides.front_weapons.Add(w);
+                    weaponcount++;
+                }
+                    
+            }
+            foreach (Weapon w in _playerShip.GetWeaponOnSide(ShipSide.Back))
+            {
+                if (w)
+                {
+                    weaponsOnSides.back_weapons.Add(w);
+                    weaponcount++;
+                }
+
+            }
+            consolestring += weaponcount + " " + "Weapons Ready";
+
             StopCoroutine(StartSetup());
         }
 
     }
 
-    private void OnDestroy()
-    {
-        _engineScrollbar.onValueChanged.RemoveListener(delegate { EngineValueChange(); });
-    }
+  
 
 }

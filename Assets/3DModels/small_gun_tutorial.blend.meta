@@ -1,89 +1,29 @@
 fileFormatVersion: 2
-guid: ee580a8d6ca45384c9bcccd8578d61c2
-timeCreated: 1502965082
+guid: 37a568ad23705654792f5aa0ce7c21ff
+timeCreated: 1503042663
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: Cube
-    100004: Cube_001
-    100006: Cube_002
-    100008: Cube_003
-    100010: Cube_004
-    100012: Pilon1
-    100014: Pilon_2
-    100016: Cylinder
-    100018: Cylinder_001
-    100020: Plane
-    100022: Plane_001
-    100024: Cylinder_003
-    100026: Cylinder_004
-    100028: Plane_002
-    100030: Plane_003
-    400000: //RootNode
-    400002: Cube
-    400004: Cube_001
-    400006: Cube_002
-    400008: Cube_003
-    400010: Cube_004
-    400012: Pilon1
-    400014: Pilon_2
-    400016: Cylinder
-    400018: Cylinder_001
-    400020: Plane
-    400022: Plane_001
-    400024: Cylinder_003
-    400026: Cylinder_004
-    400028: Plane_002
-    400030: Plane_003
-    2300000: //RootNode
-    2300002: Cube
-    2300004: Cube_001
-    2300006: Cube_002
-    2300008: Cube_003
-    2300010: Cube_004
-    2300012: Pilon1
-    2300014: Pilon_2
-    2300016: Cylinder
-    2300018: Cylinder_001
-    2300020: Plane
-    2300022: Plane_001
-    2300024: Cylinder_003
-    2300026: Cylinder_004
-    2300028: Plane_002
-    2300030: Plane_003
-    3300000: //RootNode
-    3300002: Cube
-    3300004: Cube_001
-    3300006: Cube_002
-    3300008: Cube_003
-    3300010: Cube_004
-    3300012: Pilon1
-    3300014: Pilon_2
-    3300016: Cylinder
-    3300018: Cylinder_001
-    3300020: Plane
-    3300022: Plane_001
-    3300024: Cylinder_003
-    3300026: Cylinder_004
-    3300028: Plane_002
-    3300030: Plane_003
-    4300000: Cube
-    4300002: Cube_003
-    4300004: Cube_001
-    4300006: Cube_002
-    4300008: Cube_004
-    4300010: Pilon1
-    4300012: Pilon_2
-    4300014: Plane
-    4300016: Cylinder
-    4300018: Cylinder_001
-    4300020: Plane_001
-    4300022: Cylinder_003
-    4300024: Cylinder_004
-    4300026: Plane_002
-    4300028: Plane_003
+    100000: Barrel
+    100002: Base
+    100004: //RootNode
+    100006: Tower
+    400000: Barrel
+    400002: Base
+    400004: //RootNode
+    400006: Tower
+    2300000: Barrel
+    2300002: Base
+    2300004: Tower
+    2300006: //RootNode
+    3300000: Barrel
+    3300002: Base
+    3300004: Tower
+    3300006: //RootNode
+    4300000: Barrel
+    4300002: Tower
+    4300004: Base
     7400000: Default Take
     9500000: //RootNode
   materials:
@@ -113,7 +53,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0.3
     meshCompression: 0
     addColliders: 0
     importVisibility: 1
@@ -133,7 +73,7 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 1
+    normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
   importAnimation: 1

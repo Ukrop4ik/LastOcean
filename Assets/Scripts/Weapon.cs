@@ -23,14 +23,23 @@ public class Weapon : MonoBehaviour {
     [SerializeField]
     private float _reloadTime = 0f;
     [SerializeField]
+    private float _MaxDist;
+    [SerializeField]
     private GameObject _bullet;
     [SerializeField]
     private float _bulletSpeed;
     [SerializeField]
     private Transform _firepoint;
+    [SerializeField]
+    private GameObject _tower;
+    public bool isCanShoot;
 
     private float _shootTimeBufer;
 
+    public Slot GetMySlot()
+    {
+        return _slot;
+    }
     private void Start()
     {
         _slot = transform.GetComponentInParent<Slot>();
@@ -47,35 +56,41 @@ public class Weapon : MonoBehaviour {
         else
         {
             _shootTimeBufer = 0f;
-            Shoot();
+            isCanShoot = true;
         }
 
         if (!_target) return;
-        _angleTest = Vector3.Angle(_target.position - transform.position, _slot.transform.forward);
+        if (Vector3.Distance(_target.position, transform.position) > _MaxDist) return;
 
-        Debug.Log(_angleTest);
-
-        if (_angleTest > _MinMaxAngle_Y) return;
-
-        Vector3 targetdirection = _target.transform.position - transform.position;
-        Vector3 newDir = Vector3.RotateTowards(transform.forward, targetdirection, ((_angularSpeed * 0.1f) * Time.deltaTime), 0.0F);
-
-        transform.rotation = Quaternion.LookRotation(newDir);
-
+        RotateWeapon();
     }
 
-    public void RotateWeapon(RotationAxis axis, float angle)
+    public void RotateWeapon()
     {
-        float rotationAngle = angle;
+        //tower rotation
+       // Debug.Log(Vector3.Distance(_target.position, transform.position));
+        if (!TestAngle(_MinMaxAngle_Y, _target, transform)) return;
+        Vector3 targetdirection = _target.transform.position - _firepoint.position;
+        Vector3 newDir = Vector3.RotateTowards(_tower.transform.forward, targetdirection, ((_angularSpeed * 0.1f) * Time.deltaTime), 0.0F);
+        _tower.transform.rotation = Quaternion.LookRotation(newDir);
 
-        transform.localRotation = Quaternion.Euler(0, rotationAngle, 0);
+        Shoot();
+    }
+
+    public bool TestAngle(float maxangle, Transform target, Transform self)
+    {
+        return  Vector3.Angle(target.position - self.position, _slot.transform.forward) < maxangle;
     }
 
     public void Shoot()
     {
-        _shootTimeBufer = _reloadTime;
+        if (!isCanShoot) return;
+        if (!_slot._isCanUse) return;
 
-       GameObject bullet = Instantiate(_bullet, _firepoint.position, _firepoint.rotation);
+        _shootTimeBufer = _reloadTime;
+        GameObject bullet = Instantiate(_bullet, _firepoint.position, _firepoint.rotation);
         bullet.gameObject.GetComponent<Rigidbody>().AddForce(_firepoint.forward * _bulletSpeed, ForceMode.Impulse);
+        bullet.GetComponent<Bullet>().SetTime(2f);
+        isCanShoot = false;
     }
 }

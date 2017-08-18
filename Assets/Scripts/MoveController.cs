@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class MoveController : MonoBehaviour {
 
@@ -15,7 +16,7 @@ public class MoveController : MonoBehaviour {
     public float _enginePower;
     [Range(0.001f, 1.0f)]
     private float _enginePowerBuffer;
-
+    private float _rotateBuffer;
     private void Start()
     {
         _ship = gameObject.GetComponent<ShipMain>();
@@ -35,7 +36,7 @@ public class MoveController : MonoBehaviour {
             MoveForward();
         }
 
-        Rotation();
+        RotationKeyboard();
     }
 
     private void MoveForward()
@@ -47,12 +48,28 @@ public class MoveController : MonoBehaviour {
         _rgBody.AddForce(transform.forward * _speed);
     }
 
-    private void Rotation()
+    private void RotationKeyboard()
     {
-        float h = Input.GetAxis("Horizontal") * _ship.GetAngularSpeed() * Time.deltaTime;
+        float h = CrossPlatformInputManager.GetAxis("Horizontal") * _ship.GetAngularSpeed() * Time.deltaTime;
+
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+            h = Input.GetAxis("Horizontal") * _ship.GetAngularSpeed() * Time.deltaTime;
+        }
+
         transform.Rotate(transform.up, h);
     }
-    
+    public void RotationFromButtons(int id)
+    {
+       
+        if (id == 0)
+             _rotateBuffer += _ship.GetAngularSpeed() * Time.deltaTime;
+        else
+             _rotateBuffer -= _ship.GetAngularSpeed() * Time.deltaTime;
+
+        transform.Rotate(transform.up, _rotateBuffer);
+    }
+
     public void SetEnginPower(float power)
     {
         _enginePower = power;

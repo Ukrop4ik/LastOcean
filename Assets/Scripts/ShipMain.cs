@@ -53,4 +53,16 @@ public class ShipMain : MonoBehaviour {
     {
         return _angularspeed;
     }
+    public List<Weapon> GetWeaponOnSide(ShipSide side)
+    {
+        List<Weapon> weaponsinside = new List<Weapon>();
+
+        foreach(Slot slot in _slots)
+        {
+            if (slot.GetWeapon() != null && slot.GetSlotSide() == side)
+                weaponsinside.Add(slot.GetWeapon());
+        }
+
+        return weaponsinside;
+    }
 }
