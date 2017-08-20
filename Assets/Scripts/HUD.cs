@@ -35,14 +35,7 @@ public class HUD : MonoBehaviour {
 
     public WeaponsOnSids weaponsOnSides = new WeaponsOnSids();
 
-    public void ClickLeftButton()
-    {
-        _moveController.RotationFromButtons(0);
-    }
-    public void ClickRightButton()
-    {
-        _moveController.RotationFromButtons(1);
-    }
+
 
     private void OnEnable ()
     {

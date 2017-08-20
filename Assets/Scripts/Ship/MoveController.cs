@@ -17,11 +17,13 @@ public class MoveController : MonoBehaviour {
     [Range(0.001f, 1.0f)]
     private float _enginePowerBuffer;
     private float _rotateBuffer;
-    private void Start()
+  
+
+    public void SetParameters(ShipMain ship, Rigidbody rBody, float drag)
     {
-        _ship = gameObject.GetComponent<ShipMain>();
-        _rgBody = _ship.GetRigidbody();
-        _rgBody.angularDrag = _ship.GetAngularSpeed() / 2f;
+        _ship = ship;
+        _rgBody = rBody;
+        _rgBody.angularDrag = drag / 2f;
     }
 
     private void FixedUpdate()
@@ -37,37 +39,32 @@ public class MoveController : MonoBehaviour {
         }
 
         RotationKeyboard();
+
+        if (_ship.transform.rotation.x != 0 || _ship.transform.rotation.z != 0)
+        {
+            //_ship.transform.Rotate(0, _ship.transform.rotation.y, 0);
+        }
     }
 
     private void MoveForward()
     {
-        _speed = Mathf.Clamp(_speed, 0.0f, _ship.GetSpeed() * _enginePowerBuffer);
+        _speed = Mathf.Clamp(_speed, 0.0f, _ship.GetStats().GetSpeed() * _enginePowerBuffer);
 
-        _speed = Mathf.Lerp(_speed, _ship.GetSpeed() * _enginePowerBuffer, Time.deltaTime * _ship.GetAcceleration());   
+        _speed = Mathf.Lerp(_speed, _ship.GetStats().GetSpeed() * _enginePowerBuffer, Time.deltaTime * _ship.GetStats().GetAcceleration());   
 
         _rgBody.AddForce(transform.forward * _speed);
     }
 
     private void RotationKeyboard()
     {
-        float h = CrossPlatformInputManager.GetAxis("Horizontal") * _ship.GetAngularSpeed() * Time.deltaTime;
+        float h = CrossPlatformInputManager.GetAxis("Horizontal") * _ship.GetStats().GetAngularSpeed() * Time.deltaTime;
 
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
-            h = Input.GetAxis("Horizontal") * _ship.GetAngularSpeed() * Time.deltaTime;
+            h = Input.GetAxis("Horizontal") * _ship.GetStats().GetAngularSpeed() * Time.deltaTime;
         }
 
-        transform.Rotate(transform.up, h);
-    }
-    public void RotationFromButtons(int id)
-    {
-       
-        if (id == 0)
-             _rotateBuffer += _ship.GetAngularSpeed() * Time.deltaTime;
-        else
-             _rotateBuffer -= _ship.GetAngularSpeed() * Time.deltaTime;
-
-        transform.Rotate(transform.up, _rotateBuffer);
+        transform.Rotate(0,h,0);
     }
 
     public void SetEnginPower(float power)

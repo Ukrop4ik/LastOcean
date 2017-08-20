@@ -8,11 +8,18 @@ public class Slot : MonoBehaviour {
     private SlotType _slotType;
     [SerializeField]
     private ShipSide _slotShipSide;
+    [SerializeField]
+    private ShipMain _ship;
 
     [SerializeField]
     private float _weaponAngleMax_Y;
 
     public bool _isCanUse { get; private set; }
+
+    private void Start()
+    {
+       _ship = transform.root.GetComponent<ShipMain>();
+    }
 
     public void SetUse(bool isCan)
     {
@@ -21,6 +28,10 @@ public class Slot : MonoBehaviour {
     public ShipSide GetSlotSide()
     {
         return _slotShipSide;
+    }
+    public ShipMain GetSlotShip()
+    {
+        return _ship;
     }
     public float GetWeaponAngleMinMax()
     {

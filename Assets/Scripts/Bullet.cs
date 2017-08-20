@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
-    private float _destroyTime = 0.5f;
-
-    public void SetTime(float time)
-    {
-        _destroyTime = time;
-    }
+    private float _destroyTime = 2f;
+    public float _damage { get; private set; }
+    public ShipMain _ShootShip { get; private set; }
 
     private void Update()
     {
@@ -20,5 +17,11 @@ public class Bullet : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+    }
+
+    public void CreateBullet(float time, ShipMain ship)
+    {
+        _destroyTime = time;
+        _ShootShip = ship;
     }
 }

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Context
   - HUD
+  - Ship
+  - Bullet
   layers:
   - Default
   - TransparentFX
