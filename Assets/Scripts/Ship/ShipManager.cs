@@ -12,6 +12,11 @@ public class ShipManager : MonoBehaviour {
         if (!_ships.Contains(ship))
             _ships.Add(ship);
     }
+    public void RemoveShip(ShipMain ship)
+    {
+        if (_ships.Contains(ship))
+            _ships.Remove(ship);
+    }
     public ShipMain GetPlayerShip()
     {
         ShipMain _ship = null;

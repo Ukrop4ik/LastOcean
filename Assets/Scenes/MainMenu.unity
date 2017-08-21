@@ -241,6 +241,9 @@ MonoBehaviour:
     rith_weapons: []
     front_weapons: []
     back_weapons: []
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &140107850
 MonoBehaviour:
   m_ObjectHideFlags: 0

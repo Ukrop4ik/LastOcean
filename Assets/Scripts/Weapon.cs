@@ -33,6 +33,8 @@ public class Weapon : MonoBehaviour {
     [SerializeField]
     private GameObject _tower;
     public bool isCanShoot;
+    [SerializeField]
+    private float _damage;
 
     private float _shootTimeBufer;
 
@@ -46,7 +48,10 @@ public class Weapon : MonoBehaviour {
         _MinMaxAngle_Y = _slot.GetWeaponAngleMinMax();
         _angleY = transform.localRotation.y;
     }
-
+    public void SetTarget(Transform target)
+    {
+        _target = target;
+    }
     private void Update()
     {
         if (_shootTimeBufer > 0)
@@ -89,7 +94,7 @@ public class Weapon : MonoBehaviour {
 
         _shootTimeBufer = _reloadTime;
         GameObject bullet = Instantiate(_bullet, _firepoint.position, _firepoint.rotation);
-        bullet.GetComponent<Bullet>().CreateBullet(2f, _slot.GetSlotShip());
+        bullet.GetComponent<Bullet>().CreateBullet(2f, _slot.GetSlotShip(), _damage);
         bullet.gameObject.GetComponent<Rigidbody>().AddForce(_firepoint.forward * _bulletSpeed, ForceMode.Impulse);
        
 

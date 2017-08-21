@@ -19,9 +19,14 @@ public class Bullet : MonoBehaviour {
         }
     }
 
-    public void CreateBullet(float time, ShipMain ship)
+    public void CreateBullet(float time, ShipMain ship, float damage)
     {
         _destroyTime = time;
         _ShootShip = ship;
+        _damage = damage;
+    }
+    public void SetTime(float time)
+    {
+        _destroyTime = time;
     }
 }

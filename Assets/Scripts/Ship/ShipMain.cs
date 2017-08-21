@@ -11,6 +11,8 @@ public class ShipMain : MonoBehaviour {
     [SerializeField]
     private List<Slot> _slots = new List<Slot>();
     private ShipStat Stats;
+    [SerializeField]
+    private Transform _target;
 
     private void Start()
     {
@@ -19,6 +21,15 @@ public class ShipMain : MonoBehaviour {
         Stats = gameObject.GetComponent<ShipStat>();
         _movecontroller = gameObject.GetComponent<MoveController>();
         _movecontroller.SetParameters(this, GetRigidbody(), Stats.GetAngularSpeed());
+    }
+    public void SetTarget(Transform target)
+    {
+        _target = target;
+        foreach (Slot slot in _slots)
+        {
+            if (slot.GetWeapon() != null)
+                slot.GetWeapon().SetTarget(target);
+        }
     }
     public MoveController GetMoveController()
     {
@@ -51,5 +62,16 @@ public class ShipMain : MonoBehaviour {
         }
 
         return weaponsinside;
+    }
+    public void SetDamage(float value)
+    {
+        Stats.SetHullValue(Stats.GetHullValue() - value);
+        if (Stats.GetHullValue() <= 0)
+            Dead();
+    }
+    private void Dead()
+    {
+        _shipManager.RemoveShip(this);
+        Destroy(gameObject);
     }
 }

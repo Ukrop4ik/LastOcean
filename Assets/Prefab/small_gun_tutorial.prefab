@@ -284,9 +284,10 @@ MonoBehaviour:
   _angularSpeed: 10
   _target: {fileID: 0}
   _reloadTime: 0.1
-  _MaxDist: 20
+  _MaxDist: 15
   _bullet: {fileID: 1857471814301246, guid: ca06a3a3caa25bc4784a4d4914c393e3, type: 2}
-  _bulletSpeed: 5
+  _bulletSpeed: 0.3
   _firepoint: {fileID: 4416495460400730}
   _tower: {fileID: 1793998578878900}
   isCanShoot: 0
+  _damage: 2

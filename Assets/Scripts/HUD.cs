@@ -36,6 +36,13 @@ public class HUD : MonoBehaviour {
     public WeaponsOnSids weaponsOnSides = new WeaponsOnSids();
 
 
+    public LayerMask layerMask;
+
+
+    private void Start()
+    {
+
+    }
 
     private void OnEnable ()
     {
@@ -55,6 +62,18 @@ public class HUD : MonoBehaviour {
 
     private void Update()
     {
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Input.GetMouseButtonDown(0))
+        {
+
+            if (Physics.Raycast(ray, out hit, 1000f, layerMask))
+            {
+                _playerShip.SetTarget(hit.collider.gameObject.GetComponent<Select>().GetSelectedShip().transform);
+            }
+        }
+
         _engineScrollbar.value += Input.GetAxis("Vertical") * Time.deltaTime;
 
         if (Input.GetKey(KeyCode.Q))
