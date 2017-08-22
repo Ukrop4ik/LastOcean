@@ -12,6 +12,11 @@ public class DamageCollider : MonoBehaviour {
         _ship = transform.root.GetComponent<ShipMain>();
     }
 
+    private void Update()
+    {
+    
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         Bullet _bullet;

@@ -136,6 +136,10 @@ public class HUD : MonoBehaviour {
             consolestring += "Player Ship Found \n";
             consolestring += "Controller Found \n";
 
+            GameObject.FindGameObjectWithTag("Camera").GetComponent<BattleCamera>().Settings(_playerShip.transform);
+
+            consolestring += "Camera Ready \n";
+
             int weaponcount = 0;
 
             foreach (Weapon w in _playerShip.GetWeaponOnSide(ShipSide.Left))

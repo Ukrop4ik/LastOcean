@@ -94,7 +94,7 @@ public class Weapon : MonoBehaviour {
 
         _shootTimeBufer = _reloadTime;
         GameObject bullet = Instantiate(_bullet, _firepoint.position, _firepoint.rotation);
-        bullet.GetComponent<Bullet>().CreateBullet(2f, _slot.GetSlotShip(), _damage);
+        bullet.GetComponent<Bullet>().CreateBullet(_slot.GetSlotShip(), _damage, _target, _MaxDist);
         bullet.gameObject.GetComponent<Rigidbody>().AddForce(_firepoint.forward * _bulletSpeed, ForceMode.Impulse);
        
 

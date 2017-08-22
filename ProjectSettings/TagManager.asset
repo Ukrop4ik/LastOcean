@@ -8,6 +8,7 @@ TagManager:
   - HUD
   - Ship
   - Bullet
+  - Camera
   layers:
   - Default
   - TransparentFX
