@@ -7,6 +7,8 @@ public class BattleCamera : MonoBehaviour {
     [SerializeField]
     private Transform _ship;
     private Transform _self;
+    [SerializeField]
+    private Transform _camera;
 
     [SerializeField]
     private Vector2 offsets;
@@ -15,14 +17,15 @@ public class BattleCamera : MonoBehaviour {
     {
         _ship = ship;
         _self = transform;
+        _camera.position = new Vector3(_camera.position.x + offsets.x, _camera.position.y, _camera.position.z + offsets.y);
     }
 
     private void Update()
     {
         if (!_self || !_ship) return;
 
-        _self.position = new Vector3(_ship.position.x + offsets.x, _self.position.y, _ship.position.z + offsets.y);
+        _self.position = new Vector3(_ship.position.x, _self.position.y, _ship.position.z);    
 
-        _self.rotation = Quaternion.Euler(new Vector3(0, _ship.rotation.y, 0));
+        _self.rotation = _ship.rotation;
     }
 }

@@ -93,7 +93,8 @@ public class Weapon : MonoBehaviour {
         if (!_slot._isCanUse) return;
 
         _shootTimeBufer = _reloadTime;
-        GameObject bullet = Instantiate(_bullet, _firepoint.position, _firepoint.rotation);
+        GameObject bullet = Instantiate(_bullet, _firepoint.position, Quaternion.identity);
+
         bullet.GetComponent<Bullet>().CreateBullet(_slot.GetSlotShip(), _damage, _target, _MaxDist);
         bullet.gameObject.GetComponent<Rigidbody>().AddForce(_firepoint.forward * _bulletSpeed, ForceMode.Impulse);
        
