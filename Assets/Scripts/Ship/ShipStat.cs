@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class ShipStat : MonoBehaviour
 {
+
+ 
+
     [SerializeField]
     [Range(0f, 10f)]
     private float _maximumSpeed;
     [SerializeField]
-    private float _acceleration;
+    private float _accelerationMax;
     [SerializeField]
-    private float _angularspeed;
+    private float _accelerationCur;
+    [SerializeField]
+    private float _angularspeedMax;
     [SerializeField]
     private float _hullMaximumHP;
     [SerializeField]
@@ -32,11 +37,11 @@ public class ShipStat : MonoBehaviour
     }
     public float GetAcceleration()
     {
-        return _acceleration;
+        return _accelerationMax;
     }
     public float GetAngularSpeed()
     {
-        return _angularspeed;
+        return _angularspeedMax;
     }
     public float GetHullValue(bool isMaximum = false)
     {
