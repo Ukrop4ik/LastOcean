@@ -127,12 +127,12 @@ public class HUD : MonoBehaviour {
             else
             {
                 _playerShip = _shipManager.GetPlayerShip();
-                _moveController = _playerShip.GetMoveController();
             }
             StartCoroutine(StartSetup());
         }
         else
         {
+            _moveController = _playerShip.GetMoveController();
             consolestring += "Player Ship Found \n";
             consolestring += "Controller Found \n";
 

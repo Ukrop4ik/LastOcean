@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 114786352934978484}
   - component: {fileID: 114033672211220826}
   - component: {fileID: 114996319155057458}
+  - component: {fileID: 114913890201002326}
   m_Layer: 0
   m_Name: TestShip
   m_TagString: Ship
@@ -2193,6 +2194,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ship: {fileID: 0}
+--- !u!114 &114913890201002326
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1109148538003726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!114 &114944150066141414
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2220,8 +2247,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maximumSpeed: 6
-  _acceleration: 0.5
-  _angularspeed: 6
+  _accelerationMax: 1
+  _accelerationCur: 0
+  _angularspeedMax: 5
   _hullMaximumHP: 100
   _hullCurrentHP: 0
   _armorMaximumHP: 0

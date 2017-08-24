@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class MoveController : MonoBehaviour {
+public class MoveController : Photon.MonoBehaviour {
 
     private ShipMain _ship;
     private Rigidbody _rgBody;
@@ -28,7 +28,7 @@ public class MoveController : MonoBehaviour {
 
     private void FixedUpdate()
     {
-
+        if (!photonView.isMine) return;
         if (_ship.GetOnlineType() != ShipOnlineType.Player) return;
 
         _enginePowerBuffer = Mathf.Lerp(_enginePowerBuffer, _enginePower, Time.deltaTime);

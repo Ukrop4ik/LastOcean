@@ -16,11 +16,11 @@ public class AxisShared : MonoBehaviour
 
     private void Update ()
     {
-
+#if UNITY_ANDROID
         float newAxisValue = Mathf.MoveTowards(CrossPlatformInputManager.GetAxis(_axis),
                                                 _targetValue,
                                                 Time.deltaTime * _sens);
         CrossPlatformInputManager.SetAxis(_axis, newAxisValue);
-
+#endif
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipMain : MonoBehaviour {
+public class ShipMain : Photon.MonoBehaviour {
 
     private ShipManager _shipManager;
     [SerializeField]
@@ -13,6 +13,18 @@ public class ShipMain : MonoBehaviour {
     private ShipStat Stats;
     [SerializeField]
     private Transform _target;
+
+    private Vector3 correctPlayerPos;
+    private Quaternion correctPlayerRot;
+
+    void Update()
+    {
+        if (!photonView.isMine)
+        {
+            transform.position = Vector3.Lerp(transform.position, this.correctPlayerPos, Time.deltaTime * 5);
+            transform.rotation = Quaternion.Lerp(transform.rotation, this.correctPlayerRot, Time.deltaTime * 5);
+        }
+    }
 
     private void Start()
     {
@@ -73,5 +85,23 @@ public class ShipMain : MonoBehaviour {
     {
         _shipManager.RemoveShip(this);
         Destroy(gameObject);
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        Vector3 pos = transform.position;
+        Quaternion rot = transform.rotation;
+        if (stream.isWriting)
+        {
+            // We own this player: send the others our data
+            stream.Serialize(ref pos);
+            stream.Serialize(ref rot);
+        }
+        else
+        {
+            // Network player, receive data
+            this.transform.position = pos;
+            this.transform.rotation = rot;
+        }
     }
 }
