@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HUD : MonoBehaviour {
+public class HUD : Photon.MonoBehaviour {
 
     [System.Serializable]
     public struct WeaponsOnSids
@@ -119,7 +119,7 @@ public class HUD : MonoBehaviour {
 
         if (_playerShip == null)
         {
-            consolestring += "Wait..... \n";
+            consolestring = "Wait..... \n";
             if (!_shipManager)
             {
                 _shipManager = GameObject.FindGameObjectWithTag("Context").GetComponent<ShipManager>();

@@ -16,24 +16,26 @@ public class ShipMain : Photon.MonoBehaviour {
 
     private Vector3 correctPlayerPos;
     private Quaternion correctPlayerRot;
+    private double _LastNetworkDataTime = 0f;
 
-    void Update()
-    {
-        if (!photonView.isMine)
-        {
-            transform.position = Vector3.Lerp(transform.position, this.correctPlayerPos, Time.deltaTime * 5);
-            transform.rotation = Quaternion.Lerp(transform.rotation, this.correctPlayerRot, Time.deltaTime * 5);
-        }
-    }
+    
+
+
 
     private void Start()
     {
-        _shipManager = GameObject.FindGameObjectWithTag("Context").GetComponent<ShipManager>();
-        _shipManager.AddShip(this);
-        Stats = gameObject.GetComponent<ShipStat>();
-        _movecontroller = gameObject.GetComponent<MoveController>();
-        _movecontroller.SetParameters(this, GetRigidbody(), Stats.GetAngularSpeed());
+        if (photonView.isMine)
+        {
+            _shipManager = GameObject.FindGameObjectWithTag("Context").GetComponent<ShipManager>();
+            _shipManager.AddShip(this);
+            Stats = gameObject.GetComponent<ShipStat>();
+            _movecontroller = gameObject.GetComponent<MoveController>();
+            _movecontroller.SetParameters(this, GetRigidbody(), Stats.GetAngularSpeed());
+        }
+
     }
+
+
     public void SetTarget(Transform target)
     {
         _target = target;
@@ -87,21 +89,5 @@ public class ShipMain : Photon.MonoBehaviour {
         Destroy(gameObject);
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        Vector3 pos = transform.position;
-        Quaternion rot = transform.rotation;
-        if (stream.isWriting)
-        {
-            // We own this player: send the others our data
-            stream.Serialize(ref pos);
-            stream.Serialize(ref rot);
-        }
-        else
-        {
-            // Network player, receive data
-            this.transform.position = pos;
-            this.transform.rotation = rot;
-        }
-    }
+   
 }
