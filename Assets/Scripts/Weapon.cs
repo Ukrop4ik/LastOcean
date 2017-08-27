@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour {
+public class Weapon : Photon.MonoBehaviour {
 
     public enum RotationAxis
     {
@@ -35,6 +35,7 @@ public class Weapon : MonoBehaviour {
     public bool isCanShoot;
     [SerializeField]
     private float _damage;
+    private PhotonView _photonView;
 
     private float _shootTimeBufer;
 
@@ -52,6 +53,7 @@ public class Weapon : MonoBehaviour {
         _slot = transform.GetComponentInParent<Slot>();
         _MinMaxAngle_Y = _slot.GetWeaponAngleMinMax();
         _angleY = transform.localRotation.y;
+        _photonView = _slot.GetSlotShip().GetComponent<PhotonView>();
     }
     public void SetTarget(Transform target)
     {
@@ -69,8 +71,11 @@ public class Weapon : MonoBehaviour {
             isCanShoot = true;
         }
 
-        if (!_target) return;
-        if (Vector3.Distance(_target.position, transform.position) > _MaxDist) return;
+        if (_photonView.isMine)
+        {
+            if (!_target) return;
+            if (Vector3.Distance(_target.position, transform.position) > _MaxDist) return;
+        }
 
         RotateWeapon();
     }
@@ -78,12 +83,14 @@ public class Weapon : MonoBehaviour {
     public void RotateWeapon()
     {
         //tower rotation
-       // Debug.Log(Vector3.Distance(_target.position, transform.position));
-        if (!TestAngle(_MinMaxAngle_Y, _target, transform)) return;
-        Vector3 targetdirection = _target.transform.position - _firepoint.position;
-        Vector3 newDir = Vector3.RotateTowards(_tower.transform.forward, targetdirection, ((_angularSpeed * 0.1f) * Time.deltaTime), 0.0F);
-        _tower.transform.rotation = Quaternion.LookRotation(newDir);
-
+        // Debug.Log(Vector3.Distance(_target.position, transform.position));
+        if (_photonView.isMine)
+        {
+            if (!TestAngle(_MinMaxAngle_Y, _target, transform)) return;
+            Vector3 targetdirection = _target.transform.position - _firepoint.position;
+            Vector3 newDir = Vector3.RotateTowards(_tower.transform.forward, targetdirection, ((_angularSpeed * 0.1f) * Time.deltaTime), 0.0F);
+            _tower.transform.rotation = Quaternion.LookRotation(newDir);
+        }
         Shoot();
     }
 
@@ -102,9 +109,11 @@ public class Weapon : MonoBehaviour {
 
         bullet.GetComponent<Bullet>().CreateBullet(_slot.GetSlotShip(), _damage, _target, _MaxDist);
         bullet.gameObject.GetComponent<Rigidbody>().AddForce(_firepoint.forward * _bulletSpeed, ForceMode.Impulse);
-       
 
         isCanShoot = false;
+
+
     }
+
 
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Slot : MonoBehaviour {
+public class Slot : Photon.MonoBehaviour {
 
     [SerializeField]
     private SlotType _slotType;
@@ -19,6 +19,7 @@ public class Slot : MonoBehaviour {
     private void Start()
     {
        _ship = transform.root.GetComponent<ShipMain>();
+        _ship.GetComponent<PhotonView>().ObservedComponents.Add(this);
     }
 
     public void SetUse(bool isCan)
@@ -45,4 +46,20 @@ public class Slot : MonoBehaviour {
         else
             return null;
     }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.isWriting)
+        {
+            // We own this player: send the others our data
+            stream.SendNext(_isCanUse);
+        }
+        else
+        {
+
+            _isCanUse = (bool)stream.ReceiveNext();
+
+        }
+    }
+
 }
