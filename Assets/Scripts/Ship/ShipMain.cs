@@ -18,17 +18,20 @@ public class ShipMain : Photon.MonoBehaviour {
     private Quaternion correctPlayerRot;
     private double _LastNetworkDataTime = 0f;
 
-    
+    PhotonView _photonView;
 
 
 
     private void Start()
     {
+        Stats = gameObject.GetComponent<ShipStat>();
+        _photonView = gameObject.GetComponent<PhotonView>();
+
         if (photonView.isMine)
         {
             _shipManager = GameObject.FindGameObjectWithTag("Context").GetComponent<ShipManager>();
             _shipManager.AddShip(this);
-            Stats = gameObject.GetComponent<ShipStat>();
+
             _movecontroller = gameObject.GetComponent<MoveController>();
             _movecontroller.SetParameters(this, GetRigidbody(), Stats.GetAngularSpeed());
         }
@@ -71,8 +74,11 @@ public class ShipMain : Photon.MonoBehaviour {
 
         foreach(Slot slot in _slots)
         {
+
             if (slot.GetWeapon() != null && slot.GetSlotSide() == side)
+            {
                 weaponsinside.Add(slot.GetWeapon());
+            }
         }
 
         return weaponsinside;

@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class ServerObj : Photon.MonoBehaviour {
 
+    private float yVelocity = 0.0F;
+    bool _packetGet = false;
+    float time = 0;
+
+    public List<GameObject> SyncObj = new List<GameObject>();
 
     private struct State
     {
@@ -24,19 +29,20 @@ public class ServerObj : Photon.MonoBehaviour {
 
     private void Start()
     {
-        if (!photonView.isMine)
-        {
+
             new_state = old_state = new State(transform.position, transform.rotation, 0f);
-        }
-    
+        
+   
     }
     void Update()
     {
-        if (!photonView.isMine)
-        {
-            transform.position = Vector3.Lerp(transform.position, new_state._pos, (float)new_state._stamp - (float) old_state._stamp);
-            //  transform.rotation = Quaternion.RotateTowards(transform.rotation, this.correctPlayerRot, 180f * Time.deltaTime);
-        }
+        
+        if (!_packetGet) return;
+
+        float angleY;
+        transform.position = Vector3.Lerp(transform.position, new_state._pos, Time.deltaTime);
+        angleY = Mathf.LerpAngle(transform.rotation.eulerAngles.y, new_state._rot.eulerAngles.y, Time.deltaTime);
+        transform.rotation = Quaternion.Euler(0, angleY, 0);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -51,8 +57,19 @@ public class ServerObj : Photon.MonoBehaviour {
         }
         else
         {
-            old_state = new_state;
-            new_state = new State((Vector3)stream.ReceiveNext(), (Quaternion)stream.ReceiveNext(), info.timestamp);
+            if (!_packetGet)
+            {
+                transform.position = (Vector3)stream.ReceiveNext();
+                transform.rotation = (Quaternion)stream.ReceiveNext();
+                _packetGet = true;
+            }
+            else
+            {
+                old_state = new_state;
+                new_state = new State((Vector3)stream.ReceiveNext(), (Quaternion)stream.ReceiveNext(), info.timestamp);
+            }
+  
+
         }
     }
 }

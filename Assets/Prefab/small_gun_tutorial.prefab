@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 23612411214609628}
   - component: {fileID: 95110575602582472}
   - component: {fileID: 114959930902189476}
+  - component: {fileID: 114366354678019882}
   m_Layer: 0
   m_Name: small_gun_tutorial
   m_TagString: Untagged
@@ -268,6 +269,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114366354678019882
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1661004877009896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7295c837d20e194da62c90cbf63dc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114959930902189476
 MonoBehaviour:
   m_ObjectHideFlags: 1

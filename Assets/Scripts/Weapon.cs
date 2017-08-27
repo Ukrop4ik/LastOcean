@@ -38,6 +38,11 @@ public class Weapon : MonoBehaviour {
 
     private float _shootTimeBufer;
 
+    public GameObject GetTower()
+    {
+        return _tower;
+    }
+
     public Slot GetMySlot()
     {
         return _slot;
@@ -101,4 +106,5 @@ public class Weapon : MonoBehaviour {
 
         isCanShoot = false;
     }
+
 }

@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 4692214661146220}
   - component: {fileID: 33327657459113370}
   - component: {fileID: 23703901467628612}
+  - component: {fileID: 114719547857673172}
   m_Layer: 0
   m_Name: Tower
   m_TagString: Untagged
@@ -358,6 +359,7 @@ GameObject:
   - component: {fileID: 4655227827523632}
   - component: {fileID: 33389291405222986}
   - component: {fileID: 23404085807676238}
+  - component: {fileID: 114808515535864378}
   m_Layer: 0
   m_Name: Tower
   m_TagString: Untagged
@@ -682,7 +684,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1109148538003726}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3877873, y: 0.17, z: 0.046212673}
+  m_LocalPosition: {x: 7.0056114, y: 2.6754355, z: 16.742931}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4968152312160656}
@@ -2155,6 +2157,17 @@ MonoBehaviour:
   MaxDist: 5
   _bullet: {fileID: 1857471814301246, guid: ca06a3a3caa25bc4784a4d4914c393e3, type: 2}
   line: {fileID: 120314241227600374}
+--- !u!114 &114719547857673172
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1121724157370860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7295c837d20e194da62c90cbf63dc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114749000734749570
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2182,6 +2195,17 @@ MonoBehaviour:
   - {fileID: 114025538816249626}
   - {fileID: 114423642679768600}
   _target: {fileID: 0}
+--- !u!114 &114808515535864378
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1439358816000478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7295c837d20e194da62c90cbf63dc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114863555439258822
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2227,6 +2251,7 @@ MonoBehaviour:
   ownershipTransfer: 0
   ObservedComponents:
   - {fileID: 114408626279051208}
+  - {fileID: 114996319155057458}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
@@ -2373,7 +2398,7 @@ SpringJoint:
   m_ConnectedBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -1.2617873, y: 0.417, z: 1.5712126}
+  m_ConnectedAnchor: {x: 7.1316113, y: 2.9224355, z: 18.267931}
   serializedVersion: 2
   m_Spring: 5
   m_Damper: 0.2

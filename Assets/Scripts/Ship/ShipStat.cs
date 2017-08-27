@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipStat : MonoBehaviour
+public class ShipStat : Photon.MonoBehaviour
 {
 
  
@@ -64,6 +64,22 @@ public class ShipStat : MonoBehaviour
             _armorMaximumHP = value;
         else
             _armorCurrentHP = value;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        float Hp = _hullCurrentHP;
+
+        if (stream.isWriting)
+        {
+            // We own this player: send the others our data
+            stream.SendNext(Hp);
+
+        }
+        else
+        {
+            _hullCurrentHP = (float)stream.ReceiveNext();
+        }
     }
 
 }
