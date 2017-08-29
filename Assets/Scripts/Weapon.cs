@@ -54,6 +54,8 @@ public class Weapon : Photon.MonoBehaviour {
         _MinMaxAngle_Y = _slot.GetWeaponAngleMinMax();
         _angleY = transform.localRotation.y;
         _photonView = _slot.GetSlotShip().GetComponent<PhotonView>();
+        _photonView.ObservedComponents.Add(_tower.GetComponent<ServerObj>());
+       
     }
     public void SetTarget(Transform target)
     {

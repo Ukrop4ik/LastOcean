@@ -10,6 +10,7 @@ public class Slot : Photon.MonoBehaviour {
     private ShipSide _slotShipSide;
     [SerializeField]
     private ShipMain _ship;
+    public int SlotId;
 
     [SerializeField]
     private float _weaponAngleMax_Y;

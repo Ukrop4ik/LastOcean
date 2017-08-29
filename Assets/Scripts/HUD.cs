@@ -141,46 +141,48 @@ public class HUD : Photon.MonoBehaviour {
             consolestring += "Camera Ready \n";
 
             int weaponcount = 0;
+            if (_playerShip.shipReady)
+            {
+                foreach (Weapon w in _playerShip.GetWeaponOnSide(ShipSide.Left))
+                {
+                    if (w)
+                    {
+                        weaponsOnSides.left_weapons.Add(w);
+                        weaponcount++;
+                    }
 
-            foreach (Weapon w in _playerShip.GetWeaponOnSide(ShipSide.Left))
-            {
-                if (w)
-                {
-                    weaponsOnSides.left_weapons.Add(w);
-                    weaponcount++;
                 }
-                    
-            }
-            foreach (Weapon w in _playerShip.GetWeaponOnSide(ShipSide.Rith))
-            {
-                if (w)
+                foreach (Weapon w in _playerShip.GetWeaponOnSide(ShipSide.Rith))
                 {
-                    weaponsOnSides.rith_weapons.Add(w);
-                    weaponcount++;
-                }
-                    
-            }
-            foreach (Weapon w in _playerShip.GetWeaponOnSide(ShipSide.Forward))
-            {
-                if (w)
-                {
-                    weaponsOnSides.front_weapons.Add(w);
-                    weaponcount++;
-                }
-                    
-            }
-            foreach (Weapon w in _playerShip.GetWeaponOnSide(ShipSide.Back))
-            {
-                if (w)
-                {
-                    weaponsOnSides.back_weapons.Add(w);
-                    weaponcount++;
-                }
+                    if (w)
+                    {
+                        weaponsOnSides.rith_weapons.Add(w);
+                        weaponcount++;
+                    }
 
-            }
-            consolestring += weaponcount + " " + "Weapons Ready";
+                }
+                foreach (Weapon w in _playerShip.GetWeaponOnSide(ShipSide.Forward))
+                {
+                    if (w)
+                    {
+                        weaponsOnSides.front_weapons.Add(w);
+                        weaponcount++;
+                    }
 
-            StopCoroutine(StartSetup());
+                }
+                foreach (Weapon w in _playerShip.GetWeaponOnSide(ShipSide.Back))
+                {
+                    if (w)
+                    {
+                        weaponsOnSides.back_weapons.Add(w);
+                        weaponcount++;
+                    }
+
+                }
+                consolestring += weaponcount + " " + "Weapons Ready";
+
+                StopCoroutine(StartSetup());
+            }
         }
 
     }

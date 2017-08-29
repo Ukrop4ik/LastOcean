@@ -28,4 +28,9 @@ public class UIManager : MonoBehaviour {
                 break;               
         }
     }
+
+    public void SetShip(GameObject ship)
+    {
+        Player.Instance().SetShip(ship);
+    }
 }

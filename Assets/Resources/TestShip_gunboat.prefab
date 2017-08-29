@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 4784515732178810}
   - component: {fileID: 114423642679768600}
   m_Layer: 0
-  m_Name: Slot2
+  m_Name: Slot3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 114913890201002326}
   - component: {fileID: 114408626279051208}
   m_Layer: 0
-  m_Name: TestShip
+  m_Name: TestShip_gunboat
   m_TagString: Ship
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -347,6 +347,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1639140997147646
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4880814092384236}
+  - component: {fileID: 114932966174084730}
+  m_Layer: 0
+  m_Name: Slot2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1656917479102900
 GameObject:
   m_ObjectHideFlags: 1
@@ -546,7 +562,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1109148538003726}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 168.58319, y: 366.43362, z: -532.7424}
+  m_LocalPosition: {x: -70.610535, y: 147.05533, z: -154.47934}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4968152312160656}
@@ -641,6 +657,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4660773360053714}
+  - {fileID: 4880814092384236}
   - {fileID: 4784515732178810}
   m_Father: {fileID: 4523252480553614}
   m_RootOrder: 0
@@ -776,13 +793,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1041641283258096}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.918, y: -0.006, z: -0.567}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.81, y: -0.006, z: -1.049}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4359685503966102}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4672949907568402
 Transform:
   m_ObjectHideFlags: 1
@@ -828,12 +845,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1045702401729110}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.852, y: -0.006, z: -0.445}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.048, y: 0.203, z: 0.202}
+  m_LocalScale: {x: 1.0000005, y: 1, z: 1.0000005}
   m_Children: []
   m_Father: {fileID: 4359685503966102}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!4 &4842311157584218
 Transform:
@@ -848,6 +865,19 @@ Transform:
   m_Father: {fileID: 4485697431338718}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4880814092384236
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1639140997147646}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.852, y: -0.006, z: -0.445}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4359685503966102}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!4 &4895253524424032
 Transform:
   m_ObjectHideFlags: 1
@@ -1501,7 +1531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slotType: 0
-  _slotShipSide: 0
+  _slotShipSide: 1
   _ship: {fileID: 0}
   SlotId: 1
   _weaponAngleMax_Y: 90
@@ -1555,7 +1585,7 @@ MonoBehaviour:
   _slotType: 0
   _slotShipSide: 1
   _ship: {fileID: 0}
-  SlotId: 2
+  SlotId: 3
   _weaponAngleMax_Y: 90
 --- !u!114 &114448683272634726
 MonoBehaviour:
@@ -1621,15 +1651,17 @@ MonoBehaviour:
   _onlineType: 0
   _slots:
   - {fileID: 114025538816249626}
+  - {fileID: 114932966174084730}
   - {fileID: 114423642679768600}
   _target: {fileID: 0}
   _shipId: 
   shipReady: 0
   _shipData:
-    ShipId: 
+    ShipId: TestShip_gunboat
   gun:
-  - small_gun_tutorial
-  - small_gun_tutorial
+  - small_gun_art
+  - small_gun_art
+  - small_gun_art
 --- !u!114 &114863555439258822
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1681,6 +1713,22 @@ MonoBehaviour:
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
+--- !u!114 &114932966174084730
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1639140997147646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 810af86f3a2b53a4092772babb4b4248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slotType: 0
+  _slotShipSide: 1
+  _ship: {fileID: 0}
+  SlotId: 2
+  _weaponAngleMax_Y: 90
 --- !u!114 &114944150066141414
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1708,11 +1756,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb3d10db991b9644930ecda688753bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maximumSpeed: 6
+  _maximumSpeed: 5
   _accelerationMax: 1
   _accelerationCur: 0
-  _angularspeedMax: 5
-  _hullMaximumHP: 100
+  _angularspeedMax: 6
+  _hullMaximumHP: 200
   _hullCurrentHP: 0
   _armorMaximumHP: 0
   _armorCurrentHP: 0
@@ -1823,7 +1871,7 @@ SpringJoint:
   m_ConnectedBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 168.7092, y: 366.68063, z: -531.21735}
+  m_ConnectedAnchor: {x: -70.484535, y: 147.30232, z: -152.95435}
   serializedVersion: 2
   m_Spring: 5
   m_Damper: 0.2

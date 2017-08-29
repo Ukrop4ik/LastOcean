@@ -28,6 +28,7 @@ public class MoveController : Photon.MonoBehaviour {
 
     private void FixedUpdate()
     {
+        if (!_ship) return;
         if (!photonView.isMine) return;
         if (_ship.GetOnlineType() != ShipOnlineType.Player) return;
 

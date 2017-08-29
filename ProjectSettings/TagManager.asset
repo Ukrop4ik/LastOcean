@@ -9,6 +9,7 @@ TagManager:
   - Ship
   - Bullet
   - Camera
+  - SpawnPlayer
   layers:
   - Default
   - TransparentFX

@@ -31,4 +31,8 @@ public class ShipManager : MonoBehaviour {
         }
         return _ship;
     }
+    private void CreateShip(ShipMain ship)
+    {
+
+    }
 }

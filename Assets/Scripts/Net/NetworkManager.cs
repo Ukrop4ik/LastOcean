@@ -7,10 +7,12 @@ public class NetworkManager : Photon.MonoBehaviour {
 
     private Text _netStatusText;
     public GameObject playership;
-    [SerializeField] Transform spawn;
+    [SerializeField] List<GameObject> spawnpoints = new List<GameObject>();
 
 	// Use this for initialization
 	void Start () {
+
+        spawnpoints.AddRange(GameObject.FindGameObjectsWithTag("SpawnPlayer"));
 
         _netStatusText = GameObject.Find("NetworkStatusText").GetComponent<Text>();
 
@@ -28,11 +30,12 @@ public class NetworkManager : Photon.MonoBehaviour {
 
     public virtual void OnJoinedLobby()
     {
-        PhotonNetwork.JoinOrCreateRoom("Test", new RoomOptions() { MaxPlayers = 4 }, null);
+        PhotonNetwork.JoinOrCreateRoom("Test", new RoomOptions() { MaxPlayers = 10 }, null);
     }
 
     public virtual void OnJoinedRoom()
     {
-        PhotonNetwork.Instantiate(playership.name, spawn.position, Quaternion.identity, 0);
+        Transform pos = spawnpoints[Random.Range(0, spawnpoints.Count)].transform;
+        PhotonNetwork.Instantiate(Player.Instance().GetShip().name, pos.position , pos.rotation, 0);
     }
 }

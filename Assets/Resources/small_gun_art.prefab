@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4604651492589574}
   - component: {fileID: 33886665636286534}
   - component: {fileID: 23183913496316344}
+  - component: {fileID: 114280634053432292}
   m_Layer: 0
   m_Name: Tower
   m_TagString: Untagged
@@ -59,7 +60,7 @@ GameObject:
   - component: {fileID: 114959930902189476}
   - component: {fileID: 114366354678019882}
   m_Layer: 0
-  m_Name: small_gun_tutorial
+  m_Name: small_gun_art
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -269,6 +270,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114280634053432292
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1112977754455466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7295c837d20e194da62c90cbf63dc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 2
 --- !u!114 &114366354678019882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -280,6 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7295c837d20e194da62c90cbf63dc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 0
 --- !u!114 &114959930902189476
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -292,14 +306,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slot: {fileID: 0}
-  _MinMaxAngle_Y: 90
-  _angularSpeed: 10
+  _MinMaxAngle_Y: 45
+  _angularSpeed: 8
   _target: {fileID: 0}
-  _reloadTime: 0.1
+  _reloadTime: 2
   _MaxDist: 20
-  _bullet: {fileID: 1857471814301246, guid: ca06a3a3caa25bc4784a4d4914c393e3, type: 2}
-  _bulletSpeed: 0.3
+  _bullet: {fileID: 1857471814301246, guid: 86b7cebc53d9cd745831d3ae626fc8e2, type: 2}
+  _bulletSpeed: 0.1
   _firepoint: {fileID: 4193421032867326}
   _tower: {fileID: 1112977754455466}
   isCanShoot: 0
-  _damage: 2
+  _damage: 10

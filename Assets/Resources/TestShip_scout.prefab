@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 114913890201002326}
   - component: {fileID: 114408626279051208}
   m_Layer: 0
-  m_Name: TestShip
+  m_Name: TestShip_scout
   m_TagString: Ship
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1708,11 +1708,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb3d10db991b9644930ecda688753bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maximumSpeed: 6
+  _maximumSpeed: 8
   _accelerationMax: 1
   _accelerationCur: 0
-  _angularspeedMax: 5
-  _hullMaximumHP: 100
+  _angularspeedMax: 10
+  _hullMaximumHP: 250
   _hullCurrentHP: 0
   _armorMaximumHP: 0
   _armorCurrentHP: 0
