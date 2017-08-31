@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using LitJson;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +21,7 @@ public class ShipMain : Photon.MonoBehaviour {
     private double _LastNetworkDataTime = 0f;
     public bool shipReady = false;
     PhotonView _photonView;
-
+    public JsonData jsonData;
     [SerializeField]
     private PlayerShipData _shipData;
     [SerializeField]
@@ -54,33 +55,31 @@ public class ShipMain : Photon.MonoBehaviour {
     }
 
 
-    public void CreateShip(string id, Dictionary<int, string> weapons)
+    public void CreateShip(string data)
     {
-        _shipId = id;
 
-       _shipData = new PlayerShipData(_shipId, weapons);
+        jsonData = JsonMapper.ToObject(data);
 
-        if (_shipData.WeaponsInSlots.Count > 0)
+        if (jsonData.Count > 0)
         {
-            foreach (KeyValuePair<int, string> KVP in weapons)
+
+            for (int i = 0; i < jsonData.Count; i++)
             {
-                if (KVP.Value == "") continue;
-
-                GameObject weapon = Instantiate(Resources.Load(KVP.Value) as GameObject);
-
                 foreach (Slot slot in _slots)
                 {
-                    if (KVP.Key == slot.SlotId)
+                    if (slot.SlotId == (int)jsonData[i]["slot"])
                     {
+                        GameObject weapon = Instantiate(Resources.Load((string)jsonData[i]["id"]) as GameObject);
                         weapon.transform.SetParent(slot.transform);
                         weapon.transform.localPosition = Vector3.zero;
                         weapon.transform.rotation = slot.transform.rotation;
                     }
+
                 }
-
             }
-        }
 
+        }
+    
         shipReady = true;
     }
 
@@ -150,8 +149,7 @@ public class ShipMain : Photon.MonoBehaviour {
 
         if (stream.isWriting)
         {
-            stream.SendNext(_shipId);
-            stream.SendNext(_shipData.WeaponsInSlots);
+            stream.SendNext(jsonData.ToJson());
 
         }
     
@@ -159,13 +157,7 @@ public class ShipMain : Photon.MonoBehaviour {
         {
             if (!shipReady && !photonView.isMine)
             {
-                Debug.Log("CreateShip" + "gam: " + _onlineType);
-                Dictionary<int, string> dicct = new Dictionary<int, string>();
-                foreach (KeyValuePair<int, string> KVP in (Dictionary<int, string>)stream.ReceiveNext())
-                {
-                    dicct.Add(KVP.Key, KVP.Value);
-                }
-                CreateShip((string)stream.ReceiveNext(), dicct);
+               CreateShip(jsonData.ToJson());
             }
 
         }
@@ -184,4 +176,5 @@ public class ShipMain : Photon.MonoBehaviour {
             WeaponsInSlots = _weaponId;
         }
     }
+
 }

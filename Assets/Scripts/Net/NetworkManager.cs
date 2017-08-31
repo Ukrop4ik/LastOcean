@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using LitJson;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -43,6 +46,37 @@ public class NetworkManager : Photon.MonoBehaviour {
         Transform pos = spawnpoints[Random.Range(0, spawnpoints.Count)].transform;
         GameObject ship = PhotonNetwork.Instantiate(Player.Instance().GetShipDecorator().GetShipId(), pos.position , pos.rotation, 0);
 
-        ship.GetComponent<ShipMain>().CreateShip(Player.Instance().GetShipDecorator().GetShipId(), Player.Instance().GetShipDecorator().GetWeaponData());
+
+        List<ItemList> list = new List<ItemList>();
+
+        foreach(KeyValuePair<int, string> KVP in Player.Instance().GetShipDecorator().GetWeaponData())
+        {
+            ItemList item = new ItemList(KVP.Key, KVP.Value);
+            list.Add(item);
+        }
+
+        JsonData data = JsonMapper.ToJson(list);
+        File.WriteAllText(Application.persistentDataPath + "/" + "LastOcean" + ".json", data.ToString());
+        ship.GetComponent<ShipMain>().CreateShip(data.ToString());
     }
+
+    public class ItemList
+    {
+        public int slot;
+        public string id;
+
+        public ItemList(int _slot, string _id)
+        {
+            slot = _slot;
+            id = _id;
+        }
+    }
+
+    [ContextMenu("OpenProfileFolder")]
+    public void OpenProfileFolder()
+    {
+        Process.Start(Application.persistentDataPath);
+    }
+
+
 }
