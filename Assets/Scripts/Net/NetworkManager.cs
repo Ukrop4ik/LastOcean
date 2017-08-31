@@ -12,14 +12,19 @@ public class NetworkManager : Photon.MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        spawnpoints.AddRange(GameObject.FindGameObjectsWithTag("SpawnPlayer"));
-
         _netStatusText = GameObject.Find("NetworkStatusText").GetComponent<Text>();
 
         PhotonNetwork.ConnectUsingSettings("0.1");
         PhotonNetwork.autoJoinLobby = true;
         PhotonNetwork.automaticallySyncScene = true;
 
+        AddSpaunPoints();
+
+    }
+
+    public void AddSpaunPoints()
+    {
+        spawnpoints.AddRange(GameObject.FindGameObjectsWithTag("SpawnPlayer"));
     }
 	
 	// Update is called once per frame
@@ -36,6 +41,8 @@ public class NetworkManager : Photon.MonoBehaviour {
     public virtual void OnJoinedRoom()
     {
         Transform pos = spawnpoints[Random.Range(0, spawnpoints.Count)].transform;
-        PhotonNetwork.Instantiate(Player.Instance().GetShip().name, pos.position , pos.rotation, 0);
+        GameObject ship = PhotonNetwork.Instantiate(Player.Instance().GetShipDecorator().GetShipId(), pos.position , pos.rotation, 0);
+
+        ship.GetComponent<ShipMain>().CreateShip(Player.Instance().GetShipDecorator().GetShipId(), Player.Instance().GetShipDecorator().GetWeaponData());
     }
 }

@@ -40,6 +40,10 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         GetComponent<CanvasGroup>().blocksRaycasts = false;
         _startparent = transform.parent;
+        if(_startparent.name == "Slot")
+        {
+            _startparent.GetComponent<SlotDecorator>().RemoveFromSlot();
+        }
         transform.SetParent(transform.root);
         TakeFromStack(this);
     }
@@ -66,8 +70,12 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             {
                 AddToStack(this, eventData.pointerEnter.GetComponent<Inventory>());
             }
-            else
+            if (eventData.pointerEnter.name == "Slot")
+            {
+                eventData.pointerEnter.GetComponent<SlotDecorator>().SetToSlot(_itemId);
                 transform.SetParent(eventData.pointerEnter.transform);
+            }
+            
         }
         else
         {

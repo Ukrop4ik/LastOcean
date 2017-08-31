@@ -1540,7 +1540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7295c837d20e194da62c90cbf63dc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SyncObj: []
+  Type: 0
 --- !u!114 &114423642679768600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1627,9 +1627,7 @@ MonoBehaviour:
   shipReady: 0
   _shipData:
     ShipId: 
-  gun:
-  - small_gun_tutorial
-  - small_gun_tutorial
+  gun: []
 --- !u!114 &114863555439258822
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1676,6 +1674,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 114408626279051208}
   - {fileID: 114996319155057458}
+  - {fileID: 114786352934978484}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1

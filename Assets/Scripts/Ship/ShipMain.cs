@@ -32,10 +32,10 @@ public class ShipMain : Photon.MonoBehaviour {
         _photonView = gameObject.GetComponent<PhotonView>();
         _shipData = new PlayerShipData(_shipId, new Dictionary<int, string>());
 
-        for(int i =0; i < gun.Count; i++)
-        {
-            _shipData.WeaponsInSlots.Add(i + 1, gun[i]);
-        }
+        //for(int i =0; i < gun.Count; i++)
+        //{
+        //    _shipData.WeaponsInSlots.Add(i + 1, gun[i]);
+        //}
 
         if (photonView.isMine)
         {
@@ -47,22 +47,38 @@ public class ShipMain : Photon.MonoBehaviour {
         else
         {
             _onlineType = ShipOnlineType.Opponent;
+
         }
-
-        CreateShip();
-
         _shipManager = GameObject.FindGameObjectWithTag("Context").GetComponent<ShipManager>();
         _shipManager.AddShip(this);
     }
 
-    private void CreateShip()
+
+    public void CreateShip(string id, Dictionary<int, string> weapons)
     {
-        foreach (KeyValuePair<int, string> KVP in _shipData.WeaponsInSlots)
+        _shipId = id;
+
+       _shipData = new PlayerShipData(_shipId, weapons);
+
+        if (_shipData.WeaponsInSlots.Count > 0)
         {
-            GameObject weapon = Instantiate(Resources.Load(KVP.Value) as GameObject);
-            weapon.transform.SetParent(_slots[KVP.Key - 1].transform);
-            weapon.transform.localPosition = Vector3.zero;
-            weapon.transform.rotation = _slots[KVP.Key - 1].transform.rotation;
+            foreach (KeyValuePair<int, string> KVP in weapons)
+            {
+                if (KVP.Value == "") continue;
+
+                GameObject weapon = Instantiate(Resources.Load(KVP.Value) as GameObject);
+
+                foreach (Slot slot in _slots)
+                {
+                    if (KVP.Key == slot.SlotId)
+                    {
+                        weapon.transform.SetParent(slot.transform);
+                        weapon.transform.localPosition = Vector3.zero;
+                        weapon.transform.rotation = slot.transform.rotation;
+                    }
+                }
+
+            }
         }
 
         shipReady = true;
@@ -131,14 +147,26 @@ public class ShipMain : Photon.MonoBehaviour {
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+
         if (stream.isWriting)
         {
-            // We own this player: send the others our data
             stream.SendNext(_shipId);
             stream.SendNext(_shipData.WeaponsInSlots);
+
         }
+    
         else
         {
+            if (!shipReady && !photonView.isMine)
+            {
+                Debug.Log("CreateShip" + "gam: " + _onlineType);
+                Dictionary<int, string> dicct = new Dictionary<int, string>();
+                foreach (KeyValuePair<int, string> KVP in (Dictionary<int, string>)stream.ReceiveNext())
+                {
+                    dicct.Add(KVP.Key, KVP.Value);
+                }
+                CreateShip((string)stream.ReceiveNext(), dicct);
+            }
 
         }
     }

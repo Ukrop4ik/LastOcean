@@ -10,10 +10,21 @@ public class Player : MonoBehaviour {
 
     [SerializeField]
     private GameObject _ship;
+    [SerializeField]
+    private ShipDecorator ship_decorator;
 
     private void Awake()
     {
         instance = this;
+    }
+
+    public ShipDecorator GetShipDecorator()
+    {
+        return ship_decorator;
+    }
+    public void SetShipDecorator(ShipDecorator decorator)
+    {
+        ship_decorator = decorator;
     }
 
     private void Start()

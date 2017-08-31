@@ -52,7 +52,7 @@ public class Slot : Photon.MonoBehaviour {
     {
         if (stream.isWriting)
         {
-            // We own this player: send the others our data
+           
             stream.SendNext(_isCanUse);
         }
         else
