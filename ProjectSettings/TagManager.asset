@@ -10,6 +10,7 @@ TagManager:
   - Bullet
   - Camera
   - SpawnPlayer
+  - DropField
   layers:
   - Default
   - TransparentFX
