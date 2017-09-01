@@ -11,9 +11,8 @@ public class NetworkManager : Photon.MonoBehaviour {
     private Text _netStatusText;
     public GameObject playership;
     [SerializeField] List<GameObject> spawnpoints = new List<GameObject>();
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 
         _netStatusText = GameObject.Find("NetworkStatusText").GetComponent<Text>();
 
@@ -46,16 +45,10 @@ public class NetworkManager : Photon.MonoBehaviour {
     {
         Transform pos = spawnpoints[Random.Range(0, spawnpoints.Count)].transform;
         GameObject ship = PhotonNetwork.Instantiate(Player.Instance().GetShipDecorator().GetShipId(), pos.position , pos.rotation, 0);
+        ship.name = PhotonNetwork.player.NickName + "_PlayerShip";
 
 
-        ExitGames.Client.Photon.Hashtable prop = new ExitGames.Client.Photon.Hashtable();
-
-        foreach (KeyValuePair<int, string> KVP in Player.Instance().GetShipDecorator().GetWeaponData())
-        {  
-            prop.Add(("slot_" + KVP.Key), KVP.Value);     
-        }
-
-        ship.GetComponent<ShipMain>().CreateFromServer(PhotonNetwork.player.NickName, prop);
+        ship.GetComponent<ShipMain>().CreateFromServer(Player.Instance().GetPlayerShipProp());
     }
 
     public class ItemList

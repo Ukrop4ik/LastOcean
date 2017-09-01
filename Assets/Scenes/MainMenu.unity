@@ -1019,7 +1019,7 @@ Prefab:
     - target: {fileID: 114949492216516726, guid: a837f886b2a65134684213220a6ac289,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 224256687398925296, guid: a837f886b2a65134684213220a6ac289,
         type: 2}
@@ -1159,7 +1159,7 @@ Prefab:
     - target: {fileID: 114949492216516726, guid: a837f886b2a65134684213220a6ac289,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114949492216516726, guid: a837f886b2a65134684213220a6ac289,
         type: 2}
@@ -1170,26 +1170,65 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 725369928}
+      objectReference: {fileID: 725369927}
     - target: {fileID: 114949492216516726, guid: a837f886b2a65134684213220a6ac289,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: SetShip
+      value: LoadScene
       objectReference: {fileID: 0}
     - target: {fileID: 114949492216516726, guid: a837f886b2a65134684213220a6ac289,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 114949492216516726, guid: a837f886b2a65134684213220a6ac289,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 1109148538003726, guid: a730b6add2e8fad45bf596ea31789338,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 1294277058276416, guid: a837f886b2a65134684213220a6ac289, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224264832738589922, guid: a837f886b2a65134684213220a6ac289,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.00012207031
+      objectReference: {fileID: 0}
+    - target: {fileID: 114949492216516726, guid: a837f886b2a65134684213220a6ac289,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 725369928}
+    - target: {fileID: 114949492216516726, guid: a837f886b2a65134684213220a6ac289,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetShipPropToPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 114949492216516726, guid: a837f886b2a65134684213220a6ac289,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114949492216516726, guid: a837f886b2a65134684213220a6ac289,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114949492216516726, guid: a837f886b2a65134684213220a6ac289,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114949492216516726, guid: a837f886b2a65134684213220a6ac289,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114949492216516726, guid: a837f886b2a65134684213220a6ac289,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Test
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a837f886b2a65134684213220a6ac289, type: 2}

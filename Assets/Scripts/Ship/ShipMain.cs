@@ -54,20 +54,20 @@ public class ShipMain : Photon.MonoBehaviour {
     [PunRPC]
     public void CreateFromServer(string player, ExitGames.Client.Photon.Hashtable shipdata)
     {
-        // the photonView.RPC() call is the same as without the info parameter.
-        // the info.sender is the player who called the RPC.
-        Debug.Log(string.Format("Info: {0} {1} ", player, shipdata));
 
         foreach(DictionaryEntry dict in shipdata)
         {
             if (string.IsNullOrEmpty((string)dict.Value)) continue;
 
             string value = dict.Key.ToString();
+            Debug.Log("Value : " + value);
 
             if(value.Contains("slot"))
             {
                 int slotid = 0;
                 Int32.TryParse(value.Split('_')[1], out slotid);
+                Debug.Log("Slot id: " + slotid);
+
                 foreach (Slot slot in _slots)
                 {
                     if(slot.SlotId == slotid)
@@ -81,6 +81,36 @@ public class ShipMain : Photon.MonoBehaviour {
                 }
             }
         }
+
+        shipReady = true;
+    }
+    public void CreateFromServer(ExitGames.Client.Photon.Hashtable shipdata)
+    {
+
+        foreach (DictionaryEntry dict in shipdata)
+        {
+            if (string.IsNullOrEmpty((string)dict.Value)) continue;
+
+            string value = dict.Key.ToString();
+
+            if (value.Contains("slot"))
+            {
+                int slotid = 0;
+                Int32.TryParse(value.Split('_')[1], out slotid);
+                foreach (Slot slot in _slots)
+                {
+                    if (slot.SlotId == slotid)
+                    {
+                        GameObject weapon = Instantiate(Resources.Load((string)dict.Value) as GameObject);
+                        weapon.transform.SetParent(slot.transform);
+                        weapon.transform.localPosition = Vector3.zero;
+                        weapon.transform.rotation = slot.transform.rotation;
+                    }
+                }
+            }
+        }
+
+        shipReady = true;
     }
 
     public void SetTarget(Transform target)

@@ -107,8 +107,6 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public void TakeFromStack(Item item)
     {
         if (_count <= 1) return;
-
-        Debug.Log(item._itemId + " ");
         GameObject g = Instantiate(Resources.Load("Items/" + item._itemId) as GameObject);
         g.name = item._itemId;
         Item i = g.GetComponent<Item>();

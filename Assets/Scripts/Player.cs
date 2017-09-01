@@ -12,6 +12,16 @@ public class Player : MonoBehaviour {
     private GameObject _ship;
     [SerializeField]
     private ShipDecorator ship_decorator;
+    private ExitGames.Client.Photon.Hashtable prop = new ExitGames.Client.Photon.Hashtable();
+
+    public ExitGames.Client.Photon.Hashtable GetPlayerShipProp()
+    {
+        return prop;
+    }
+    public void SetPlayerShipprop(ExitGames.Client.Photon.Hashtable _prop)
+    {
+        prop = _prop;
+    }
 
     private void Awake()
     {

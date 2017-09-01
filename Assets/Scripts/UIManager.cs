@@ -33,4 +33,16 @@ public class UIManager : MonoBehaviour {
     {
         Player.Instance().SetShip(ship);
     }
+
+    public void SetShipPropToPlayer()
+    {
+        ExitGames.Client.Photon.Hashtable prop = new ExitGames.Client.Photon.Hashtable();
+
+        foreach (KeyValuePair<int, string> KVP in Player.Instance().GetShipDecorator().GetWeaponData())
+        {
+            prop.Add(("slot_" + KVP.Key), KVP.Value);
+        }
+        PhotonNetwork.player.SetCustomProperties(prop);
+        Player.Instance().SetPlayerShipprop(prop);
+    }
 }
