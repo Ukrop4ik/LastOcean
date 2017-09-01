@@ -113,6 +113,7 @@ public class HUD : Photon.MonoBehaviour {
         consoletext.text = consolestring;
     }
 
+
     private IEnumerator StartSetup()
     {
         yield return new WaitForSeconds(0.1f);

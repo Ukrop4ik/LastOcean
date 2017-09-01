@@ -1,4 +1,5 @@
 ﻿using LitJson;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,7 +28,7 @@ public class ShipMain : Photon.MonoBehaviour {
     [SerializeField]
     private List<string> gun = new List<string>();
     public string data_str = "";
-
+    public string playerName = "";
     public bool OpponentReady = false;
 
     private void Start()
@@ -36,69 +37,59 @@ public class ShipMain : Photon.MonoBehaviour {
         _photonView = gameObject.GetComponent<PhotonView>();
         _shipData = new PlayerShipData(_shipId, new Dictionary<int, string>());
 
-        //for(int i =0; i < gun.Count; i++)
-        //{
-        //    _shipData.WeaponsInSlots.Add(i + 1, gun[i]);
-        //}
-
         if (photonView.isMine)
         {
-
-
+            this.photonView.RPC("CreateFromServer", PhotonTargets.OthersBuffered, photonView.name, PhotonNetwork.player.CustomProperties);
             _movecontroller = gameObject.GetComponent<MoveController>();
             _movecontroller.SetParameters(this, GetRigidbody(), Stats.GetAngularSpeed());
         }
         else
         {
-            _onlineType = ShipOnlineType.Opponent;
-
+            _onlineType = ShipOnlineType.Opponent;                
         }
         _shipManager = GameObject.FindGameObjectWithTag("Context").GetComponent<ShipManager>();
         _shipManager.AddShip(this);
-    }
+    } 
 
-    private void Update()
+    [PunRPC]
+    public void CreateFromServer(string player, ExitGames.Client.Photon.Hashtable shipdata)
     {
-        if(!shipReady && data_str != "")
+        // the photonView.RPC() call is the same as without the info parameter.
+        // the info.sender is the player who called the RPC.
+        Debug.Log(string.Format("Info: {0} {1} ", player, shipdata));
+
+        foreach(DictionaryEntry dict in shipdata)
         {
-            CreateShip(data_str);
+            if (string.IsNullOrEmpty((string)dict.Value)) continue;
 
-            if(_onlineType == ShipOnlineType.Opponent)
+            string value = dict.Key.ToString();
+
+            if(value.Contains("slot"))
             {
-                OpponentReady = true;
-            }
-        }
-    }
+                char[] delimetr = new char[] {'s','l','o','t','_'};
+                string[] substrings = value.Split(delimetr);
+                string Sslot = "";
+                foreach (String s in substrings)
+                {
+                    Sslot += s;
+                }
 
-    public void CreateShip(string data)
-    {
+                int slotid = 0;
+                Int32.TryParse(Sslot, out slotid);
 
-        jsonData = JsonMapper.ToObject(data);
-
-        if (jsonData.Count > 0)
-        {
-
-            for (int i = 0; i < jsonData.Count; i++)
-            {
                 foreach (Slot slot in _slots)
                 {
-                    if (slot.SlotId == (int)jsonData[i]["slot"])
+                    if(slot.SlotId == slotid)
                     {
-                        if ((string)jsonData[i]["id"] != "")
-                        {
-                            GameObject weapon = Instantiate(Resources.Load((string)jsonData[i]["id"]) as GameObject);
-                            weapon.transform.SetParent(slot.transform);
-                            weapon.transform.localPosition = Vector3.zero;
-                            weapon.transform.rotation = slot.transform.rotation;
-                        }
+                        Debug.Log((string)dict.Value);
+                        GameObject weapon = Instantiate(Resources.Load((string)dict.Value) as GameObject);
+                        weapon.transform.SetParent(slot.transform);
+                        weapon.transform.localPosition = Vector3.zero;
+                        weapon.transform.rotation = slot.transform.rotation;
                     }
-
                 }
             }
-
         }
-    
-        shipReady = true;
     }
 
     public void SetTarget(Transform target)
@@ -159,42 +150,12 @@ public class ShipMain : Photon.MonoBehaviour {
 
         Destroy(gameObject);
     }
-
-
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-
-        if (!OpponentReady || !shipReady)
-        {
-            if (stream.isWriting)
-            {
-                stream.SendNext(jsonData.ToJson());
-                Debug.Log("Send");
-            }
-
-            else
-            {
-                data_str = (string)stream.ReceiveNext();
-                Debug.Log("Get");
-            }
-        }
-        else
-        {
-            if (stream.isWriting)
-            {
-                stream.SendNext("");
-                Debug.Log("Send empty");
-            }
-
-            else
-            {
-                Debug.Log((string)stream.ReceiveNext());
-            }
-        }
-    }
     
+
+
+
     }
+
 
 
     [System.Serializable]

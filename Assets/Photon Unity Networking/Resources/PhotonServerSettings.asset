@@ -36,4 +36,7 @@ MonoBehaviour:
   - PunRespawn
   - RequestForPickupItems
   - RequestForPickupTimes
+  - Write
+  - ChatMessage
+  - CreateFromServer
   DisableAutoOpenWizard: 1

@@ -20,6 +20,7 @@ public class NetworkManager : Photon.MonoBehaviour {
         PhotonNetwork.ConnectUsingSettings("0.1");
         PhotonNetwork.autoJoinLobby = true;
         PhotonNetwork.automaticallySyncScene = true;
+        PhotonNetwork.playerName = Random.Range(0, 555665665).ToString();
 
         AddSpaunPoints();
 
@@ -47,17 +48,14 @@ public class NetworkManager : Photon.MonoBehaviour {
         GameObject ship = PhotonNetwork.Instantiate(Player.Instance().GetShipDecorator().GetShipId(), pos.position , pos.rotation, 0);
 
 
-        List<ItemList> list = new List<ItemList>();
+        ExitGames.Client.Photon.Hashtable prop = new ExitGames.Client.Photon.Hashtable();
 
-        foreach(KeyValuePair<int, string> KVP in Player.Instance().GetShipDecorator().GetWeaponData())
-        {
-            ItemList item = new ItemList(KVP.Key, KVP.Value);
-            list.Add(item);
+        foreach (KeyValuePair<int, string> KVP in Player.Instance().GetShipDecorator().GetWeaponData())
+        {  
+            prop.Add(("slot_" + KVP.Key), KVP.Value);     
         }
 
-        JsonData data = JsonMapper.ToJson(list);
-        File.WriteAllText(Application.persistentDataPath + "/" + "LastOcean" + ".json", data.ToString());
-        ship.GetComponent<ShipMain>().data_str = data.ToString();
+        ship.GetComponent<ShipMain>().CreateFromServer(PhotonNetwork.player.NickName, prop);
     }
 
     public class ItemList
