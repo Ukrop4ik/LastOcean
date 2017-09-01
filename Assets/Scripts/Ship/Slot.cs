@@ -15,12 +15,13 @@ public class Slot : Photon.MonoBehaviour {
     [SerializeField]
     private float _weaponAngleMax_Y;
 
-    public bool _isCanUse { get; private set; }
+    public bool _isCanUse;
 
     private void Start()
     {
+        _isCanUse = false;
        _ship = transform.root.GetComponent<ShipMain>();
-        _ship.GetComponent<PhotonView>().ObservedComponents.Add(this);
+      
     }
 
     public void SetUse(bool isCan)
@@ -50,17 +51,11 @@ public class Slot : Photon.MonoBehaviour {
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if (stream.isWriting)
-        {
-           
-            stream.SendNext(_isCanUse);
-        }
-        else
-        {
 
-            _isCanUse = (bool)stream.ReceiveNext();
 
-        }
+        stream.Serialize(ref _isCanUse);
+
+  
     }
 
 }

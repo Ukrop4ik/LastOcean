@@ -57,7 +57,7 @@ public class NetworkManager : Photon.MonoBehaviour {
 
         JsonData data = JsonMapper.ToJson(list);
         File.WriteAllText(Application.persistentDataPath + "/" + "LastOcean" + ".json", data.ToString());
-        ship.GetComponent<ShipMain>().CreateShip(data.ToString());
+        ship.GetComponent<ShipMain>().data_str = data.ToString();
     }
 
     public class ItemList

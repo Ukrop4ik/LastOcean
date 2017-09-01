@@ -26,6 +26,9 @@ public class ShipMain : Photon.MonoBehaviour {
     private PlayerShipData _shipData;
     [SerializeField]
     private List<string> gun = new List<string>();
+    public string data_str = "";
+
+    public bool OpponentReady = false;
 
     private void Start()
     {
@@ -54,6 +57,18 @@ public class ShipMain : Photon.MonoBehaviour {
         _shipManager.AddShip(this);
     }
 
+    private void Update()
+    {
+        if(!shipReady && data_str != "")
+        {
+            CreateShip(data_str);
+
+            if(_onlineType == ShipOnlineType.Opponent)
+            {
+                OpponentReady = true;
+            }
+        }
+    }
 
     public void CreateShip(string data)
     {
@@ -69,10 +84,13 @@ public class ShipMain : Photon.MonoBehaviour {
                 {
                     if (slot.SlotId == (int)jsonData[i]["slot"])
                     {
-                        GameObject weapon = Instantiate(Resources.Load((string)jsonData[i]["id"]) as GameObject);
-                        weapon.transform.SetParent(slot.transform);
-                        weapon.transform.localPosition = Vector3.zero;
-                        weapon.transform.rotation = slot.transform.rotation;
+                        if ((string)jsonData[i]["id"] != "")
+                        {
+                            GameObject weapon = Instantiate(Resources.Load((string)jsonData[i]["id"]) as GameObject);
+                            weapon.transform.SetParent(slot.transform);
+                            weapon.transform.localPosition = Vector3.zero;
+                            weapon.transform.rotation = slot.transform.rotation;
+                        }
                     }
 
                 }
@@ -147,20 +165,35 @@ public class ShipMain : Photon.MonoBehaviour {
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
 
-        if (stream.isWriting)
+        if (!OpponentReady || !shipReady)
         {
-            stream.SendNext(jsonData.ToJson());
-
-        }
-    
-        else
-        {
-            if (!shipReady && !photonView.isMine)
+            if (stream.isWriting)
             {
-               CreateShip(jsonData.ToJson());
+                stream.SendNext(jsonData.ToJson());
+                Debug.Log("Send");
             }
 
+            else
+            {
+                data_str = (string)stream.ReceiveNext();
+                Debug.Log("Get");
+            }
         }
+        else
+        {
+            if (stream.isWriting)
+            {
+                stream.SendNext("");
+                Debug.Log("Send empty");
+            }
+
+            else
+            {
+                Debug.Log((string)stream.ReceiveNext());
+            }
+        }
+    }
+    
     }
 
 
@@ -177,4 +210,4 @@ public class ShipMain : Photon.MonoBehaviour {
         }
     }
 
-}
+
