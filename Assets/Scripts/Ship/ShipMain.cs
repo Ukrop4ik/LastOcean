@@ -66,17 +66,8 @@ public class ShipMain : Photon.MonoBehaviour {
 
             if(value.Contains("slot"))
             {
-                char[] delimetr = new char[] {'s','l','o','t','_'};
-                string[] substrings = value.Split(delimetr);
-                string Sslot = "";
-                foreach (String s in substrings)
-                {
-                    Sslot += s;
-                }
-
                 int slotid = 0;
-                Int32.TryParse(Sslot, out slotid);
-
+                Int32.TryParse(value.Split('_')[1], out slotid);
                 foreach (Slot slot in _slots)
                 {
                     if(slot.SlotId == slotid)
