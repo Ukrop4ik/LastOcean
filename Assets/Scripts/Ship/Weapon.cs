@@ -36,6 +36,12 @@ public class Weapon : Photon.MonoBehaviour {
     [SerializeField]
     private float _damage;
     private PhotonView _photonView;
+    [SerializeField]
+    private float _reloadspeed;
+    private float _reloadspeedCurr;
+    [SerializeField]
+    private int _ammocountMax;
+    private int _ammocount;
 
     private float _shootTimeBufer;
 
@@ -55,6 +61,7 @@ public class Weapon : Photon.MonoBehaviour {
         _angleY = transform.localRotation.y;
         _photonView = _slot.GetSlotShip().GetComponent<PhotonView>();
         _photonView.ObservedComponents.Add(_tower.GetComponent<ServerObj>());
+        
        
     }
     public void SetTarget(Transform target)

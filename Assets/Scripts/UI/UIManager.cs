@@ -1,15 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
 
+    private Text _netStatusText;
     [SerializeField]
     private List<GameObject> HUDs = new List<GameObject>();
 
     private void Awake()
     {
         DontDestroyOnLoad(this);
+    }
+
+    private void Start()
+    {
+        _netStatusText = GameObject.Find("NetworkStatusText").GetComponent<Text>();
+        StartCoroutine(UpdateUI());
     }
 
     public void SelectActiveHUD(SceneType type)
@@ -44,5 +52,18 @@ public class UIManager : MonoBehaviour {
         }
         PhotonNetwork.player.SetCustomProperties(prop);
         Player.Instance().SetPlayerShipprop(prop);
+
+
     }
+
+    private IEnumerator UpdateUI()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        _netStatusText.text = "Status: " + PhotonNetwork.connectionStateDetailed.ToString() + " Ping: " + PhotonNetwork.GetPing();
+
+        StartCoroutine(UpdateUI());
+    }
+
+
 }

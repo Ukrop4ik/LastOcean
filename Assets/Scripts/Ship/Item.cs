@@ -40,11 +40,19 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         GetComponent<CanvasGroup>().blocksRaycasts = false;
         _startparent = transform.parent;
+
         if(_startparent.name == "Slot")
         {
+            transform.SetParent(transform.root);
             _startparent.GetComponent<SlotDecorator>().RemoveFromSlot();
         }
-        transform.SetParent(transform.root);
+        if(_startparent.name == "Inventory")
+        {
+            transform.SetParent(transform.root);
+            _startparent.GetComponent<Inventory>().UpdateInventory();
+        }
+
+
         TakeFromStack(this);
     }
 
@@ -63,12 +71,18 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             transform.SetParent(_startparent);
             return;
         }
+        if(eventData.pointerEnter.tag != "DropField" && eventData.pointerEnter.name != "Inventory")
+        {
+            transform.SetParent(_startparent);
+            return;
+        }
 
         if (eventData.pointerEnter.tag == "DropField")
         {
             if(eventData.pointerEnter.name == "Inventory")
             {
                 AddToStack(this, eventData.pointerEnter.GetComponent<Inventory>());
+                transform.SetParent(eventData.pointerEnter.transform);
             }
             if (eventData.pointerEnter.name == "Slot")
             {
@@ -81,7 +95,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         {
             if(_startparent.gameObject.name == "Inventory")
             {
-                AddToStack(this, eventData.pointerEnter.GetComponent<Inventory>());
+                AddToStack(this, _startparent.GetComponent<Inventory>());
             }
             else
                 transform.SetParent(_startparent);
@@ -115,6 +129,12 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         g.transform.SetParent(_startparent);
         g.transform.localScale = Vector3.one;
 
+        if(_startparent.name == "Inventory")
+        {
+            Inventory inv = _startparent.GetComponent<Inventory>();
+            inv.UpdateInventory();
+        }
+
     }
     public void AddToStack(Item item, Inventory inv)
     {
@@ -122,9 +142,9 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
         if(inv.IsInventoryContainsItem(_itemId))
         {
-            inv.SetItemToStack(_itemId, _count);
+            inv.SetItemToStack(_itemId, _count, gameObject);
         }
 
-        Destroy(this.gameObject);
+        inv.UpdateInventory();
     }
 }

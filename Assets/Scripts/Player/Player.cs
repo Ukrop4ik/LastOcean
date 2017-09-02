@@ -7,7 +7,7 @@ public class Player : MonoBehaviour {
     private static Player instance;
     public static Player Instance() { return instance; }
 
-
+    public PlayerDB Data { get; private set; }
     [SerializeField]
     private GameObject _ship;
     [SerializeField]
@@ -27,6 +27,11 @@ public class Player : MonoBehaviour {
     {
         instance = this;
     }
+    private void Start()
+    {
+        DontDestroyOnLoad(this);
+        Data = GetComponent<PlayerDB>();
+    }
 
     public ShipDecorator GetShipDecorator()
     {
@@ -35,11 +40,6 @@ public class Player : MonoBehaviour {
     public void SetShipDecorator(ShipDecorator decorator)
     {
         ship_decorator = decorator;
-    }
-
-    private void Start()
-    {
-        DontDestroyOnLoad(this);
     }
 
     public GameObject GetShip()

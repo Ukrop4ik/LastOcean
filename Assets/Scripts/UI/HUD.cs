@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class HUD : Photon.MonoBehaviour {
 
+
     [System.Serializable]
     public struct WeaponsOnSids
     {
@@ -23,7 +24,11 @@ public class HUD : Photon.MonoBehaviour {
         }
     }
     private string consolestring = "";
-
+    [SerializeField]
+    [Range(0.01f, 1f)]
+    private float _updateUiRate;
+    [SerializeField]
+    private Image _hpslider;
     [SerializeField]
     private Text consoletext;
     private ShipManager _shipManager;
@@ -33,6 +38,8 @@ public class HUD : Photon.MonoBehaviour {
     private Scrollbar _engineScrollbar;
     private MoveController _moveController;
 
+    private ShipStat _shipStat;
+
     public WeaponsOnSids weaponsOnSides = new WeaponsOnSids();
 
 
@@ -41,7 +48,7 @@ public class HUD : Photon.MonoBehaviour {
 
     private void Start()
     {
-
+        StartCoroutine(UpdateShipStatus());
     }
 
     private void OnEnable ()
@@ -113,6 +120,18 @@ public class HUD : Photon.MonoBehaviour {
         consoletext.text = consolestring;
     }
 
+    private IEnumerator UpdateShipStatus()
+    {
+        yield return new WaitForSeconds(_updateUiRate);
+
+        if(_playerShip && _shipStat)
+        {
+            _hpslider.fillAmount = _shipStat.GetHullValue() / _shipStat.GetHullValue(true);
+        }
+
+        StartCoroutine(UpdateShipStatus());
+
+    }
 
     private IEnumerator StartSetup()
     {
@@ -135,6 +154,9 @@ public class HUD : Photon.MonoBehaviour {
         {
             _moveController = _playerShip.GetMoveController();
             consolestring += "Player Ship Found \n";
+
+            _shipStat = _playerShip.gameObject.GetComponent<ShipStat>();
+
             consolestring += "Controller Found \n";
 
             GameObject.FindGameObjectWithTag("Camera").GetComponent<BattleCamera>().Settings(_playerShip.transform);

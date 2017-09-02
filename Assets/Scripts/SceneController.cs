@@ -19,6 +19,7 @@ public class SceneController : MonoBehaviour {
         {
             if (date.SceneName == name)
             {
+                PhotonNetwork.JoinOrCreateRoom(name, new RoomOptions() { MaxPlayers = 10 }, null);
                 SceneManager.LoadScene(name);
                 UI.SelectActiveHUD(date.Type);
                 return;
