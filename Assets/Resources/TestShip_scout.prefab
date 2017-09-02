@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4660773360053714}
   - component: {fileID: 114025538816249626}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Slot1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4784515732178810}
   - component: {fileID: 114423642679768600}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Slot2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 114996319155057458}
   - component: {fileID: 114913890201002326}
   - component: {fileID: 114924156696922656}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: TestShip_scout
   m_TagString: Ship
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 4000194859996076}
   - component: {fileID: 33069367206367250}
   - component: {fileID: 23914464089264254}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cylinder_003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 4001537350034044}
   - component: {fileID: 33901072417777592}
   - component: {fileID: 23442114433082712}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cylinder_001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4266952558148960}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 4432522358470462}
   - component: {fileID: 33862421291024552}
   - component: {fileID: 23234451184207612}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Plane_001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,7 +157,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4281683902450036}
   - component: {fileID: 95152401592822760}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: startship
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 4185306544337688}
   - component: {fileID: 33744143508141494}
   - component: {fileID: 23378577955834470}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cylinder_004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +189,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4968152312160656}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,7 +205,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4895253524424032}
   - component: {fileID: 114944150066141414}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Slot1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 4779452721084148}
   - component: {fileID: 33027467898477604}
   - component: {fileID: 23717737717665634}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Plane_002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 4526675867056576}
   - component: {fileID: 33442567128698956}
   - component: {fileID: 23725913284932938}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Plane_003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,7 +273,7 @@ GameObject:
   - component: {fileID: 4181458592406758}
   - component: {fileID: 33749708226119978}
   - component: {fileID: 23508005064413974}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,7 +305,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4654622299730468}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Special
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -320,7 +320,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4359685503966102}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Weapons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -354,7 +354,7 @@ GameObject:
   - component: {fileID: 4728802363542486}
   - component: {fileID: 33510373781787826}
   - component: {fileID: 23583062947498344}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -371,7 +371,7 @@ GameObject:
   - component: {fileID: 4397211979251108}
   - component: {fileID: 33528654781418484}
   - component: {fileID: 23106518545491808}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pilon_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -386,7 +386,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4523252480553614}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Equipment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -403,7 +403,7 @@ GameObject:
   - component: {fileID: 4921504872408240}
   - component: {fileID: 33828047053246348}
   - component: {fileID: 23108320572147120}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pilon1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -420,7 +420,7 @@ GameObject:
   - component: {fileID: 4381287773370078}
   - component: {fileID: 33298191623089354}
   - component: {fileID: 23554826253037674}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -493,7 +493,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1109148538003726}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.1273537, y: 10.688192, z: 5.441258}
+  m_LocalPosition: {x: -9.350385, y: 14.414993, z: -12.217222}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4968152312160656}
@@ -1387,6 +1387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ship: {fileID: 0}
+  view: {fileID: 0}
 --- !u!114 &114492801343839402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1399,6 +1400,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ship: {fileID: 0}
+  view: {fileID: 0}
 --- !u!114 &114749000734749570
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1433,6 +1435,7 @@ MonoBehaviour:
     ShipId: 
   gun: []
   data_str: 
+  playerName: 
   OpponentReady: 0
 --- !u!114 &114863555439258822
 MonoBehaviour:
@@ -1446,6 +1449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ship: {fileID: 0}
+  view: {fileID: 0}
 --- !u!114 &114876190199476356
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1458,6 +1462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ship: {fileID: 0}
+  view: {fileID: 0}
 --- !u!114 &114913890201002326
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1480,8 +1485,6 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 114924156696922656}
   - {fileID: 114996319155057458}
-  - {fileID: 114025538816249626}
-  - {fileID: 114423642679768600}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
@@ -1504,7 +1507,7 @@ MonoBehaviour:
     TeleportIfDistanceGreaterThan: 3
     InterpolateOption: 4
     InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 1.07
+    InterpolateLerpSpeed: 5
     InterpolateMoveTowardsAcceleration: 2
     InterpolateMoveTowardsDeceleration: 2
     InterpolateSpeedCurve:
@@ -1544,11 +1547,11 @@ MonoBehaviour:
     DrawErrorGizmo: 1
   m_RotationModel:
     SynchronizeEnabled: 1
-    InterpolateOption: 1
+    InterpolateOption: 2
     InterpolateRotateTowardsSpeed: 360
-    InterpolateLerpSpeed: 5
+    InterpolateLerpSpeed: 20
   m_ScaleModel:
-    SynchronizeEnabled: 1
+    SynchronizeEnabled: 0
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0

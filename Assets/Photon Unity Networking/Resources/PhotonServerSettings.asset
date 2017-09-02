@@ -39,4 +39,5 @@ MonoBehaviour:
   - Write
   - ChatMessage
   - CreateFromServer
+  - Dead
   DisableAutoOpenWizard: 1

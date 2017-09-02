@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Slot : Photon.MonoBehaviour {
+public class Slot : MonoBehaviour {
 
     [SerializeField]
     private SlotType _slotType;
@@ -49,13 +49,6 @@ public class Slot : Photon.MonoBehaviour {
             return null;
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
 
-
-        stream.Serialize(ref _isCanUse);
-
-  
-    }
 
 }

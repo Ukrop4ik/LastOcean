@@ -44,6 +44,10 @@ public class Weapon : Photon.MonoBehaviour {
     private int _ammocount;
 
     private float _shootTimeBufer;
+    [SerializeField]
+    private bool _targetinline;
+
+    Vector3 targetPos;
 
     public GameObject GetTower()
     {
@@ -61,6 +65,7 @@ public class Weapon : Photon.MonoBehaviour {
         _angleY = transform.localRotation.y;
         _photonView = _slot.GetSlotShip().GetComponent<PhotonView>();
         _photonView.ObservedComponents.Add(_tower.GetComponent<ServerObj>());
+        _slot.GetSlotShip().gameObject.GetComponent<PhotonView>().ObservedComponents.Add(this);
         
        
     }
@@ -84,6 +89,32 @@ public class Weapon : Photon.MonoBehaviour {
         {
             if (!_target) return;
             if (Vector3.Distance(_target.position, transform.position) > _MaxDist) return;
+
+            RaycastHit hit;
+
+            if(Physics.Raycast(_tower.transform.position, _tower.transform.forward, out hit, _MaxDist))
+            {
+                if(hit.transform == _target)
+                {
+                    _targetinline = true;
+                    targetPos = _target.position;
+                }
+                else
+                {
+                    _targetinline = false;
+                }
+            }
+            else
+            {
+                _targetinline = false;
+            }
+        }
+        else
+        {
+            if(_targetinline)
+            {
+               _tower.transform.rotation = Quaternion.LookRotation(targetPos - _firepoint.position);
+            }
         }
 
         RotateWeapon();
@@ -121,6 +152,17 @@ public class Weapon : Photon.MonoBehaviour {
 
         isCanShoot = false;
 
+
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+
+
+        stream.Serialize(ref isCanShoot);
+        stream.Serialize(ref _slot._isCanUse);
+        stream.Serialize(ref _targetinline);
+        stream.Serialize(ref targetPos);
 
     }
 

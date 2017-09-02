@@ -27,8 +27,7 @@ public class ShipStat : Photon.MonoBehaviour
 
     private void Start()
     {
-        _hullCurrentHP = _hullMaximumHP;
-        _armorCurrentHP = _armorMaximumHP;
+        RestoreStat();
     }
 
     public float GetSpeed()
@@ -68,18 +67,12 @@ public class ShipStat : Photon.MonoBehaviour
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        float Hp = _hullCurrentHP;
-
-        if (stream.isWriting)
-        {
-            // We own this player: send the others our data
-            stream.SendNext(Hp);
-
-        }
-        else
-        {
-            _hullCurrentHP = (float)stream.ReceiveNext();
-        }
+        stream.Serialize(ref _hullCurrentHP);
     }
 
+    public void RestoreStat()
+    {
+        _hullCurrentHP = _hullMaximumHP;
+        _armorCurrentHP = _armorMaximumHP;
+    }
 }

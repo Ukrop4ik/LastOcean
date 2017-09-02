@@ -10,7 +10,7 @@ public class NetworkManager : Photon.MonoBehaviour {
 
 
     public GameObject playership;
-    [SerializeField] List<GameObject> spawnpoints = new List<GameObject>();
+    [SerializeField] private static List<GameObject> spawnpoints = new List<GameObject>();
     // Use this for initialization
     void Start () {
 
@@ -38,10 +38,14 @@ public class NetworkManager : Photon.MonoBehaviour {
         Transform pos = spawnpoints[Random.Range(0, spawnpoints.Count)].transform;
         GameObject ship = PhotonNetwork.Instantiate(Player.Instance().GetShipDecorator().GetShipId(), pos.position , pos.rotation, 0);
         ship.name = PhotonNetwork.player.NickName + "_PlayerShip";
-
-
         ship.GetComponent<ShipMain>().CreateFromServer(Player.Instance().GetPlayerShipProp());
     }
+
+    public static List<GameObject> GetPoints()
+    {
+        return spawnpoints;
+    }
+
 
     public class ItemList
     {

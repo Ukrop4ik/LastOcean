@@ -161,21 +161,21 @@ public class ShipMain : Photon.MonoBehaviour {
     {
         Stats.SetHullValue(Stats.GetHullValue() - value);
         if (Stats.GetHullValue() <= 0)
-            Dead();
+        {
+            Dead(this);         
+        }
     }
-    private void Dead()
+    private void Dead(ShipMain ship)
     {
-        _shipManager.RemoveShip(this);
+        List<GameObject> points = NetworkManager.GetPoints();
 
+        transform.position = points[UnityEngine.Random.Range(0, points.Count)].transform.position;
 
-
-        Destroy(gameObject);
-    }
-    
-
-
+        Stats.RestoreStat();
 
     }
+
+}
 
 
 

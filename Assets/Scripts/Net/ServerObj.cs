@@ -12,7 +12,8 @@ public class ServerObj : Photon.MonoBehaviour {
     {
         All,
         Position,
-        Rotation
+        Rotation,
+        ForceRotation
     }
 
     [SerializeField]
@@ -61,6 +62,10 @@ public class ServerObj : Photon.MonoBehaviour {
                 break;
             case SyncType.Rotation:
                 angleY = Mathf.LerpAngle(transform.rotation.eulerAngles.y, new_state._rot.eulerAngles.y, Time.deltaTime);
+                transform.rotation = Quaternion.Euler(0, angleY, 0);
+                break;
+            case SyncType.ForceRotation:
+                angleY = Mathf.LerpAngle(transform.rotation.eulerAngles.y, new_state._rot.eulerAngles.y, Time.deltaTime*0.5f);
                 transform.rotation = Quaternion.Euler(0, angleY, 0);
                 break;
         }

@@ -6,10 +6,13 @@ public class DamageCollider : MonoBehaviour {
 
     [SerializeField]
     private ShipMain _ship;
+    [SerializeField]
+    private PhotonView view;
 
     private void Start()
     {
         _ship = transform.root.GetComponent<ShipMain>();
+        view = _ship.gameObject.GetComponent<PhotonView>();
     }
 
     private void Update()
@@ -19,6 +22,8 @@ public class DamageCollider : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!view.isMine) return;
+
         Bullet _bullet;
 
         if (other.gameObject.tag == "Bullet")
