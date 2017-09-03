@@ -46,4 +46,8 @@ public class Bullet : MonoBehaviour {
     {
         _destroyTime = time;
     }
+    public void SetDamage(float value)
+    {
+        _damage = value;
+    }
 }

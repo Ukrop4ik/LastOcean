@@ -24,10 +24,17 @@ public class ShipStat : Photon.MonoBehaviour
     private float _armorMaximumHP;
     [SerializeField]
     private float _armorCurrentHP;
+    [SerializeField]
+    private float _reversSpeed;
 
     private void Start()
     {
         RestoreStat();
+    }
+
+    public float GetReversSpeed()
+    {
+        return _reversSpeed;
     }
 
     public float GetSpeed()

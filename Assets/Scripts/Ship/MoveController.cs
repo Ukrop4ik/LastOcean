@@ -17,13 +17,18 @@ public class MoveController : Photon.MonoBehaviour {
     [Range(0.001f, 1.0f)]
     private float _enginePowerBuffer;
     private float _rotateBuffer;
-  
+    Vector3 newDirection;
+    Vector3 oldDirection;
+    Vector3 forceDirection;
+    bool _isRevers = false;
 
     public void SetParameters(ShipMain ship, Rigidbody rBody, float drag)
     {
         _ship = ship;
         _rgBody = rBody;
         _rgBody.angularDrag = drag / 2f;
+        oldDirection = transform.forward;
+        forceDirection = transform.forward;
     }
 
     private void FixedUpdate()
@@ -39,12 +44,14 @@ public class MoveController : Photon.MonoBehaviour {
             MoveForward();
         }
 
+        if(_isRevers)
+        {
+            _rgBody.AddForce(-transform.forward * _ship.GetStats().GetReversSpeed());
+        }
+
         RotationKeyboard();
 
-        if (_ship.transform.rotation.x != 0 || _ship.transform.rotation.z != 0)
-        {
-            //_ship.transform.Rotate(0, _ship.transform.rotation.y, 0);
-        }
+        forceDirection = Vector3.Lerp(forceDirection, newDirection, Time.deltaTime * 0.5f);
     }
 
     private void MoveForward()
@@ -53,7 +60,13 @@ public class MoveController : Photon.MonoBehaviour {
 
         _speed = Mathf.Lerp(_speed, _ship.GetStats().GetSpeed() * _enginePowerBuffer, Time.deltaTime * _ship.GetStats().GetAcceleration());   
 
-        _rgBody.AddForce(transform.forward * _speed);
+        _rgBody.AddForce(forceDirection * _speed);
+    }
+
+    public void Revers(bool value)
+    {
+        _isRevers = value;
+
     }
 
     private void RotationKeyboard()
@@ -66,6 +79,7 @@ public class MoveController : Photon.MonoBehaviour {
         }
 
         transform.Rotate(0,h,0);
+        newDirection = transform.forward;
     }
 
     public void SetEnginPower(float power)

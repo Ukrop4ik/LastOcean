@@ -34,10 +34,12 @@ public class ShipMain : Photon.MonoBehaviour {
     private void Start()
     {
         Stats = gameObject.GetComponent<ShipStat>();
-        _photonView = gameObject.GetComponent<PhotonView>();
-        _shipData = new PlayerShipData(_shipId, new Dictionary<int, string>());
+        if (_onlineType != ShipOnlineType.Bot)
+            _photonView = gameObject.GetComponent<PhotonView>();
+        if (_onlineType != ShipOnlineType.Bot)
+            _shipData = new PlayerShipData(_shipId, new Dictionary<int, string>());
 
-        if (photonView.isMine)
+        if (photonView.isMine && _onlineType != ShipOnlineType.Bot)
         {
             this.photonView.RPC("CreateFromServer", PhotonTargets.OthersBuffered, photonView.name, PhotonNetwork.player.CustomProperties);
             _movecontroller = gameObject.GetComponent<MoveController>();
@@ -45,10 +47,11 @@ public class ShipMain : Photon.MonoBehaviour {
         }
         else
         {
-            _onlineType = ShipOnlineType.Opponent;                
+            if(_onlineType != ShipOnlineType.Bot)
+                 _onlineType = ShipOnlineType.Opponent;                
         }
         _shipManager = GameObject.FindGameObjectWithTag("Context").GetComponent<ShipManager>();
-        _shipManager.AddShip(this);
+        ShipManager.AddShip(this);
     } 
 
     [PunRPC]

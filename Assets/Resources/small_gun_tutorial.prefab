@@ -389,7 +389,7 @@ MonoBehaviour:
   _MinMaxAngle_Y: 90
   _angularSpeed: 10
   _target: {fileID: 0}
-  _reloadTime: 0.1
+  _reloadTime: 0.2
   _MaxDist: 20
   _bullet: {fileID: 1857471814301246, guid: ca06a3a3caa25bc4784a4d4914c393e3, type: 2}
   _bulletSpeed: 0.3
@@ -397,5 +397,9 @@ MonoBehaviour:
   _tower: {fileID: 1112977754455466}
   isCanShoot: 0
   _damage: 2
-  _reloadspeed: 0
-  _ammocountMax: 0
+  _reloadspeed: 5
+  _ammocountMax: 20
+  _ammocount: 0
+  _targetinline: 0
+  _isReloading: 0
+  _netPlayerShoot: 0

@@ -1549,7 +1549,7 @@ MonoBehaviour:
     SynchronizeEnabled: 1
     InterpolateOption: 2
     InterpolateRotateTowardsSpeed: 360
-    InterpolateLerpSpeed: 20
+    InterpolateLerpSpeed: 30
   m_ScaleModel:
     SynchronizeEnabled: 0
     InterpolateOption: 0
@@ -1586,11 +1586,12 @@ MonoBehaviour:
   _maximumSpeed: 8
   _accelerationMax: 1
   _accelerationCur: 0
-  _angularspeedMax: 10
+  _angularspeedMax: 15
   _hullMaximumHP: 250
   _hullCurrentHP: 0
   _armorMaximumHP: 0
   _armorCurrentHP: 0
+  _reversSpeed: 4
 --- !u!135 &135115857595770598
 SphereCollider:
   m_ObjectHideFlags: 1
