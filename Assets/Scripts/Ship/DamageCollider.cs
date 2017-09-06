@@ -39,6 +39,7 @@ public class DamageCollider : MonoBehaviour {
                 _bullet.SetTime(0.5f);
                 _bullet.SetDamage(0f);
                 _bullet.gameObject.tag = "Trash";
+                _ship.Lastdamageship = _bullet._ShootShip;
             }
 
            

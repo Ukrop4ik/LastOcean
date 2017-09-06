@@ -113,7 +113,7 @@ public class Inventory : MonoBehaviour {
                 items.Add(new PlayerDB.ItemData(item.ID, item.Count));
             }
 
-            Player.Instance().Data.SaveData(items);
+            Player.Instance().Data.SaveData(items, Player.Instance().NickName);
         }
     }
 
@@ -121,6 +121,11 @@ public class Inventory : MonoBehaviour {
     public void LoadFromPlayerData()
     {
         List<PlayerDB.ItemData> items = Player.Instance().Data.LoadInventoryItems();
+
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            Destroy(transform.GetChild(0).gameObject);
+        }
 
         foreach(PlayerDB.ItemData item in items)
         {

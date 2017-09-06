@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+    private static int Gold = 0;
+    public string NickName;
+
     private static Player instance;
     public static Player Instance() { return instance; }
 
@@ -23,9 +26,20 @@ public class Player : MonoBehaviour {
         prop = _prop;
     }
 
+    public static int GetPlayerGold()
+    {
+        return Gold;
+    }
+
+    public static void SetPlayerGold(int value)
+    {
+        Gold += value;
+    }
+
     private void Awake()
     {
         instance = this;
+        NickName = PlayerPrefs.GetString("NickName");
     }
     private void Start()
     {

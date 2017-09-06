@@ -14,9 +14,6 @@ public class NetworkManager : Photon.MonoBehaviour {
     // Use this for initialization
     void Start () {
 
- 
-        PhotonNetwork.playerName = Random.Range(0, 555665665).ToString();
-
         AddSpaunPoints();
 
     }

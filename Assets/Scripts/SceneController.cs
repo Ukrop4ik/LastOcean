@@ -12,14 +12,30 @@ public class SceneController : MonoBehaviour {
     [SerializeField]
     private UIManager UI;
 
+    private static SceneController instance;
+    public static SceneController Instance() { return instance; }
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    private void Start()
+    {
+       
+    }
     public void LoadScene(string name)
     {
         foreach(SceneDate date in scenes)
         {
             if (date.SceneName == name)
             {
-                PhotonNetwork.JoinOrCreateRoom(name, new RoomOptions() { MaxPlayers = 10 }, null);
+                if (date.Type == SceneType.Battle)
+                    PhotonNetwork.JoinOrCreateRoom(name, new RoomOptions() { MaxPlayers = 10 }, null);
+                else
+                    PhotonNetwork.LeaveRoom();
+                    PhotonNetwork.JoinLobby();
+
                 SceneManager.LoadScene(name);
                 UI.SelectActiveHUD(date.Type);
                 return;

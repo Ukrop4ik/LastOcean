@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
@@ -18,6 +19,7 @@ public class UIManager : MonoBehaviour {
     {
         _netStatusText = GameObject.Find("NetworkStatusText").GetComponent<Text>();
         StartCoroutine(UpdateUI());
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void SelectActiveHUD(SceneType type)

@@ -8,9 +8,17 @@ using System.IO;
 public class PlayerDB : MonoBehaviour {
 
     private JsonData _data;
-
+    public string NickName;
     [SerializeField]
     private List<ItemData> _inventoryitemdata = new List<ItemData>();
+
+    private static PlayerDB instance;
+    public static PlayerDB Instance() { return instance; }
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
@@ -36,35 +44,23 @@ public class PlayerDB : MonoBehaviour {
     }
 
     [ContextMenu("SaveData")]
-    public void SaveData(List<ItemData> items)
+    public void SaveData(List<ItemData> items, string NickName)
     {
-        PlayerData PD = new PlayerData("Nick", items);
-        File.WriteAllText(Application.persistentDataPath + "/" + PD.PlayerName + ".json", JsonMapper.ToJson(PD));
+        PlayerData PD = new PlayerData(NickName, items);
+        File.WriteAllText(Application.persistentDataPath + "/" + Player.Instance().NickName + ".prf", JsonMapper.ToJson(PD));
         OpenProfileFolder();
     }
 
     public JsonData LoadData()
     {
 
-        if(File.Exists(Application.persistentDataPath + "/" + "Nick" + ".json"))
+        if (File.Exists(Application.persistentDataPath + "/" + Player.Instance().NickName + ".prf"))
         {
-            string data = File.ReadAllText(Application.persistentDataPath + "/" + "Nick" + ".json");
+            string data = File.ReadAllText(Application.persistentDataPath + "/" + Player.Instance().NickName + ".prf");
             return JsonMapper.ToObject(data);
         }
         else
-        {
-            List<ItemData> startItems = new List<ItemData>();
-            startItems.Add(new ItemData("small_gun_tutorial", 500));
-            startItems.Add(new ItemData("small_gun_art", 500));
-
-            PlayerData _PD = new PlayerData("Nick", startItems);
-            File.WriteAllText(Application.persistentDataPath + "/" + _PD.PlayerName + ".json", JsonMapper.ToJson(_PD));
-
-            string data = File.ReadAllText(Application.persistentDataPath + "/" + "Nick" + ".json");
-            return JsonMapper.ToObject(data);
-        }
-
-
+            return null;
     }
 
     public class PlayerData

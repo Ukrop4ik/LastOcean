@@ -41,6 +41,7 @@ public class ShipManager : MonoBehaviour {
             if(ship.GetOnlineType() != ShipOnlineType.Player)
             {
                 _HUD.CreateNavigationArrow(ship.transform);
+                _HUD.CreateTargetText(ship, ship.transform);
             }
             _ships.Add(ship);
             _shipcount++;

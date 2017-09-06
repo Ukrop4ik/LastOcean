@@ -15,6 +15,9 @@ public class HUD : Photon.MonoBehaviour {
     [SerializeField]
     private GameObject _navigationArrow;
     private int _navigationArrowCount = 0;
+    [SerializeField]
+    private GameObject _targetText;
+
 
     [System.Serializable]
     public struct WeaponsOnSids
@@ -39,6 +42,11 @@ public class HUD : Photon.MonoBehaviour {
     [SerializeField]
     private Image _hpslider;
     [SerializeField]
+    private GameObject _enemyShipStatusPanel;
+    [SerializeField]
+    private Image _hpsliderEnemy;
+
+    [SerializeField]
     private Text consoletext;
     private ShipManager _shipManager;
     [SerializeField]
@@ -47,6 +55,8 @@ public class HUD : Photon.MonoBehaviour {
     private Scrollbar _engineScrollbar;
     private MoveController _moveController;
     private float _shipCountBuffer;
+
+    private ShipMain _selectedShip;
 
     private bool _isRevers = false;
 
@@ -57,6 +67,16 @@ public class HUD : Photon.MonoBehaviour {
 
     public LayerMask layerMask;
 
+    private void ClearAll()
+    {
+        weaponsOnSides.back_weapons.Clear();
+        weaponsOnSides.front_weapons.Clear();
+        weaponsOnSides.left_weapons.Clear();
+        weaponsOnSides.rith_weapons.Clear();
+        _selectedShip = null;
+        _shipStat = null;
+        consolestring = "";
+    }
 
     private void Start()
     {
@@ -81,6 +101,7 @@ public class HUD : Photon.MonoBehaviour {
     private void OnDisable()
     {
         _engineScrollbar.onValueChanged.RemoveListener(delegate { EngineValueChange(); });
+        ClearAll();
     }
 
     private void EngineValueChange()
@@ -91,6 +112,26 @@ public class HUD : Photon.MonoBehaviour {
         {
             Revers();
         }
+    }
+
+    public void CreateTargetText(ShipMain _ship, Transform target)
+    {
+        GameObject tt = Instantiate(_targetText, Vector3.zero, Quaternion.identity) as GameObject;
+        tt.transform.SetParent(this.transform);
+        tt.transform.localScale = Vector3.one;
+
+        switch(_ship.GetOnlineType())
+        {
+            case ShipOnlineType.Bot:
+                tt.GetComponent<TargetText>().CreateText("BOT", target);
+                break;
+            case ShipOnlineType.Opponent:
+                tt.GetComponent<TargetText>().CreateText(_ship.gameObject.name, target);
+                break;
+            default:
+                break;
+        }  
+
     }
 
     public void CreateNavigationArrow(Transform target)
@@ -130,6 +171,7 @@ public class HUD : Photon.MonoBehaviour {
             if (Physics.Raycast(ray, out hit, 1000f, layerMask))
             {
                 _playerShip.SetTarget(hit.collider.gameObject.GetComponent<Select>().GetSelectedShip().transform);
+                _selectedShip = hit.collider.gameObject.GetComponent<Select>().GetSelectedShip();
             }
         }
 
@@ -209,6 +251,16 @@ public class HUD : Photon.MonoBehaviour {
                     if (weponInd.weapon._ammocount != weponInd.bulletisactive)
                         weponInd.EnableBullet(weponInd.weapon._ammocount);
                 }
+        }
+
+        if(_playerShip.GetTarget() && _selectedShip)
+        {
+            _enemyShipStatusPanel.SetActive(true);
+            _hpsliderEnemy.fillAmount = _selectedShip.GetStats().GetHullValue() / _selectedShip.GetStats().GetHullValue(true);
+        }
+        else
+        {
+            _enemyShipStatusPanel.SetActive(false);
         }
 
         StartCoroutine(UpdateShipStatus());

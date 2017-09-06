@@ -30,6 +30,7 @@ public class ShipMain : Photon.MonoBehaviour {
     public string data_str = "";
     public string playerName = "";
     public bool OpponentReady = false;
+    public ShipMain Lastdamageship;
 
     private void Start()
     {
@@ -41,22 +42,39 @@ public class ShipMain : Photon.MonoBehaviour {
 
         if (photonView.isMine && _onlineType != ShipOnlineType.Bot)
         {
-            this.photonView.RPC("CreateFromServer", PhotonTargets.OthersBuffered, photonView.name, PhotonNetwork.player.CustomProperties);
+            this.photonView.RPC("CreateFromServer", PhotonTargets.OthersBuffered, PhotonNetwork.player.NickName, PhotonNetwork.player.CustomProperties);
             _movecontroller = gameObject.GetComponent<MoveController>();
             _movecontroller.SetParameters(this, GetRigidbody(), Stats.GetAngularSpeed());
+            MissionManager.Instance().SetPlayer(PhotonNetwork.player.ID, PhotonNetwork.player.NickName);
         }
         else
         {
             if(_onlineType != ShipOnlineType.Bot)
-                 _onlineType = ShipOnlineType.Opponent;                
+            {
+                _onlineType = ShipOnlineType.Opponent;             
+            }
+                              
         }
         _shipManager = GameObject.FindGameObjectWithTag("Context").GetComponent<ShipManager>();
-        ShipManager.AddShip(this);
+
+        if(_onlineType == ShipOnlineType.Bot)
+        {
+            MissionManager.Instance().AddShip(this);
+            ShipManager.AddShip(this);
+        }
+        else
+        {
+            ShipManager.AddShip(this);
+        }
+
     } 
+
 
     [PunRPC]
     public void CreateFromServer(string player, ExitGames.Client.Photon.Hashtable shipdata)
     {
+
+        playerName = player;
 
         foreach(DictionaryEntry dict in shipdata)
         {
@@ -64,7 +82,6 @@ public class ShipMain : Photon.MonoBehaviour {
 
             string value = dict.Key.ToString();
             Debug.Log("Value : " + value);
-
             if(value.Contains("slot"))
             {
                 int slotid = 0;
@@ -125,6 +142,10 @@ public class ShipMain : Photon.MonoBehaviour {
                 slot.GetWeapon().SetTarget(target);
         }
     }
+    public Transform GetTarget()
+    {
+        return _target;
+    }
     public MoveController GetMoveController()
     {
         return _movecontroller;
@@ -170,11 +191,22 @@ public class ShipMain : Photon.MonoBehaviour {
     }
     private void Dead(ShipMain ship)
     {
+        if(_onlineType == ShipOnlineType.Bot)
+        {
+            MissionManager.Instance().RemoveShip(this);
+            Destroy(gameObject);
+        }
+
         List<GameObject> points = NetworkManager.GetPoints();
 
         transform.position = points[UnityEngine.Random.Range(0, points.Count)].transform.position;
 
         Stats.RestoreStat();
+
+        if(Lastdamageship.GetOnlineType() == ShipOnlineType.Player)
+        {
+            Player.SetPlayerGold(100);
+        }
 
     }
 
