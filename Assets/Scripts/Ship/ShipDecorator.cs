@@ -9,11 +9,16 @@ public class ShipDecorator : MonoBehaviour {
     private string _shipId;
     [SerializeField]
     private List<ShipSlot> slots = new List<ShipSlot>();
-
+    [SerializeField]
+    private List<Transform> slots_transform = new List<Transform>();
 
     private void Start()
     {
         Player.Instance().SetShipDecorator(this);    
+    }
+    public void DestroyDecorator()
+    {
+        Destroy(this.gameObject);
     }
 
     public string GetShipId()
@@ -29,6 +34,18 @@ public class ShipDecorator : MonoBehaviour {
                 slot.IteminslotId = itemId;
             }
         }
+    }
+
+    public Transform GetSlotFromId(int id)
+    {
+        return slots_transform[id-1];
+    }
+
+    public void CreateItemInSlot(Transform slot, string itemId)
+    {
+        GameObject itemObj = Instantiate(Resources.Load("Items/" + itemId) as GameObject, slot);
+        itemObj.name = itemId;
+        itemObj.transform.localScale = Vector3.one;
     }
     public void RemoveFromSlot(int slotId)
     {
@@ -54,7 +71,7 @@ public class ShipDecorator : MonoBehaviour {
     }
 
     [System.Serializable]
-    private class ShipSlot
+    public class ShipSlot
     {
         public int SlotId;
         public string IteminslotId;

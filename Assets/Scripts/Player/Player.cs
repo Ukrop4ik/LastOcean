@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    [SerializeField]
-    private int Gold = 0;
+
     public string NickName;
 
     private static Player instance;
@@ -27,15 +26,7 @@ public class Player : MonoBehaviour {
         prop = _prop;
     }
 
-    public int GetPlayerGold()
-    {
-        return Gold;
-    }
 
-    public void SetPlayerGold(int value)
-    {
-        Gold += value;
-    }
 
     private void Awake()
     {

@@ -39,7 +39,7 @@ public class SceneController : MonoBehaviour {
 
                     PhotonNetwork.JoinLobby();
                 }
-
+                PlayerDB.Instance().Save();
                 SceneManager.LoadScene(name);
                 UI.SelectActiveHUD(date.Type);
                 return;

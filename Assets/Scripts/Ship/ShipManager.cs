@@ -21,6 +21,12 @@ public class ShipManager : MonoBehaviour {
        
     }
 
+
+    public static List<ShipMain> GetAllShips()
+    {
+        return _ships;
+    }
+
     public static List<ShipMain> GetOtherShips()
     {
         List<ShipMain> ships = new List<ShipMain>();

@@ -34,7 +34,6 @@ public class DamageCollider : MonoBehaviour {
 
             if (_ship != _bullet._ShootShip)
             {
-                Debug.Log("HIT!" + transform.root.gameObject.name);
                 _ship.SetDamage(_bullet._damage);
                 _bullet.SetTime(0.5f);
                 _bullet.SetDamage(0f);

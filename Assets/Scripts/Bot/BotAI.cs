@@ -6,6 +6,19 @@ using MoreLinq;
 
 public class BotAI : MonoBehaviour {
 
+    public enum AiLogick
+    {
+        AttackPlayer,
+        AttackAll,
+        DefencePlayer
+    }
+    public enum BotState
+    {
+        Idle
+    }
+    public AiLogick Logick;
+    public BotState State;
+
     [SerializeField]
     private ShipMain _target;
     private ShipMain _ship;
@@ -17,6 +30,8 @@ public class BotAI : MonoBehaviour {
     private List<Weapon> _myWeapons = new List<Weapon>();
     private bool enable = false;
     BotTargetData closesttarget;
+    [SerializeField]
+    private float _agroRange;
 
     private void Start()
     {
@@ -36,6 +51,8 @@ public class BotAI : MonoBehaviour {
             
             StartCoroutine(BotUpdateStatus());
 
+            if(Logick == AiLogick.DefencePlayer)
+              _target = ShipManager.GetPlayerShip();
         }
     }
 
@@ -44,12 +61,47 @@ public class BotAI : MonoBehaviour {
         if (!enable) return;
         if (!_target) return;
 
+        
+        switch(Logick)
+        {
+            case AiLogick.AttackPlayer:
+                if(CheckAgroRange())
+                {
+                    Rotation();
+                    Move();
+                }
+                break;
+            case AiLogick.AttackAll:
+                {
+                    Rotation();
+                    Move();
+                }
+                break;
+            case AiLogick.DefencePlayer:
+                {
+                    Rotation();
+                    Move();
+                }
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+    private bool CheckAgroRange()
+    {
+        return closesttarget.Dist < _agroRange;
+    }
+
+    private void Rotation()
+    {
         float angle = Vector3.Angle(transform.transform.forward, _target.transform.position - transform.transform.position);
         Vector3 croos = Vector3.Cross(transform.transform.forward, _target.transform.position - transform.transform.position);
 
         if (croos.y > 0)
             angle = -angle;
-
 
         if (closesttarget.Dist < 25)
         {
@@ -63,45 +115,117 @@ public class BotAI : MonoBehaviour {
         {
             _movecontroller.RotationKeyboard(angle > 0 ? -1 : 1);
         }
- 
-
-
-        if(closesttarget.Dist > 40)
+    }
+    private void Move()
+    {
+        if (closesttarget.Dist > 40)
             _movecontroller.SetEnginPower(1);
         if (closesttarget.Dist < 30)
             _movecontroller.SetEnginPower(1f);
         if (closesttarget.Dist < 15)
             _movecontroller.SetEnginPower(0.5f);
-
-       //Debug.Log(angle);
     }
-
     private IEnumerator BotUpdateStatus()
     {
         yield return new WaitForSeconds(0.5f);
 
         _targets.Clear();
 
-        if (ShipManager.GetPlayersShips().Count > 0)
+
+        switch (Logick)
         {
-            foreach (ShipMain ship in ShipManager.GetPlayersShips())
-            {
-                if (ship)
-                    _targets.Add(new BotTargetData(ship, Vector3.Distance(this.transform.position, ship.transform.position)));
-            }
-
-            if (_targets.Count > 0)
-            {
-
-                 closesttarget = _targets.MinBy(x => x.Dist);
-                _target = closesttarget.Ship;
-                _ship.SetTarget(_target.transform);
-                foreach (Weapon weapon in _myWeapons)
+            case AiLogick.AttackPlayer:
+                if (ShipManager.GetPlayersShips().Count > 0)
                 {
-                    weapon.SetTarget(_target.transform);
+                    foreach (ShipMain ship in ShipManager.GetPlayersShips())
+                    {
+                        if (ship)
+                            _targets.Add(new BotTargetData(ship, Vector3.Distance(this.transform.position, ship.transform.position)));
+                    }
+
+                    if (_targets.Count > 0)
+                    {
+
+                        closesttarget = _targets.MinBy(x => x.Dist);
+                        _target = closesttarget.Ship;
+                        _ship.SetTarget(_target.transform);
+                        foreach (Weapon weapon in _myWeapons)
+                        {
+                            weapon.SetTarget(_target.transform);
+                        }
+                    }
                 }
-            }
+                break;
+            case AiLogick.AttackAll:
+                if (ShipManager.GetAllShips().Count > 0)
+                {
+                    foreach (ShipMain ship in ShipManager.GetAllShips())
+                    {
+                        if (ship == _ship) continue;
+
+                        if (ship)
+                            _targets.Add(new BotTargetData(ship, Vector3.Distance(this.transform.position, ship.transform.position)));
+                    }
+
+                    if (_targets.Count > 0)
+                    {
+
+                        closesttarget = _targets.MinBy(x => x.Dist);
+                        _target = closesttarget.Ship;
+                        _ship.SetTarget(_target.transform);
+                        foreach (Weapon weapon in _myWeapons)
+                        {
+                            weapon.SetTarget(_target.transform);
+                        }
+                    }
+                }
+                break;
+            case AiLogick.DefencePlayer:
+                if (ShipManager.GetAllShips().Count > 0)
+                {
+                    foreach (ShipMain ship in ShipManager.GetAllShips())
+                    {
+                        if (ship == _ship) continue;
+                        if (ship.GetOnlineType() == ShipOnlineType.Player) continue;
+
+                        if (ship)
+                            _targets.Add(new BotTargetData(ship, Vector3.Distance(this.transform.position, ship.transform.position)));
+                    }
+
+                    if (_targets.Count > 0)
+                    {
+
+                        closesttarget = _targets.MinBy(x => x.Dist);
+
+                        if(CheckAgroRange())
+                        {
+                            if (!_target) break;
+                            if (_target.GetOnlineType() != ShipOnlineType.Player)
+                            {
+                                _target = closesttarget.Ship;
+                                _ship.SetTarget(_target.transform);
+                            }
+                        }
+                        else
+                        {
+                            _target = ShipManager.GetPlayerShip();
+                        }
+
+                        foreach (Weapon weapon in _myWeapons)
+                        {   if (!_target) break;
+
+                            if(_target.GetOnlineType() == ShipOnlineType.Bot)
+                                 weapon.SetTarget(_target.transform);
+                        }
+                    }
+                }
+                break;
+
+            default:
+                break;
         }
+
+       
         StartCoroutine(BotUpdateStatus());
     }
 

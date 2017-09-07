@@ -14,6 +14,10 @@ public class CreatePlayer : MonoBehaviour {
     List<PlayerDB.ItemData> ItemData = new List<PlayerDB.ItemData>();
     [SerializeField]
     List<PlayerDB.Tasks> Tasks = new List<PlayerDB.Tasks>();
+    [SerializeField]
+    private List<PlayerDB.Resources> _resources = new List<PlayerDB.Resources>();
+    [SerializeField]
+    private List<PlayerDB.ShipData> _ships = new List<PlayerDB.ShipData>();
 
     [SerializeField]
     InputField inputName;
@@ -46,7 +50,7 @@ public class CreatePlayer : MonoBehaviour {
 
     public void SaveData(List<PlayerDB.ItemData> items, string NickName, List<PlayerDB.Tasks> tasks)
     {
-        Data = new PlayerDB.PlayerData(NickName, items, tasks);
+        Data = new PlayerDB.PlayerData(NickName, items, tasks, _resources, _ships);
         File.WriteAllText(Application.persistentDataPath + "/" + Data.PlayerName + ".prf", JsonMapper.ToJson(Data));
         File.WriteAllText(Application.persistentDataPath + "/" + "Profile" + ".prf", "NewPlayerProfileData: " + Data.PlayerName);
         PlayerPrefs.SetString("NickName", NickName);

@@ -44,6 +44,8 @@ public class NetworkManager : Photon.MonoBehaviour {
         GameObject ship = PhotonNetwork.Instantiate(Player.Instance().GetShipDecorator().GetShipId(), pos.position , pos.rotation, 0);
         ship.name = PhotonNetwork.player.NickName + "_PlayerShip";
         ship.GetComponent<ShipMain>().CreateFromServer(Player.Instance().GetPlayerShipProp());
+
+        Player.Instance().GetShipDecorator().DestroyDecorator();
     }
 
     public static List<GameObject> GetPoints()

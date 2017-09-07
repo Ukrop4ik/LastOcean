@@ -840,6 +840,16 @@ MonoBehaviour:
   Tasks:
   - ID: Test
     Time: 50000
+  _resources:
+  - Id: Gold
+    Count: 1000
+  _ships:
+  - ID: TestShip_scout
+    Slots:
+    - SlotId: 1
+      IteminslotId: small_gun_tutorial
+    - SlotId: 2
+      IteminslotId: small_gun_tutorial
   inputName: {fileID: 3600043}
   inputButton: {fileID: 681856032}
 --- !u!1 &2002275681

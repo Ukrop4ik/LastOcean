@@ -36,10 +36,17 @@ public class MissionManager : Photon.MonoBehaviour {
         
     }
 
+    public void AddGoldReward(int value)
+    {
+        goldReward += value;
+    }
+
     private void Start()
     {
+
         StartCoroutine(Check());
         StartCoroutine(Timer());
+    
     }
 
 
@@ -79,7 +86,7 @@ public class MissionManager : Photon.MonoBehaviour {
         {
             if (_bots.Count == 0)
             {
-                photonView.RPC("Win", PhotonTargets.AllBuffered);
+                photonView.RPC("Win", PhotonTargets.All);
                 StopCoroutine(Check());
             }
         }
@@ -91,8 +98,12 @@ public class MissionManager : Photon.MonoBehaviour {
     [PunRPC]
     private void Win()
     {
-        SceneController.Instance().LoadScene("MainMenu");
-        Player.Instance().SetPlayerGold(Player.Instance().GetPlayerGold() + goldReward);
+        if (photonView.isMine)
+        {
+            Debug.Log("Win!" + "GoldGet: " + goldReward + " allGold: " + PlayerDB.Instance().GetPlayerGold() + goldReward);
+            SceneController.Instance().LoadScene("MainMenu");
+            PlayerDB.Instance().SetPlayerGold(goldReward);
+        }
     }
 
     private IEnumerator Timer()

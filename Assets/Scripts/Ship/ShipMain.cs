@@ -216,7 +216,7 @@ public class ShipMain : Photon.MonoBehaviour {
         {
             if (Lastdamageship.GetOnlineType() == ShipOnlineType.Player)
             {
-                Player.Instance().SetPlayerGold(goldToHead);
+                MissionManager.Instance().AddGoldReward(goldToHead);
             }
         }
 

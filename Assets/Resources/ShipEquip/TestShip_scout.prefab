@@ -223,6 +223,9 @@ MonoBehaviour:
     IteminslotId: 
   - SlotId: 2
     IteminslotId: 
+  slots_transform:
+  - {fileID: 224451672497366184}
+  - {fileID: 224855747552663424}
 --- !u!114 &114590317131189974
 MonoBehaviour:
   m_ObjectHideFlags: 1
