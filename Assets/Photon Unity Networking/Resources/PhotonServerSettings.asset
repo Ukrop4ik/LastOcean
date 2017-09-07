@@ -43,4 +43,5 @@ MonoBehaviour:
   - SetPlayer
   - Set
   - CreateHud
+  - Win
   DisableAutoOpenWizard: 1

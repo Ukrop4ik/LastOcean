@@ -16,6 +16,14 @@ public class NetworkManager : Photon.MonoBehaviour {
 
         AddSpaunPoints();
 
+        if(PhotonNetwork.offlineMode)
+        {
+            Transform pos = spawnpoints[Random.Range(0, spawnpoints.Count)].transform;
+            GameObject ship = Instantiate(Resources.Load(Player.Instance().GetShipDecorator().GetShipId()) as GameObject, pos.position, pos.rotation);
+            ship.name = PhotonNetwork.player.NickName + "_PlayerShip";
+            ship.GetComponent<ShipMain>().CreateFromServer(Player.Instance().GetPlayerShipProp());
+        }
+
     }
 
     public void AddSpaunPoints()

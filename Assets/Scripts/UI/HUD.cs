@@ -45,7 +45,8 @@ public class HUD : Photon.MonoBehaviour {
     private GameObject _enemyShipStatusPanel;
     [SerializeField]
     private Image _hpsliderEnemy;
-
+    [SerializeField]
+    private Text _missionTimer;
     [SerializeField]
     private Text consoletext;
     private ShipManager _shipManager;
@@ -66,6 +67,7 @@ public class HUD : Photon.MonoBehaviour {
 
 
     public LayerMask layerMask;
+
 
     private void ClearAll()
     {
@@ -114,23 +116,28 @@ public class HUD : Photon.MonoBehaviour {
         }
     }
 
+    public void SetMissionTimer(int value)
+    {
+        int _timer = value;
+        string minuts = "0";
+        string seconds = "0";
+
+        if (_timer <= 0) return;
+
+        if (_timer / 60 > 0)
+            minuts = (_timer / 60).ToString("00");
+
+        seconds = (_timer % 60).ToString("00");
+
+        _missionTimer.text = minuts + " : " + seconds;
+    }
+
     public void CreateTargetText(ShipMain _ship, Transform target)
     {
         GameObject tt = Instantiate(_targetText, Vector3.zero, Quaternion.identity) as GameObject;
         tt.transform.SetParent(this.transform);
         tt.transform.localScale = Vector3.one;
-
-        switch(_ship.GetOnlineType())
-        {
-            case ShipOnlineType.Bot:
-                tt.GetComponent<TargetText>().CreateText("BOT", target);
-                break;
-            case ShipOnlineType.Opponent:
-                tt.GetComponent<TargetText>().CreateText(_ship.gameObject.name, target);
-                break;
-            default:
-                break;
-        }  
+        tt.GetComponent<TargetText>().CreateText(_ship);
 
     }
 

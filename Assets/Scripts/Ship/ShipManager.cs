@@ -67,4 +67,16 @@ public class ShipManager : MonoBehaviour {
         }
         return _ship;
     }
+    public static List<ShipMain> GetPlayersShips()
+    {
+        List<ShipMain> ships = new List<ShipMain>();
+
+        foreach (ShipMain ship in _ships)
+        {
+            if (ship.GetOnlineType() != ShipOnlineType.Bot)
+                ships.Add(ship);
+        }
+
+        return ships;
+    }
 }

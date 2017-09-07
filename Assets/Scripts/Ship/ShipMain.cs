@@ -21,6 +21,7 @@ public class ShipMain : Photon.MonoBehaviour {
     private Quaternion correctPlayerRot;
     private double _LastNetworkDataTime = 0f;
     public bool shipReady = false;
+    [SerializeField]
     PhotonView _photonView;
     public JsonData jsonData;
     [SerializeField]
@@ -31,20 +32,23 @@ public class ShipMain : Photon.MonoBehaviour {
     public string playerName = "";
     public bool OpponentReady = false;
     public ShipMain Lastdamageship;
-
+    [SerializeField]
+    private int goldToHead;
     private void Start()
     {
         Stats = gameObject.GetComponent<ShipStat>();
-        if (_onlineType != ShipOnlineType.Bot)
-            _photonView = gameObject.GetComponent<PhotonView>();
+        _movecontroller = gameObject.GetComponent<MoveController>();
+        _movecontroller.SetParameters(this, GetRigidbody(), Stats.GetAngularSpeed());
+        _photonView = gameObject.GetComponent<PhotonView>();
         if (_onlineType != ShipOnlineType.Bot)
             _shipData = new PlayerShipData(_shipId, new Dictionary<int, string>());
 
         if (photonView.isMine && _onlineType != ShipOnlineType.Bot)
         {
-            this.photonView.RPC("CreateFromServer", PhotonTargets.OthersBuffered, PhotonNetwork.player.NickName, PhotonNetwork.player.CustomProperties);
-            _movecontroller = gameObject.GetComponent<MoveController>();
-            _movecontroller.SetParameters(this, GetRigidbody(), Stats.GetAngularSpeed());
+            if(!PhotonNetwork.offlineMode)
+                 this.photonView.RPC("CreateFromServer", PhotonTargets.OthersBuffered, PhotonNetwork.player.NickName, PhotonNetwork.player.CustomProperties);
+
+
             MissionManager.Instance().SetPlayer(PhotonNetwork.player.ID, PhotonNetwork.player.NickName);
         }
         else
@@ -166,6 +170,12 @@ public class ShipMain : Photon.MonoBehaviour {
     {
         return gameObject.GetComponent<Rigidbody>();
     }
+
+    public List<Slot> GetSlots()
+    {
+        return _slots;
+    }
+
     public List<Weapon> GetWeaponOnSide(ShipSide side)
     {
         List<Weapon> weaponsinside = new List<Weapon>();
@@ -186,16 +196,15 @@ public class ShipMain : Photon.MonoBehaviour {
         Stats.SetHullValue(Stats.GetHullValue() - value);
         if (Stats.GetHullValue() <= 0)
         {
-            Dead(this);         
+            if (!PhotonNetwork.offlineMode)
+                _photonView.RPC("Dead", PhotonTargets.All);
+            else
+                Dead();
         }
     }
-    private void Dead(ShipMain ship)
+    [PunRPC]
+    private void Dead()
     {
-        if(_onlineType == ShipOnlineType.Bot)
-        {
-            MissionManager.Instance().RemoveShip(this);
-            Destroy(gameObject);
-        }
 
         List<GameObject> points = NetworkManager.GetPoints();
 
@@ -203,11 +212,19 @@ public class ShipMain : Photon.MonoBehaviour {
 
         Stats.RestoreStat();
 
-        if(Lastdamageship.GetOnlineType() == ShipOnlineType.Player)
+        if (photonView.isMine)
         {
-            Player.SetPlayerGold(100);
+            if (Lastdamageship.GetOnlineType() == ShipOnlineType.Player)
+            {
+                Player.Instance().SetPlayerGold(goldToHead);
+            }
         }
 
+        if (_onlineType == ShipOnlineType.Bot)
+        {
+            MissionManager.Instance().RemoveShip(this);
+            Destroy(gameObject);
+        }
     }
 
 }

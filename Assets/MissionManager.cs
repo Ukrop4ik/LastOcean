@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class MissionManager : Photon.MonoBehaviour {
 
+    public enum WinCondition
+    {
+        BotKill
+    }
+
+    public WinCondition winCondition;
+
+    [SerializeField]
+    private int goldReward;
+
+    [SerializeField]
+    private int _missionTime;
+    
+
     [SerializeField]
     private List<ShipMain> _bots = new List<ShipMain>();
 
@@ -25,6 +39,7 @@ public class MissionManager : Photon.MonoBehaviour {
     private void Start()
     {
         StartCoroutine(Check());
+        StartCoroutine(Timer());
     }
 
 
@@ -60,10 +75,39 @@ public class MissionManager : Photon.MonoBehaviour {
     {
         yield return new WaitForSeconds(1f);
 
-        if(_bots.Count == 0)
-             SceneController.Instance().LoadScene("MainMenu");
+        if(winCondition == WinCondition.BotKill)
+        {
+            if (_bots.Count == 0)
+            {
+                photonView.RPC("Win", PhotonTargets.AllBuffered);
+                StopCoroutine(Check());
+            }
+        }
+
 
         StartCoroutine(Check());
+    }
+
+    [PunRPC]
+    private void Win()
+    {
+        SceneController.Instance().LoadScene("MainMenu");
+        Player.Instance().SetPlayerGold(Player.Instance().GetPlayerGold() + goldReward);
+    }
+
+    private IEnumerator Timer()
+    {
+        yield return new WaitForSeconds(1f);
+
+        _missionTime--;
+        _HUD.SetMissionTimer(_missionTime);
+        if(_missionTime > 0)
+           StartCoroutine(Timer());
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        stream.Serialize(ref _missionTime);
     }
 
     [System.Serializable]

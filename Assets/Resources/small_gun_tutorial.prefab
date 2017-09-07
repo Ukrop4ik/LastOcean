@@ -392,11 +392,12 @@ MonoBehaviour:
   _reloadTime: 0.2
   _MaxDist: 20
   _bullet: {fileID: 1857471814301246, guid: ca06a3a3caa25bc4784a4d4914c393e3, type: 2}
-  _bulletSpeed: 0.3
+  _bulletSpeed: 0.5
   _firepoint: {fileID: 4193421032867326}
   _tower: {fileID: 1112977754455466}
   isCanShoot: 0
   _damage: 2
+  _photonView: {fileID: 0}
   _reloadspeed: 5
   _ammocountMax: 20
   _ammocount: 0

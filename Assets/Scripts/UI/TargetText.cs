@@ -12,21 +12,25 @@ public class TargetText : MonoBehaviour {
     [SerializeField]
     private bool _active = false;
 
-    public void CreateText(string _text, Transform target)
+    public void CreateText(ShipMain ship)
     {
 
-        text.text = _text;
-        Target = target;
+        text.text = ship.playerName;
+        Target = ship.transform;
         _active = true;
+
+        if (ship.GetOnlineType() == ShipOnlineType.Bot)
+            text.text = "BOT";
     }
 
-    void Update()
+    void LateUpdate()
     {
         if (!_active) return;
+
         if (!Target)
             Destroy(this.gameObject);
-
-        this.transform.position = Camera.main.WorldToScreenPoint(Target.position);
-
+        else
+            this.transform.position = Camera.main.WorldToScreenPoint(Target.position);
+            
     }
 }

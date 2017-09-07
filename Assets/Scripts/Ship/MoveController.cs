@@ -33,9 +33,9 @@ public class MoveController : Photon.MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if (!_ship) return;
-        if (!photonView.isMine) return;
-        if (_ship.GetOnlineType() != ShipOnlineType.Player) return;
+        //if (!_ship) return;
+        //if (!photonView.isMine) return;
+        //if (_ship.GetOnlineType() != ShipOnlineType.Player) return;
 
         _enginePowerBuffer = Mathf.Lerp(_enginePowerBuffer, _enginePower, Time.deltaTime);
 
@@ -49,7 +49,8 @@ public class MoveController : Photon.MonoBehaviour {
             _rgBody.AddForce(-transform.forward * _ship.GetStats().GetReversSpeed());
         }
 
-        RotationKeyboard();
+        if(_ship.GetOnlineType() == ShipOnlineType.Player)
+           RotationKeyboard(0);
 
         forceDirection = Vector3.Lerp(forceDirection, newDirection, Time.deltaTime * 0.5f);
     }
@@ -69,17 +70,29 @@ public class MoveController : Photon.MonoBehaviour {
 
     }
 
-    private void RotationKeyboard()
+    public void RotationKeyboard(float rotation)
     {
-        float h = CrossPlatformInputManager.GetAxis("Horizontal") * _ship.GetStats().GetAngularSpeed() * Time.deltaTime;
-
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        if (_ship.GetOnlineType() == ShipOnlineType.Player)
         {
-            h = Input.GetAxis("Horizontal") * _ship.GetStats().GetAngularSpeed() * Time.deltaTime;
+
+            float h = CrossPlatformInputManager.GetAxis("Horizontal") * _ship.GetStats().GetAngularSpeed() * Time.deltaTime;
+
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+            {
+                h = Input.GetAxis("Horizontal") * _ship.GetStats().GetAngularSpeed() * Time.deltaTime;
+            }
+
+            transform.Rotate(0, h, 0);
+            newDirection = transform.forward;
         }
 
-        transform.Rotate(0,h,0);
-        newDirection = transform.forward;
+
+        if (_ship.GetOnlineType() == ShipOnlineType.Bot)
+        {
+            float h = rotation * _ship.GetStats().GetAngularSpeed() * Time.deltaTime;
+            transform.Rotate(0, h, 0);
+            newDirection = transform.forward;
+        }
     }
 
     public void SetEnginPower(float power)

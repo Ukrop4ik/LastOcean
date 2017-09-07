@@ -49,7 +49,6 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if(_startparent.name == "Inventory")
         {
             transform.SetParent(transform.root);
-            _startparent.GetComponent<Inventory>().UpdateInventory();
         }
 
 
@@ -69,11 +68,15 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if (eventData.pointerEnter == null)
         {
             transform.SetParent(_startparent);
+            if (_startparent.name == "Inventory")
+                AddToStack(this, _startparent.GetComponent<Inventory>());
             return;
         }
         if(eventData.pointerEnter.tag != "DropField" && eventData.pointerEnter.name != "Inventory")
         {
             transform.SetParent(_startparent);
+            if(_startparent.name == "Inventory")
+                AddToStack(this, _startparent.GetComponent<Inventory>());
             return;
         }
 
@@ -120,7 +123,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void TakeFromStack(Item item)
     {
-        if (_count <= 1) return;
+        if (_count == 1) return;
         GameObject g = Instantiate(Resources.Load("Items/" + item._itemId) as GameObject);
         g.name = item._itemId;
         Item i = g.GetComponent<Item>();
@@ -132,19 +135,16 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if(_startparent.name == "Inventory")
         {
             Inventory inv = _startparent.GetComponent<Inventory>();
-            inv.UpdateInventory();
         }
 
     }
     public void AddToStack(Item item, Inventory inv)
     {
         if (_count < 1) return;
-
+        Debug.Log(item._itemId + "  " + inv.name);
         if(inv.IsInventoryContainsItem(_itemId))
         {
             inv.SetItemToStack(_itemId, _count, gameObject);
         }
-
-        inv.UpdateInventory();
     }
 }

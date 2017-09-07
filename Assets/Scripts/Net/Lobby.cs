@@ -14,6 +14,7 @@ public class Lobby : Photon.MonoBehaviour {
             PhotonNetwork.ConnectUsingSettings("0.1");
             PhotonNetwork.autoJoinLobby = true;
             PhotonNetwork.automaticallySyncScene = true;
+            PhotonNetwork.offlineMode = false;
         }
     }
 
@@ -22,5 +23,9 @@ public class Lobby : Photon.MonoBehaviour {
         PhotonNetwork.playerName = Player.Instance().NickName;
 
         Debug.Log("JoinLobby");
+
+       
     }
+
+
 }

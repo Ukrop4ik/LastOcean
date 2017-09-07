@@ -9,20 +9,20 @@ public class Inventory : MonoBehaviour {
 
     private void Start()
     {
-        UpdateInventory();
+
     }
 
     private void OnEnable()
     {
        Invoke("LoadFromPlayerData", 0.3f);
+       StartCoroutine(InvUpdateRoutine());
     }
     private void OnDesable()
     {
-
+        StopCoroutine(InvUpdateRoutine());
     }
     public bool IsInventoryContainsItem(string id)
     {
-        UpdateInventory();
         bool test = false;
         foreach (ItemStack stack in _items)
         {
@@ -40,7 +40,6 @@ public class Inventory : MonoBehaviour {
     {
         item.transform.SetParent(this.transform);
         item.transform.localScale = Vector3.one;
-        UpdateInventory();
     }
 
     public void SetItemToStack(string id, int value, GameObject obj)
@@ -58,17 +57,11 @@ public class Inventory : MonoBehaviour {
 
         }
         Destroy(obj);
-        UpdateInventory();
-    }
-
-    public void UpdateInventory()
-    {
-        StartCoroutine(InvUpdateRoutine());
     }
 
     private IEnumerator InvUpdateRoutine()
     {
-        yield return new WaitForSeconds(0.075f);
+        yield return new WaitForSeconds(0.5f);
 
         _items.Clear();
 
@@ -98,22 +91,24 @@ public class Inventory : MonoBehaviour {
                     _items.Add(new ItemStack(item.GetId(), item.GetCount()));
             }
         }
+
+        SaveToPlayerData();
+
+        StartCoroutine(InvUpdateRoutine());
     }
 
-    [ContextMenu("SaveToPlayer")]
     public void SaveToPlayerData()
     {
-        if(_items.Count > 0)
-        {
-            List<PlayerDB.ItemData> items = new List<PlayerDB.ItemData>();
-            
-            foreach(ItemStack item in _items)
-            {
-                Debug.Log("item: " + item.ID);
-                items.Add(new PlayerDB.ItemData(item.ID, item.Count));
-            }
+        PlayerDB.Instance().ClearItemData();
 
-            Player.Instance().Data.SaveData(items, Player.Instance().NickName);
+        if (_items.Count > 0)
+        {
+
+            foreach (ItemStack item in _items)
+            {
+                PlayerDB.Instance().AddItem(new PlayerDB.ItemData(item.ID, item.Count));
+
+            }
         }
     }
 
@@ -137,8 +132,6 @@ public class Inventory : MonoBehaviour {
             Item i = itemObj.GetComponent<Item>();
             i.SetCount(item.ItemCount);
         }
-
-        UpdateInventory();
     }
 
     [System.Serializable]

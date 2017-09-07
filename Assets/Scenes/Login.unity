@@ -837,6 +837,9 @@ MonoBehaviour:
   ItemData:
   - ItemId: small_gun_tutorial
     ItemCount: 2
+  Tasks:
+  - ID: Test
+    Time: 50000
   inputName: {fileID: 3600043}
   inputButton: {fileID: 681856032}
 --- !u!1 &2002275681

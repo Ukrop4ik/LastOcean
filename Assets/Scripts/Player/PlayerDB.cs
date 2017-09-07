@@ -11,6 +11,8 @@ public class PlayerDB : MonoBehaviour {
     public string NickName;
     [SerializeField]
     private List<ItemData> _inventoryitemdata = new List<ItemData>();
+    [SerializeField]
+    private List<Tasks> _tasks = new List<Tasks>();
 
     private static PlayerDB instance;
     public static PlayerDB Instance() { return instance; }
@@ -23,6 +25,13 @@ public class PlayerDB : MonoBehaviour {
     private void Start()
     {
         _data = LoadData();
+        LoadTasks();
+        LoadName();
+    }
+
+    public List<Tasks> GetTasks()
+    {
+        return _tasks;
     }
 
     public List<ItemData> LoadInventoryItems()
@@ -43,10 +52,29 @@ public class PlayerDB : MonoBehaviour {
         return id;
     }
 
-    [ContextMenu("SaveData")]
-    public void SaveData(List<ItemData> items, string NickName)
+    public List<ItemData> GetItems()
     {
-        PlayerData PD = new PlayerData(NickName, items);
+        return _inventoryitemdata;
+    }
+    public void AddItem(ItemData item)
+    {
+        _inventoryitemdata.Add(item);
+    }
+    public void ClearItemData()
+    {
+        _inventoryitemdata.Clear();
+    }
+
+    public void Save()
+    {
+        PlayerData PD = new PlayerData(Player.Instance().NickName, _inventoryitemdata, _tasks);
+        File.WriteAllText(Application.persistentDataPath + "/" + Player.Instance().NickName + ".prf", JsonMapper.ToJson(PD));
+    }
+
+    [ContextMenu("SaveData")]
+    public void SaveData(List<ItemData> items, string NickName, List<Tasks> tasks)
+    {
+        PlayerData PD = new PlayerData(NickName, items, tasks);
         File.WriteAllText(Application.persistentDataPath + "/" + Player.Instance().NickName + ".prf", JsonMapper.ToJson(PD));
         OpenProfileFolder();
     }
@@ -63,15 +91,36 @@ public class PlayerDB : MonoBehaviour {
             return null;
     }
 
+    private void LoadTasks()
+    {
+        for(int i = 0; i < _data["Tasks"].Count; i++)
+        {
+            _tasks.Add(new Tasks((string)_data["Tasks"][i]["ID"], (int)_data["Tasks"][i]["Time"]));
+        }
+    }
+    private void LoadName()
+    {
+        NickName = (string)_data["PlayerName"];
+    }
+
+    private void OnApplicationQuit()
+    {
+        UnityEngine.Debug.Log("SaveData");
+        Save();
+    }
+
+
     public class PlayerData
     {
         public string PlayerName;
         public List<ItemData> Inventory;
+        public List<Tasks> Tasks;
 
-        public PlayerData(string Name, List<ItemData> Items)
+        public PlayerData(string Name, List<ItemData> Items, List<Tasks> tasks)
         {
             PlayerName = Name;
             Inventory = Items;
+            Tasks = tasks;
         }
     }
 
@@ -85,6 +134,18 @@ public class PlayerDB : MonoBehaviour {
         {
             ItemId = Id;
             ItemCount = count;
+        }
+    }
+    [System.Serializable]
+    public class Tasks
+    {
+        public string ID;
+        public int Time;
+
+        public Tasks(string Id, int time)
+        {
+            ID = Id;
+            Time = time;
         }
     }
 

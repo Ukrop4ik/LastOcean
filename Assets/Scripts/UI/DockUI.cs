@@ -18,7 +18,7 @@ public class DockUI : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.1f);
 
-        _goldText.text = "Gold: " + Player.GetPlayerGold();
+        _goldText.text = "Gold: " + Player.Instance().GetPlayerGold();
 
         StartCoroutine(UpdateUI());
     }

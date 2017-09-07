@@ -35,6 +35,7 @@ public class Weapon : Photon.MonoBehaviour {
     public bool isCanShoot;
     [SerializeField]
     private float _damage;
+    [SerializeField]
     private PhotonView _photonView;
     [SerializeField]
     private float _reloadspeed;

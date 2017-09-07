@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 114996319155057458}
   - component: {fileID: 114913890201002326}
   - component: {fileID: 114924156696922656}
+  - component: {fileID: 114786547741204064}
   m_Layer: 10
   m_Name: TestShip_scout
   m_TagString: Ship
@@ -493,7 +494,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1109148538003726}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.350385, y: 14.414993, z: -12.217222}
+  m_LocalPosition: {x: 14.959808, y: 21.55956, z: 29.499962}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4968152312160656}
@@ -1285,8 +1286,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.0288284, y: 0.27296758, z: 3.6753805}
-  m_Center: {x: -0.025331378, y: -0.109635465, z: -0.21661484}
+  m_Size: {x: 2.0346208, y: 0.72924304, z: 3.6753805}
+  m_Center: {x: -0.028227568, y: 0.11850226, z: -0.21661484}
 --- !u!65 &65696587284357476
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1437,6 +1438,19 @@ MonoBehaviour:
   data_str: 
   playerName: 
   OpponentReady: 0
+  Lastdamageship: {fileID: 0}
+  goldToHead: 100
+--- !u!114 &114786547741204064
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1109148538003726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b4bda28c149031418ffc1dc11ac0f2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114863555439258822
 MonoBehaviour:
   m_ObjectHideFlags: 1

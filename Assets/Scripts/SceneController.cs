@@ -30,11 +30,15 @@ public class SceneController : MonoBehaviour {
         {
             if (date.SceneName == name)
             {
-                if (date.Type == SceneType.Battle)
-                    PhotonNetwork.JoinOrCreateRoom(name, new RoomOptions() { MaxPlayers = 10 }, null);
-                else
-                    PhotonNetwork.LeaveRoom();
+                if (!PhotonNetwork.offlineMode)
+                {
+                    if (date.Type == SceneType.Battle)
+                        PhotonNetwork.JoinOrCreateRoom(name, new RoomOptions() { MaxPlayers = 10 }, null);
+                    else
+                        PhotonNetwork.LeaveRoom();
+
                     PhotonNetwork.JoinLobby();
+                }
 
                 SceneManager.LoadScene(name);
                 UI.SelectActiveHUD(date.Type);
