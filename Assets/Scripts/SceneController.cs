@@ -15,6 +15,8 @@ public class SceneController : MonoBehaviour {
     private static SceneController instance;
     public static SceneController Instance() { return instance; }
 
+    public string LoadedScene = "";
+
     private void Awake()
     {
         instance = this;
@@ -40,6 +42,7 @@ public class SceneController : MonoBehaviour {
                     PhotonNetwork.JoinLobby();
                 }
                 PlayerDB.Instance().Save();
+                LoadedScene = name;
                 SceneManager.LoadScene(name);
                 UI.SelectActiveHUD(date.Type);
                 return;

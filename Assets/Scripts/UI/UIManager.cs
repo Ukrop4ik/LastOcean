@@ -18,8 +18,12 @@ public class UIManager : MonoBehaviour {
     private void Start()
     {
         _netStatusText = GameObject.Find("NetworkStatusText").GetComponent<Text>();
-        StartCoroutine(UpdateUI());
+        SceneController.Instance().LoadedScene = "MainMenu";
         SceneManager.LoadScene("MainMenu");
+        HUDs[0].SetActive(true);
+        StartCoroutine(UpdateUI());
+
+
     }
 
     public void SelectActiveHUD(SceneType type)

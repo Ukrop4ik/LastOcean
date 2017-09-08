@@ -843,6 +843,10 @@ MonoBehaviour:
   _resources:
   - Id: Gold
     Count: 1000
+  - Id: Metal
+    Count: 100
+  - Id: Fuel
+    Count: 100
   _ships:
   - ID: TestShip_scout
     Slots:

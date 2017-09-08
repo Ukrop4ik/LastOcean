@@ -28,7 +28,7 @@ public class CreatePlayer : MonoBehaviour {
     {
         if (File.Exists(Application.persistentDataPath + "/" + "Profile" + ".prf") && !string.IsNullOrEmpty(PlayerPrefs.GetString("NickName")))
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene("InitScene");
         }
     }
 

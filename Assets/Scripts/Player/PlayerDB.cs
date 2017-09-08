@@ -61,10 +61,83 @@ public class PlayerDB : MonoBehaviour {
             }
         }
     }
+    public int GetPlayerMetal()
+    {
+        int value = 0;
+        foreach (Resources res in _resources)
+        {
+            if (res.Id == "Metal")
+            {
+                value = res.Count;
+            }
+        }
+        return value;
+    }
+
+    public void SetPlayerMetal(int value)
+    {
+        foreach (Resources res in _resources)
+        {
+            if (res.Id == "Metal")
+            {
+                res.Count += value;
+                return;
+            }
+        }
+    }
+    public int GetPlayerFuel()
+    {
+        int value = 0;
+        foreach (Resources res in _resources)
+        {
+            if (res.Id == "Fuel")
+            {
+                value = res.Count;
+            }
+        }
+        return value;
+    }
+
+    public void SetPlayerFuel(int value)
+    {
+        foreach (Resources res in _resources)
+        {
+            if (res.Id == "Fuel")
+            {
+                res.Count += value;
+                return;
+            }
+        }
+    }
+    public int GetPlayerGems()
+    {
+        int value = 0;
+        foreach (Resources res in _resources)
+        {
+            if (res.Id == "Gems")
+            {
+                value = res.Count;
+            }
+        }
+        return value;
+    }
+
+    public void SetPlayerGems(int value)
+    {
+        foreach (Resources res in _resources)
+        {
+            if (res.Id == "Gems")
+            {
+                res.Count += value;
+                return;
+            }
+        }
+    }
 
     private void Start()
     {
         _data = LoadData();
+        _inventoryitemdata = LoadInventoryItems();
         LoadTasks();
         LoadName();
         LoadResources();
@@ -98,9 +171,17 @@ public class PlayerDB : MonoBehaviour {
     {
         return _inventoryitemdata;
     }
-    public void AddItem(ItemData item)
+    public void AddNewItem(ItemData item)
     {
         _inventoryitemdata.Add(item);
+    }
+    public void AddItem(string itemId, int value)
+    {
+        foreach(ItemData i in _inventoryitemdata)
+        {
+            if (i.ItemId == itemId)
+                i.ItemCount = value;
+        }
     }
     public void ClearItemData()
     {
@@ -176,6 +257,13 @@ public class PlayerDB : MonoBehaviour {
         Save();
     }
 
+
+    private IEnumerator AutoSave()
+    {
+        yield return new WaitForSeconds(10f);
+        Save();
+        StartCoroutine(AutoSave());
+    }
 
     public class PlayerData
     {

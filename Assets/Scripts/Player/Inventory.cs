@@ -14,12 +14,15 @@ public class Inventory : MonoBehaviour {
 
     private void OnEnable()
     {
-       Invoke("LoadFromPlayerData", 0.3f);
+        LoadFromPlayerData();
        StartCoroutine(InvUpdateRoutine());
     }
     private void OnDesable()
     {
         StopCoroutine(InvUpdateRoutine());
+        SaveToPlayerData();
+        PlayerDB.Instance().Save();
+
     }
     public bool IsInventoryContainsItem(string id)
     {
@@ -65,8 +68,6 @@ public class Inventory : MonoBehaviour {
 
         _items.Clear();
 
-        Debug.Log("Update inventory!");
-
         if (transform.childCount > 0)
         {
             for (int i = 0; i < transform.childCount; i++)
@@ -90,24 +91,31 @@ public class Inventory : MonoBehaviour {
                 if (isAdd)
                     _items.Add(new ItemStack(item.GetId(), item.GetCount()));
             }
+            SaveToPlayerData();
         }
-
-        SaveToPlayerData();
-
         StartCoroutine(InvUpdateRoutine());
     }
 
+    [ContextMenu("SaveToPlayerData")]
     public void SaveToPlayerData()
     {
-        PlayerDB.Instance().ClearItemData();
-
         if (_items.Count > 0)
         {
-
             foreach (ItemStack item in _items)
             {
-                PlayerDB.Instance().AddItem(new PlayerDB.ItemData(item.ID, item.Count));
+                bool isFound = false;
 
+                foreach(PlayerDB.ItemData i in PlayerDB.Instance().GetItems())
+                {
+                    if(item.ID == i.ItemId)
+                    {
+                        isFound = true;
+                        PlayerDB.Instance().AddItem(item.ID, item.Count);
+                    }
+                }
+
+                if(!isFound)
+                    PlayerDB.Instance().AddNewItem(new PlayerDB.ItemData(item.ID, item.Count));
             }
         }
     }
@@ -115,7 +123,7 @@ public class Inventory : MonoBehaviour {
     [ContextMenu("LoadFromPlayerData")]
     public void LoadFromPlayerData()
     {
-        List<PlayerDB.ItemData> items = Player.Instance().Data.LoadInventoryItems();
+        List<PlayerDB.ItemData> items = PlayerDB.Instance().GetItems();
 
         for(int i = 0; i < transform.childCount; i++)
         {
