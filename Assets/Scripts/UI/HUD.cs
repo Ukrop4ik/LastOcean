@@ -18,6 +18,10 @@ public class HUD : Photon.MonoBehaviour {
     [SerializeField]
     private GameObject _targetText;
 
+    [SerializeField]
+    private Button lFireButton;
+    [SerializeField]
+    private Button RFireButton;
 
     [System.Serializable]
     public struct WeaponsOnSids
@@ -68,6 +72,8 @@ public class HUD : Photon.MonoBehaviour {
 
     public LayerMask layerMask;
 
+    public bool Lfire = false;
+    public bool Rfire = false;
 
     private void ClearAll()
     {
@@ -167,6 +173,15 @@ public class HUD : Photon.MonoBehaviour {
 
     }
 
+    public void Fire()
+    {
+
+    }
+    public void FireL()
+    {
+
+    }
+
     private void Update()
     {
         RaycastHit hit;
@@ -189,7 +204,7 @@ public class HUD : Photon.MonoBehaviour {
             Revers();
         }
 
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.Q) || Lfire)
         {
             if (weaponsOnSides.left_weapons.Count > 0)
             foreach(Weapon we in weaponsOnSides.left_weapons)
@@ -206,7 +221,7 @@ public class HUD : Photon.MonoBehaviour {
             }
         }
 
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.E) || Rfire)
         {
             if (weaponsOnSides.rith_weapons.Count > 0)
                 foreach (Weapon we in weaponsOnSides.rith_weapons)

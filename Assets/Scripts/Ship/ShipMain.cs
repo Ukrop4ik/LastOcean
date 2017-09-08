@@ -206,7 +206,7 @@ public class ShipMain : Photon.MonoBehaviour {
     private void Dead()
     {
 
-        List<GameObject> points = NetworkManager.GetPoints();
+        List<GameObject> points = NetworkManager.Instance().GetPoints();
 
         transform.position = points[UnityEngine.Random.Range(0, points.Count)].transform.position;
 

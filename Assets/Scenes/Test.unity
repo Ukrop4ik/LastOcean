@@ -1778,6 +1778,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playership: {fileID: 1109148538003726, guid: a730b6add2e8fad45bf596ea31789338, type: 2}
+  spawnpoints:
+  - {fileID: 352867197}
+  - {fileID: 1220668833}
+  - {fileID: 364190012}
+  - {fileID: 1113725516}
+  - {fileID: 404027453}
 --- !u!4 &2085212411
 Transform:
   m_ObjectHideFlags: 0

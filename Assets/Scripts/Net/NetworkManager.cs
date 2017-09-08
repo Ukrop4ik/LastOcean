@@ -10,11 +10,22 @@ public class NetworkManager : Photon.MonoBehaviour {
 
 
     public GameObject playership;
-    [SerializeField] private static List<GameObject> spawnpoints = new List<GameObject>();
+    [SerializeField]
+    private List<GameObject> spawnpoints = new List<GameObject>();
     // Use this for initialization
+
+
+    private static NetworkManager instance;
+    public static NetworkManager Instance() { return instance; }
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     void Start () {
 
-        AddSpaunPoints();
+        //AddSpaunPoints();
 
         if(PhotonNetwork.offlineMode)
         {
@@ -48,7 +59,7 @@ public class NetworkManager : Photon.MonoBehaviour {
         Player.Instance().GetShipDecorator().DestroyDecorator();
     }
 
-    public static List<GameObject> GetPoints()
+    public List<GameObject> GetPoints()
     {
         return spawnpoints;
     }
