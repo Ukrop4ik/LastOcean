@@ -18,7 +18,6 @@ public class PlayerDB : MonoBehaviour {
     private List<Resources> _resources = new List<Resources>();
     [SerializeField]
     private List<ShipData> _ships = new List<ShipData>();
-
     private static PlayerDB instance;
     public static PlayerDB Instance() { return instance; }
 
@@ -37,6 +36,7 @@ public class PlayerDB : MonoBehaviour {
         _ships.Add(data);
     }
 
+    #region("Resources")
     public int GetPlayerGold()
     {
         int value = 0;
@@ -133,22 +133,45 @@ public class PlayerDB : MonoBehaviour {
             }
         }
     }
+#endregion
 
     private void Start()
     {
         _data = LoadData();
         _inventoryitemdata = LoadInventoryItems();
-        LoadTasks();
         LoadName();
         LoadResources();
         LoadShips();
+        LoadTasks();
+
     }
+
+
 
     public List<Tasks> GetTasks()
     {
         return _tasks;
     }
-
+    public void AddTask(TimelineEvent task)
+    {
+        _tasks.Add(new Tasks(task.EventId, task.Endtime, task.Starttime, task.UnikalId, task.IsMomental ? 1 : 0));
+        GameObject obj = Instantiate(UnityEngine.Resources.Load("Events/" + task.EventId) as GameObject, this.transform);
+        obj.name = task.UnikalId.ToString();
+    }
+    public void RemoveTask(TimelineEvent task)
+    {
+        Tasks tascktoremove = null;
+        foreach(Tasks t in _tasks)
+        {
+            if(t.UnikalId == task.UnikalId)
+            {
+                tascktoremove = t;
+            }
+            
+        }
+        if(tascktoremove != null)
+            _tasks.Remove(tascktoremove);
+    }
     public List<ItemData> LoadInventoryItems()
     {
         List<ItemData> id = new List<ItemData>();
@@ -216,6 +239,8 @@ public class PlayerDB : MonoBehaviour {
 
     private void LoadResources()
     {
+        UnityEngine.Debug.Log("Loaded Resources");
+        if (_data["Resources"].Count == 0) return;
         for (int i = 0; i < _data["Resources"].Count; i++)
         {
             _resources.Add(new Resources((string)_data["Resources"][i]["Id"], (int)_data["Resources"][i]["Count"]));
@@ -224,7 +249,8 @@ public class PlayerDB : MonoBehaviour {
 
     private void LoadShips()
     {
-
+        UnityEngine.Debug.Log("Loaded Ships");
+        if (_data["Ships"].Count == 0) return;
         for (int i = 0; i < _data["Ships"].Count; i++)
         {
             List<ShipDecorator.ShipSlot> slots = new List<ShipDecorator.ShipSlot>();
@@ -241,13 +267,20 @@ public class PlayerDB : MonoBehaviour {
 
     private void LoadTasks()
     {
-        for(int i = 0; i < _data["Tasks"].Count; i++)
+        UnityEngine.Debug.Log("Loaded Events");
+        if (_data["Tasks"].Count == 0) return;
+        for (int i = 0; i < _data["Tasks"].Count; i++)
         {
-            _tasks.Add(new Tasks((string)_data["Tasks"][i]["ID"], (int)_data["Tasks"][i]["Time"]));
+            Tasks t = new Tasks((string)_data["Tasks"][i]["ID"], (int)_data["Tasks"][i]["TimeEnd"], (int)_data["Tasks"][i]["TimeStart"], (int)_data["Tasks"][i]["UnikalId"], (int)_data["Tasks"][i]["IsMomental"]);
+            _tasks.Add(t);
+            NetworkData.Instance().AddEventToTimeline(new TimelineEvent(t.TimeStart, t.TimeEnd, t.ID, t.UnikalId, t.IsMomental == 1));
+            GameObject obj = Instantiate(UnityEngine.Resources.Load("Events/" + t.ID) as GameObject, this.transform);
+            obj.name = t.UnikalId.ToString();
         }
     }
     private void LoadName()
     {
+        UnityEngine.Debug.Log("Loaded Name");
         NickName = (string)_data["PlayerName"];
     }
 
@@ -311,12 +344,17 @@ public class PlayerDB : MonoBehaviour {
     public class Tasks
     {
         public string ID;
-        public int Time;
-
-        public Tasks(string Id, int time)
+        public int TimeStart;
+        public int TimeEnd;
+        public int UnikalId;
+        public int IsMomental;
+        public Tasks(string Id, int timeend, int timestart, int Unikal, int isMomental)
         {
             ID = Id;
-            Time = time;
+            TimeEnd = timeend;
+            TimeStart = timestart;
+            UnikalId = Unikal;
+            IsMomental = isMomental;
         }
     }
     [System.Serializable]

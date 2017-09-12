@@ -75,7 +75,35 @@ public class DockUI : MonoBehaviour {
         _fuelText.text = "Fuel: " + PlayerDB.Instance().GetPlayerFuel();
         _gemsText.text = "Gems: " + PlayerDB.Instance().GetPlayerGems();
 
+        if (PlayerDB.Instance().GetTasks().Count > 0)
+        {
+            for (int i = 0; i < PlayerDB.Instance().GetTasks().Count; i++)
+            {
+                UIManager.Instance().GetTimlineVisual()[i].Text.text = StaticMetods.ConvertTimeToString((PlayerDB.Instance().GetTasks()[i].TimeEnd - NetworkData.Instance().GetServerTimeInt()));
+
+                if (PlayerDB.Instance().GetTasks()[i].IsMomental == 0 && IsTaskEnd(PlayerDB.Instance().GetTasks()[i]))
+                {
+                    UIManager.Instance().GetTimlineVisual()[i].Image.color = Color.green;
+                    UIManager.Instance().GetTimlineVisual()[i].TaskListId = i;
+                }
+                else
+                {
+                    UIManager.Instance().GetTimlineVisual()[i].Image.color = Color.red;
+                }
+            }
+            for (int i = PlayerDB.Instance().GetTasks().Count; i < UIManager.Instance().GetTimlineVisual().Count; i++)
+            {
+                UIManager.Instance().GetTimlineVisual()[i].Text.text = "";
+                UIManager.Instance().GetTimlineVisual()[i].Image.color = Color.yellow;
+            }
+        }
+
         StartCoroutine(UpdateUI());
+    }
+
+    private bool IsTaskEnd(PlayerDB.Tasks tasks)
+    {
+        return tasks.TimeEnd <= NetworkData.Instance().GetServerTimeInt();
     }
 
     public IEnumerator LoadShipsFromDB()

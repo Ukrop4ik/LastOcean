@@ -13,6 +13,8 @@ public class NetworkData : Photon.MonoBehaviour {
     private static NetworkData instance;
     public static NetworkData Instance() { return instance; }
 
+    public Timeline EventTimeline;
+
     private void Awake()
     {
         instance = this;
@@ -21,12 +23,50 @@ public class NetworkData : Photon.MonoBehaviour {
     private void Start()
     {
         lastsessionTime = PlayerPrefs.GetInt("STime");
+        EventTimeline = Timeline.CreateInstance<Timeline>();
     }
 
+    private void TimelineRoutine()
+    {
+
+        EventTimeline.UpdateTimeLine(PhotonNetwork.time);
+
+    }
+
+    public int GetServerTimeInt()
+    {
+        return (int)PhotonNetwork.time;
+    }
+
+    [ContextMenu("AddTestEventToTimeline")]
+    public void AddTestEventToTimeline()
+    {
+        TimelineEvent en = new TimelineEvent((int)PhotonNetwork.time, 150000, "event_get_fuel_1", true);
+        PlayerDB.Instance().AddTask(en);
+        EventTimeline.AddEventToTimeline(en);
+    }
+    [ContextMenu("AddNoMomentalEvenbt")]
+    public void AddTestNoMomentalEventToTimeline()
+    {
+        TimelineEvent en = new TimelineEvent((int)PhotonNetwork.time, 10, "event_get_fuel_1", false);
+        en.IsMomental = false;
+        PlayerDB.Instance().AddTask(en);
+        EventTimeline.AddEventToTimeline(en);
+    }
+    public void AddEventToTimeline(TimelineEvent even)
+    {
+        EventTimeline.AddEventToTimeline(even);
+    }
+    [ContextMenu("SaveTimeline")]
+    public void SaveTimeline()
+    {
+        UnityEditor.AssetDatabase.CreateAsset(EventTimeline, Application.persistentDataPath +"/TimelIne.asset");
+        UnityEditor.AssetDatabase.SaveAssets();
+    }
 
     private IEnumerator GetServerTime()
     {
-        if(sessionTime != 0)
+        if(sessionTime != 0 && !AllReady)
         {
             AllReady = true;
         }
@@ -37,6 +77,8 @@ public class NetworkData : Photon.MonoBehaviour {
         {
             sessionTimeDelta = sessionTime - lastsessionTime;
         }
+
+        TimelineRoutine();
 
         sessionTime = (int)PhotonNetwork.time;
         StartCoroutine(GetServerTime());

@@ -9,10 +9,32 @@ public class UIManager : MonoBehaviour {
     private Text _netStatusText;
     [SerializeField]
     private List<GameObject> HUDs = new List<GameObject>();
+    [SerializeField]
+    private List<TimeLineVisual> timlinevisuallist = new List<TimeLineVisual>();
+
+    private static UIManager instance;
+    public static UIManager Instance() { return instance; }
 
     private void Awake()
     {
+        instance = this;
         DontDestroyOnLoad(this);
+    }
+
+    public List<TimeLineVisual> GetTimlineVisual()
+    {
+        return timlinevisuallist;
+    }
+    public void AddVisualTask(PlayerDB.Tasks task)
+    {
+        foreach(TimeLineVisual vis in timlinevisuallist)
+        {
+            if(vis.Task == null)
+            {
+                vis.Task = task;
+                return;
+            }
+        }
     }
 
     private void Start()
@@ -68,7 +90,53 @@ public class UIManager : MonoBehaviour {
 
         _netStatusText.text = "Status: " + PhotonNetwork.connectionStateDetailed.ToString() + " Ping: " + PhotonNetwork.GetPing();
 
+        foreach(TimeLineVisual vis in timlinevisuallist)
+        {
+            vis.Check();
+        }
         StartCoroutine(UpdateUI());
+    }
+    [System.Serializable]
+    public class TimeLineVisual
+    {
+        public int Time;
+        public GameObject Obj;
+        public Image Image;
+        public Text Text;
+        public int TaskListId;
+        public PlayerDB.Tasks Task = null;
+
+        public TimeLineVisual(int time, GameObject obj, Image image, Text text, int listid)
+        {
+            Time = time;
+            Obj = obj;
+            Image = image;
+            Text = text;
+            TaskListId = listid;
+        }
+
+        public void Check()
+        {
+            if (Task == null) return;
+
+            if(Task.TimeEnd > (int)NetworkData.Instance().GetServerTimeInt())
+            {
+               // Obj.SetActive(true);
+                Text.text = (Task.TimeEnd - ((int)NetworkData.Instance().GetServerTimeInt())).ToString();
+            }
+            else
+            {
+                Clear();
+               // Obj.SetActive(false);
+            }
+
+        }
+
+        public void Clear()
+        {
+            Time = 0;
+            Task = null;
+        }
     }
 
 
