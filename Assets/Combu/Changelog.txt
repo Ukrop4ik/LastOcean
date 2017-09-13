@@ -1,0 +1,297 @@
+=======================================================================
+ RELEASE NOTES - Documentation at http://skaredcreations.com/api/combu
+=======================================================================
+
+
+VERSION 2.1.10
+
+Unity:
+- Fixed issues preventing to build Universal App for Windows Store
+- Added new property UserFile.customData
+- Added new methods Mail.Unread, Mail.Unread(long) to mark a message as unread
+- Added new method User.CreateGuest to create a new guest account
+- Added new property CombuManager.GuestPrefix in inspector to use as prefix to the id for guest accounts (ex.: "Guest-" to obtain "Guest-1".."Guest-N")
+- Added new method User.AuthenticateSession to auto-login an account passing the id and sessionToken that you saved previously
+- CombuManager.timezone has been deprecated, since now the timestamps in the database should be stored in UTC (clients can convert to/from local timezone through DateTime if needed)
+
+Server:
+- Added new property CB_UserFile.customData
+- Added search by email in the web page Admin > Players
+- Added feature Create Player in the web page Admin > Players
+- Added action 'unread' to mail webservice
+- Added action 'login_session' to users webservice
+- Fixed issue in CB_LeaderBoard::LoadHighscoreForAccount
+- Fixed issue in search by Online state in the web page Admin > Players
+
+--
+
+VERSION 2.1.9
+
+Unity:
+- Fixed demo scenes for Unity 5.3+
+
+Server:
+- Minor fixes and code optimizations
+
+--
+
+VERSION 2.1.8
+
+Unity:
+- Fixed User.Delete (password is now encrypted)
+- Added new overload Mail.Read(long, System.Action<bool,string>) to mark a single message as read by its Id
+
+Server:
+- Fixed issue when creating a new user while being already authenticated with another account
+- Replaced all "exit" occurrences in webservices output with "Utils::EchoJson" to add proper headers (fix for WebGL and/or different domain/port)
+- Fixed security issue in AuthenticatePlatform that allowed disabled accounts to login
+
+--
+
+VERSION 2.1.7
+
+Server:
+- Minor change: added "Access-Control-*" headers to Utils::EchoJson to help solve issues in WebGL running on different domain (e.g.: Facebook Canvas)
+
+--
+
+VERSION 2.1.6
+
+Server:
+- Bug fix: CustomData of UserGroup is now correctly saved on database
+
+--
+
+VERSION 2.1.5
+
+Server:
+- Bug fix in leaderboard load scores to send local player score
+
+Unity:
+- Leaderboard.LoadScores now correctly initialize both "scores" array and "localUserScore" object
+
+--
+
+VERSION 2.1.4
+
+Server:
+- Bug fixes to user search by multiple custom data
+- Bug fixes to user groups loaded by owner/member username
+
+Unity:
+- Added new property "name" to the class UserFile (this property is not unique, neither per account nor per table)
+- You can now pass "null" to UserFile.Update to not change the file content (if you pass "new byte[0]" it will upload an empty file)
+- The method CombuManager.CaptureScreenshot has been changed to static and now renders all cameras
+
+--
+
+VERSION 2.1.3
+
+Server:
+- Bug fixes to user groups
+
+Unity:
+- Added groupName parameter to overload of UserGroup.Load to search groups by name
+
+--
+
+VERSION 2.1.2
+
+Server:
+- Bug fix in security token management and serving any web service
+- Replaced mktime() with time() where needed (strict rule from PHP 5.1+)
+
+Database:
+- Removed fields from table CB_Account: GUID, SignatureTimestamp
+
+--
+
+VERSION 2.1.1
+
+Server:
+- Fixed bug in saving account customData
+- Web service groups/list has been improved to allow loading of all public groups
+- Class AddonModule has new method NotifyUserLogout to notify all add-ons when the user logged off
+- Added new class CB_Session to store the login sessions of players
+
+Unity:
+- Added new properties to UserGroup class: "idOwner", "owner", "customData"
+- Added new overload to load all groups: UserGroup.Load(pageNumber, limit, callback)
+- Added new methods UserGroup.LoadMembership to load the groups where the user is member
+- UserGroup.Load retrieves only the group owner by the user
+- You can now login the same account from different sources
+
+Database:
+- Added new table CB_Session
+
+--
+
+VERSION 2.1.0
+
+Server:
+- Bug fix in user creation: ENABLED is correctly set TRUE by default
+- Searching users by custom data now works for numeric data
+- A new class AddonModule has been added, it can be used to create add-ons in the folder /addons more informations coming in the next days on http://skaredcreations.com
+
+Unity:
+- Fixed CombuManager.isAuthenticated
+- Added parameter Timezone to every calls, if not empty in CombuManager
+- Added new properties to User class: "ignored" and "requests", these and "friends" are assigned when you call User.LoadFriends basing on the contact type requested
+
+--
+
+VERSION 2.0.7
+
+Server:
+- Added informations about online users in Administration homepage and Players
+
+Unity:
+- Added new parameter isOnline to method User.Load to filter the online users
+
+--
+
+VERSION 2.0.6
+
+Server:
+- Fixed issue in webservice groups/wsSave preventing correctly initialization of the group after save
+
+--
+
+VERSION 2.0.5
+
+Server:
+- Added sample script extra/login_wordpress.php to show how to integrate Combu with Wordpress accounts
+- Fixed issue in webservice groups/wsList
+- Added new class CB_ServerSettings and new section SETTINGS in Admin Console
+- Added possibility to send newsletters to a test email address before sending to everyone else
+- Updated and fixed the sample scripts in /pages showing off how to use the server API for your website
+
+Unity:
+- Added new property 'settings' to the class CombuServerInfo
+- Added new sample scene CombuDemoWordpress that uses the sample script login_wordpress.php
+- Minor changes
+
+--
+
+VERSION 2.0.4
+
+Server:
+- Added sample code in users/wsCreate and users/wsLoginPlatform to add starting inventory to new users
+
+
+--
+
+VERSION 2.0.3
+
+Server:
+- Fixed issue in Inventory.Load webservice
+
+
+--
+
+VERSION 2.0.2
+
+Unity:
+- Fixed account update: Id of logged user is now correctly sent
+
+
+--
+
+VERSION 2.0.1
+
+Unity:
+- Fixed account creation: password is now sent encrypted
+
+
+--
+
+VERSION 2.0
+
+Server:
+- Implemented new classes CB_Account_Platform, CB_Tournament, CB_Tournament_CustomData, CB_Match, CB_Match_Account, CB_Match_CustomData, CB_Match_Round
+- Added support to unlimited number of account platforms to associate to Combu accounts (use PlatformKey to differentiate Facebook, GameCenter, etc.)
+- Added webservice to link an account to a platform account (external platforms like Facebook)
+- Implemented new webservices server/info, server/ping
+- Some webservices have been slitly modified to work with the new API
+- Improvement to the web Administration layout
+- You can now disable a player in the admin console and deny him to login
+
+Database:
+- New tables CB_Account_Platform, CB_Tournament, CB_Tournament_CustomData, CB_Match, CB_Match_Account, CB_Match_CustomData, CB_Match_Round
+- Removed fields in CB_Account: FacebookId, GameCenterId
+- Added fields in CB_Account: Enabled
+
+Unity:
+- The API has been completely refactored, CombuManager is the new main component (it replaces the old CBManager) and you can access to localUser, platform or any core class in the namespace Combu.
+- The documentation of the new API is online at http://skaredcreations.com/api/combu/
+
+--
+
+VERSION 1.5.4
+
+Combu files have not been modified. This version is only to release the unitypackage of Combu 2.0 Release Candidate,
+it will bring a fresh new air to Combu as it will now adheres the Unity standard of ISocialPlatform.
+You will need to make some changes to your code, but almost everything you wrote till now is easily
+portable to the new Combu classes that have been completely refactored to implement the interfaces of ISocialPlatform.
+You will find the full new documentation online at http://skaredcreations.com/api/combu/last
+
+--
+
+VERSION 1.5.3
+
+Server:
+- Fixed SQL statement filters in CB_UserFilesActivity::Load, CB_Mail::Load, CB_Mail::LoadUnread, CB_UserGroupAccount::Load
+- Logged users cannot send more than one Like to a UserFile
+- Web admin console: you can now see and change Email in Player Info
+
+Unity:
+- Fixed date/time conversion of CBNews.date from JSON
+
+
+--
+
+VERSION 1.5.2
+
+Updated Combu web files, latest was missing the webservice handler for mail count.
+
+--
+
+VERSION 1.5.1
+
+Server:
+- Fixed define SECURITY_ENABLED in api.php to re-enable the security
+- New web service "users/search" to make a search in the user accounts table
+- New web service "mail/count" to get the number of read and unread messages
+- Web service "mail/read" now accept parameter Id to be -1 so that it can mark as read all messages received by the logged user
+
+Unity:
+- Added new method CBManager/LoadUsers to search users
+- Added new method CBManager/CountMail to get the numbers of read and unread messages received by the logged user
+- Added new class CBMailCount to handle the results from CBManager/CountMail
+- Added overload CBManager/ReadMail without any parameters to mark as read all messages received by the logged user
+
+--
+
+VERSION 1.5.0
+
+Server:
+- Web service "users/load" accepts also Username to load an account
+- Web service "users/update" accepts also Username to update an account
+- Web service "users/update" can change the Username of the account if you pass both Id and Username
+- Web service "mail/send" now accepts parameters Id and Username containing multiple recipients separated by column and new parameter IdGroup to send messages to whole group
+- Added new web service "groups" to manage user groups
+
+Unity:
+- Added overload method CBManager/LoadUser accepting parameter Username
+- Method CBManager/UpdateUser now sends the parameter Username
+- Method CBManager/SendMail was changed to support the list type "Received", "Sent" and "Both" (instead of only received or sent)
+- Added overload methods CBManager/SendMail accepting array of Usernames or Ids to send messages to custom group of users
+- Added method CBManager/SendMailToGroup to send messages to a group Id
+- Added method CBManager/LoadMailConversations to load a list of recipients (single users or groups)
+- Added methods CBManager/UserGroupLoad, CBManager/UserGroupSave, CBManager/UserGroupDelete, CBManager/UserGroupJoin and CBManager/UserGroupLeave to manage groups of users
+- Added a new demo scene DemoMessages with a simple implementation of message discussions similar to Facebook, Whatsapp etc
+
+Database:
+- Added new field `IdGroup` to table `CB_Mail`
+- Added new table `CB_UserGroup`
+- Added new table `CB_UserGroupAccount`

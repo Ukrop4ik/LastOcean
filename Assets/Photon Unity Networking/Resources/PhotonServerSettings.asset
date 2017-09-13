@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3758f8f58fdef43803eb9be1df0608, type: 3}
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
-  AppID: 1c4aa47d-cc59-47a0-9129-e9cda7ebc4ca
+  AppID: f7924eab-b0fa-4a58-942d-6bbb2379cd24
   VoiceAppID: 
-  ChatAppID: 
+  ChatAppID: 30e54f28-6228-4583-b873-34f1698fff0b
   HostType: 1
   PreferredRegion: 0
   EnabledRegions: -1
@@ -28,20 +28,22 @@ MonoBehaviour:
   RunInBackground: 1
   RpcList:
   - Chat
+  - ColorRpc
   - DestroyRpc
+  - DoJump
+  - Flash
   - InstantiateRpc
+  - Marco
   - PickupItemInit
+  - Polo
   - PunPickup
   - PunPickupSimple
   - PunRespawn
   - RequestForPickupItems
   - RequestForPickupTimes
-  - Write
-  - ChatMessage
+  - TaggedPlayer
   - CreateFromServer
   - Dead
-  - SetPlayer
   - Set
-  - CreateHud
   - Win
   DisableAutoOpenWizard: 1

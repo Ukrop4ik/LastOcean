@@ -4,6 +4,7 @@ using UnityEngine;
 using LitJson;
 using System.Diagnostics;
 using System.IO;
+using Combu;
 
 public class PlayerDB : MonoBehaviour {
 
@@ -137,7 +138,7 @@ public class PlayerDB : MonoBehaviour {
 
     private void Start()
     {
-        _data = LoadData();
+        //_data = LoadData();
         _inventoryitemdata = LoadInventoryItems();
         LoadName();
         LoadResources();
@@ -175,12 +176,13 @@ public class PlayerDB : MonoBehaviour {
     public List<ItemData> LoadInventoryItems()
     {
         List<ItemData> id = new List<ItemData>();
+        JsonData d = JsonMapper.ToObject(CombuManager.localUser.customData["_inventoryitemdata"].ToString());
 
-        if (_data["Inventory"].Count > 0)
+        if (d.Count > 0)
         {
-            for (int i = 0; i < _data["Inventory"].Count; i++)
+            for (int i = 0; i < d.Count; i++)
             {
-                id.Add(new ItemData((string)_data["Inventory"][i]["ItemId"], (int)_data["Inventory"][i]["ItemCount"]));
+                id.Add(new ItemData((string)d[i]["ItemId"], (int)d[i]["ItemCount"]));
             }
         }
 
@@ -211,18 +213,67 @@ public class PlayerDB : MonoBehaviour {
         _inventoryitemdata.Clear();
     }
 
-    public void Save()
+    public void SaveShips()
     {
-        PlayerData PD = new PlayerData(Player.Instance().NickName, _inventoryitemdata, _tasks, _resources, _ships);
-        File.WriteAllText(Application.persistentDataPath + "/" + Player.Instance().NickName + ".prf", JsonMapper.ToJson(PD));
+        string d = JsonMapper.ToJson(_ships);
+        CombuManager.localUser.customData["_ships"] = d;
+        CombuManager.localUser.Update((bool success, string error) =>
+        {
+
+        });
     }
 
-    [ContextMenu("SaveData")]
-    public void SaveData(List<ItemData> items, string NickName, List<Tasks> tasks)
+    public void SaveItems()
     {
-        PlayerData PD = new PlayerData(NickName, items, tasks, _resources, _ships);
-        File.WriteAllText(Application.persistentDataPath + "/" + Player.Instance().NickName + ".prf", JsonMapper.ToJson(PD));
-        OpenProfileFolder();
+        string d = JsonMapper.ToJson(_inventoryitemdata);
+        CombuManager.localUser.customData["_inventoryitemdata"] = d;
+        CombuManager.localUser.Update((bool success, string error) =>
+        {
+
+        });
+    }
+
+    public void SaveTasks()
+    {
+        string d = JsonMapper.ToJson(_tasks);
+        CombuManager.localUser.customData["_tasks"] = d;
+        CombuManager.localUser.Update((bool success, string error) =>
+        {
+
+        });
+    }
+
+    public void SaveResources()
+    {
+        Combu.Inventory.Load(CombuManager.localUser.id, (Combu.Inventory[] items, string error) =>
+        {
+            foreach (Resources rs in _resources)
+            {
+                foreach (Combu.Inventory item in items)
+                {
+                    if(rs.Id == "Gold" && item.name == "gold")
+                    {
+                        item.quantity = rs.Count;
+                        item.Update((bool __success, string __error) => {});
+                    }
+                    if (rs.Id == "Metal" && item.name == "metal")
+                    {
+                        item.quantity = rs.Count;
+                        item.Update((bool __success, string __error) => { });
+                    }
+                    if (rs.Id == "Fuel" && item.name == "fuel")
+                    {
+                        item.quantity = rs.Count;
+                        item.Update((bool __success, string __error) => { });
+                    }
+                    if (rs.Id == "Gems" && item.name == "gems")
+                    {
+                        item.quantity = rs.Count;
+                        item.Update((bool __success, string __error) => { });
+                    }
+                }
+            }
+        });
     }
 
     public JsonData LoadData()
@@ -237,41 +288,80 @@ public class PlayerDB : MonoBehaviour {
             return null;
     }
 
+    [ContextMenu("Save")]
+    public void Save()
+    {
+        SaveItems();
+        SaveResources();
+        SaveShips();
+        SaveTasks();
+    }
+
     private void LoadResources()
     {
-        UnityEngine.Debug.Log("Loaded Resources");
-        if (_data["Resources"].Count == 0) return;
-        for (int i = 0; i < _data["Resources"].Count; i++)
+        Combu.Inventory.Load(CombuManager.localUser.id, (Combu.Inventory[] items, string error) =>
         {
-            _resources.Add(new Resources((string)_data["Resources"][i]["Id"], (int)_data["Resources"][i]["Count"]));
-        }
+
+            foreach(Combu.Inventory item in items)
+            {
+                if(item.name == "gold")
+                {
+                    UnityEngine.Debug.Log("Get Item " + "   " + item.name + "  " + item.quantity);
+                    _resources.Add(new Resources("Gold", item.quantity));
+                }
+                if (item.name == "metal")
+                {
+                    UnityEngine.Debug.Log("Get Item " + "   " + item.name + "  " + item.quantity);
+                    _resources.Add(new Resources("Metal", item.quantity));
+                }
+                if (item.name == "fuel")
+                {
+                    UnityEngine.Debug.Log("Get Item " + "   " + item.name + "  " + item.quantity);
+                    _resources.Add(new Resources("Fuel", item.quantity));
+                }
+                if (item.name == "gems")
+                {
+                    UnityEngine.Debug.Log("Get Item " + "   " + item.name + "  " + item.quantity);
+                    _resources.Add(new Resources("Gems", item.quantity));
+                }
+            }
+
+
+        });
+
+
     }
 
     private void LoadShips()
     {
         UnityEngine.Debug.Log("Loaded Ships");
-        if (_data["Ships"].Count == 0) return;
-        for (int i = 0; i < _data["Ships"].Count; i++)
+
+        JsonData d = JsonMapper.ToObject(CombuManager.localUser.customData["_ships"].ToString());
+
+        if (d.Count == 0) return;
+        for (int i = 0; i < d.Count; i++)
         {
             List<ShipDecorator.ShipSlot> slots = new List<ShipDecorator.ShipSlot>();
 
-            for(int s = 0; s < _data["Ships"][i]["Slots"].Count; s++)
+            for(int s = 0; s < d[i]["Slots"].Count; s++)
             {
-                slots.Add(new ShipDecorator.ShipSlot((int)_data["Ships"][i]["Slots"][s]["SlotId"], (string)_data["Ships"][i]["Slots"][s]["IteminslotId"]));
+                slots.Add(new ShipDecorator.ShipSlot((int)d[i]["Slots"][s]["SlotId"], (string)d[i]["Slots"][s]["IteminslotId"]));
             }
 
-            ShipData data = new ShipData((string)_data["Ships"][i]["ID"], slots);
+            ShipData data = new ShipData((string)d[i]["ID"], slots);
             _ships.Add(data);
         }
     }
 
     private void LoadTasks()
     {
+        JsonData d = JsonMapper.ToObject(CombuManager.localUser.customData["_tasks"].ToString());
+
         UnityEngine.Debug.Log("Loaded Events");
-        if (_data["Tasks"].Count == 0) return;
-        for (int i = 0; i < _data["Tasks"].Count; i++)
+        if (d.Count == 0) return;
+        for (int i = 0; i < d.Count; i++)
         {
-            Tasks t = new Tasks((string)_data["Tasks"][i]["ID"], (int)_data["Tasks"][i]["TimeEnd"], (int)_data["Tasks"][i]["TimeStart"], (int)_data["Tasks"][i]["UnikalId"], (int)_data["Tasks"][i]["IsMomental"]);
+            Tasks t = new Tasks((string)d[i]["ID"], (int)d[i]["TimeEnd"], (int)d[i]["TimeStart"], (int)d[i]["UnikalId"], (int)d[i]["IsMomental"]);
             _tasks.Add(t);
             NetworkData.Instance().AddEventToTimeline(new TimelineEvent(t.TimeStart, t.TimeEnd, t.ID, t.UnikalId, t.IsMomental == 1));
             GameObject obj = Instantiate(UnityEngine.Resources.Load("Events/" + t.ID) as GameObject, this.transform);
@@ -281,7 +371,7 @@ public class PlayerDB : MonoBehaviour {
     private void LoadName()
     {
         UnityEngine.Debug.Log("Loaded Name");
-        NickName = (string)_data["PlayerName"];
+        NickName = CombuManager.localUser.userName;
     }
 
     private void OnApplicationQuit()
