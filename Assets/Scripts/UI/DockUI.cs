@@ -110,6 +110,8 @@ public class DockUI : MonoBehaviour {
     {
         yield return new WaitForSeconds(1f);
 
+        List<ShipDecorator> _decorators = new List<ShipDecorator>();
+
         Debug.Log("ShipDataLoad");
         foreach(PlayerDB.ShipData data in PlayerDB.Instance().GetShips())
         {
@@ -120,10 +122,17 @@ public class DockUI : MonoBehaviour {
 
             foreach(ShipDecorator.ShipSlot slot in data.Slots)
             {
-                decorator.AddItemToSlot(slot.SlotId, slot.IteminslotId);
-                decorator.CreateItemInSlot(decorator.GetSlotFromId(slot.SlotId), slot.IteminslotId);
+                if (slot.IteminslotId != "")
+                {
+                    Item i = decorator.CreateItemInSlot(decorator.GetSlotFromId(slot.SlotId), slot.IteminslotId);
+                    decorator.AddItemToSlot(slot.SlotId, slot.IteminslotId, i.Mass);
+                }
             }
+
+            _decorators.Add(decorator);
             
         }
+
+        PlayerDB.Instance()._currentShipDecorator = _decorators[0];
     }
 }

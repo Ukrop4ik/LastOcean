@@ -57,12 +57,7 @@ public class NetworkData : Photon.MonoBehaviour {
     {
         EventTimeline.AddEventToTimeline(even);
     }
-    [ContextMenu("SaveTimeline")]
-    public void SaveTimeline()
-    {
-        UnityEditor.AssetDatabase.CreateAsset(EventTimeline, Application.persistentDataPath +"/TimelIne.asset");
-        UnityEditor.AssetDatabase.SaveAssets();
-    }
+
 
     private IEnumerator GetServerTime()
     {

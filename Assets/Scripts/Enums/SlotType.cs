@@ -3,5 +3,8 @@
 public enum SlotType
 {
     Weapon,
-    Special
+    Special,
+    Hull,
+    Crew,
+    Engine
 }

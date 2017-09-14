@@ -22,6 +22,8 @@ public class PlayerDB : MonoBehaviour {
     private static PlayerDB instance;
     public static PlayerDB Instance() { return instance; }
 
+    public ShipDecorator _currentShipDecorator;
+
     private void Awake()
     {
         instance = this;
@@ -219,7 +221,7 @@ public class PlayerDB : MonoBehaviour {
         CombuManager.localUser.customData["_ships"] = d;
         CombuManager.localUser.Update((bool success, string error) =>
         {
-
+            UnityEngine.Debug.Log(d);
         });
     }
 
@@ -229,7 +231,7 @@ public class PlayerDB : MonoBehaviour {
         CombuManager.localUser.customData["_inventoryitemdata"] = d;
         CombuManager.localUser.Update((bool success, string error) =>
         {
-
+            UnityEngine.Debug.Log(d);
         });
     }
 
@@ -239,7 +241,7 @@ public class PlayerDB : MonoBehaviour {
         CombuManager.localUser.customData["_tasks"] = d;
         CombuManager.localUser.Update((bool success, string error) =>
         {
-
+            UnityEngine.Debug.Log(d);
         });
     }
 
@@ -306,22 +308,18 @@ public class PlayerDB : MonoBehaviour {
             {
                 if(item.name == "gold")
                 {
-                    UnityEngine.Debug.Log("Get Item " + "   " + item.name + "  " + item.quantity);
                     _resources.Add(new Resources("Gold", item.quantity));
                 }
                 if (item.name == "metal")
                 {
-                    UnityEngine.Debug.Log("Get Item " + "   " + item.name + "  " + item.quantity);
                     _resources.Add(new Resources("Metal", item.quantity));
                 }
                 if (item.name == "fuel")
                 {
-                    UnityEngine.Debug.Log("Get Item " + "   " + item.name + "  " + item.quantity);
                     _resources.Add(new Resources("Fuel", item.quantity));
                 }
                 if (item.name == "gems")
                 {
-                    UnityEngine.Debug.Log("Get Item " + "   " + item.name + "  " + item.quantity);
                     _resources.Add(new Resources("Gems", item.quantity));
                 }
             }
@@ -339,6 +337,8 @@ public class PlayerDB : MonoBehaviour {
         JsonData d = JsonMapper.ToObject(CombuManager.localUser.customData["_ships"].ToString());
 
         if (d.Count == 0) return;
+
+
         for (int i = 0; i < d.Count; i++)
         {
             List<ShipDecorator.ShipSlot> slots = new List<ShipDecorator.ShipSlot>();
@@ -351,6 +351,7 @@ public class PlayerDB : MonoBehaviour {
             ShipData data = new ShipData((string)d[i]["ID"], slots);
             _ships.Add(data);
         }
+
     }
 
     private void LoadTasks()

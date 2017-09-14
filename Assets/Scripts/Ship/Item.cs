@@ -8,7 +8,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(UnityEngine.UI.Image))]
 public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
-
+    public int Mass = 0;
     [SerializeField]
     private string _itemId;
     [SerializeField]
@@ -18,6 +18,8 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     private Image _image;
     [SerializeField]
     private Transform _startparent;
+    public SlotType Type;
+    public SpecialType SpecialType;
 
     public int GetCount()
     {
@@ -44,7 +46,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if(_startparent.name == "Slot")
         {
             transform.SetParent(transform.root);
-            _startparent.GetComponent<SlotDecorator>().RemoveFromSlot();
+            _startparent.GetComponent<SlotDecorator>().RemoveFromSlot(Mass);
         }
         if(_startparent.name == "Inventory")
         {
@@ -89,8 +91,18 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             }
             if (eventData.pointerEnter.name == "Slot")
             {
-                eventData.pointerEnter.GetComponent<SlotDecorator>().SetToSlot(_itemId);
-                transform.SetParent(eventData.pointerEnter.transform);
+                if (eventData.pointerEnter.GetComponent<SlotDecorator>().Type == Type && eventData.pointerEnter.GetComponent<SlotDecorator>().SpecialType == SpecialType)
+                {
+                    eventData.pointerEnter.GetComponent<SlotDecorator>().SetToSlot(_itemId, Mass);
+                    transform.SetParent(eventData.pointerEnter.transform);
+                }
+                else
+                {
+                    transform.SetParent(_startparent);
+                    if (_startparent.name == "Inventory")
+                        AddToStack(this, _startparent.GetComponent<Inventory>());
+                    return;
+                }
             }
             
         }

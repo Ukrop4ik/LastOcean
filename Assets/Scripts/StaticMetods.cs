@@ -19,4 +19,9 @@ public class StaticMetods : MonoBehaviour {
 
         return minuts + " : " + seconds;
     }
+
+    public void ClaerField()
+    {
+
+    }
 }
