@@ -17,13 +17,14 @@ public class ShipDecorator : MonoBehaviour {
     private float _currentShipMass;
 
     [SerializeField]
-    private ShipStat _stats;
+    public ShipStat _stats;
 
     public bool isReady = false;
 
-    private void Start()
+
+    private void OnEnable()
     {
-        Player.Instance().SetShipDecorator(this);    
+        Player.Instance().SetShipDecorator(this);
     }
 
     private void Update()

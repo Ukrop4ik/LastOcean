@@ -37,6 +37,17 @@ public class ShipMain : Photon.MonoBehaviour {
     private void Start()
     {
         Stats = gameObject.GetComponent<ShipStat>();
+
+        if (_onlineType == ShipOnlineType.Player & photonView.isMine)
+        {
+            Stats.SetHullValue(PlayerDB.Instance()._currentShipDecorator._stats.GetHullValue(true), true);
+            Stats.SetArmorValue(PlayerDB.Instance()._currentShipDecorator._stats.GetArmorValue(true), true);
+            Stats.SetAcceleration(PlayerDB.Instance()._currentShipDecorator._stats.GetAcceleration());
+            Stats.SetAngularSpeed(PlayerDB.Instance()._currentShipDecorator._stats.GetAngularSpeed());
+            Stats.SetSpeed(PlayerDB.Instance()._currentShipDecorator._stats.GetSpeed());
+            Stats.SetBackSpeed(PlayerDB.Instance()._currentShipDecorator._stats.GetReversSpeed());
+        }
+
         _movecontroller = gameObject.GetComponent<MoveController>();
         _movecontroller.SetParameters(this, GetRigidbody(), Stats.GetAngularSpeed());
         _photonView = gameObject.GetComponent<PhotonView>();
@@ -193,7 +204,25 @@ public class ShipMain : Photon.MonoBehaviour {
     }
     public void SetDamage(float value)
     {
-        Stats.SetHullValue(Stats.GetHullValue() - value);
+
+        if (Stats.GetArmorValue() > 0)
+        {
+            if (Stats.GetArmorValue() - value < 0)
+            {
+                Stats.SetHullValue(Stats.GetHullValue() - (value - Stats.GetArmorValue()));
+                Stats.SetArmorValue(0);
+            }
+            else
+            {
+                Stats.SetArmorValue(Stats.GetArmorValue()-value);
+            }
+        }
+        else
+        {
+            Stats.SetHullValue(Stats.GetHullValue() - value);
+        }
+    
+
         if (Stats.GetHullValue() <= 0)
         {
             if (!PhotonNetwork.offlineMode)

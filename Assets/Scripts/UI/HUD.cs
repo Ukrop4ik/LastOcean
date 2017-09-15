@@ -17,8 +17,8 @@ public class HUD : Photon.MonoBehaviour {
     private int _navigationArrowCount = 0;
     [SerializeField]
     private GameObject _targetText;
-
     [SerializeField]
+    private GameObject _pointer;
     private Button lFireButton;
     [SerializeField]
     private Button RFireButton;
@@ -46,9 +46,13 @@ public class HUD : Photon.MonoBehaviour {
     [SerializeField]
     private Image _hpslider;
     [SerializeField]
+    private Image _armorslider;
+    [SerializeField]
     private GameObject _enemyShipStatusPanel;
     [SerializeField]
     private Image _hpsliderEnemy;
+    [SerializeField]
+    private Image _armorslider_enemy;
     [SerializeField]
     private Text _missionTimer;
     [SerializeField]
@@ -197,6 +201,17 @@ public class HUD : Photon.MonoBehaviour {
             }
         }
 
+        if(_selectedShip)
+        {
+            //_pointer.SetActive(true);
+            //_pointer.transform.position = Camera.main.WorldToScreenPoint(_selectedShip.transform.position);
+            //_pointer.GetComponent<RectTransform>().Rotate(0, 0, _pointer.transform.rotation.z + Time.deltaTime);
+        }
+        else
+        {
+            //_pointer.SetActive(false);
+        }
+
         _engineScrollbar.value += Input.GetAxis("Vertical") * Time.deltaTime;
 
         if(Input.GetKeyDown(KeyCode.R))
@@ -256,6 +271,7 @@ public class HUD : Photon.MonoBehaviour {
         if(_playerShip && _shipStat)
         {
             _hpslider.fillAmount = _shipStat.GetHullValue() / _shipStat.GetHullValue(true);
+            _armorslider.fillAmount = _shipStat.GetArmorValue() / _shipStat.GetArmorValue(true);
 
             if (LSireWeaponIndicator.Count > 0)
                 foreach (WeaponHUDIndicator weponInd in LSireWeaponIndicator)
@@ -279,6 +295,7 @@ public class HUD : Photon.MonoBehaviour {
         {
             _enemyShipStatusPanel.SetActive(true);
             _hpsliderEnemy.fillAmount = _selectedShip.GetStats().GetHullValue() / _selectedShip.GetStats().GetHullValue(true);
+            _armorslider_enemy.fillAmount = _selectedShip.GetStats().GetArmorValue() / _selectedShip.GetStats().GetArmorValue(true);
         }
         else
         {

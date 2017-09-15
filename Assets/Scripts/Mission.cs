@@ -13,6 +13,8 @@ public class Mission : MonoBehaviour {
 
     private void Update()
     {
+        if (!PlayerDB.Instance()._currentShipDecorator) return;
+
         if(PlayerDB.Instance()._currentShipDecorator.isReady)
         {
             _missionButton.interactable = true;

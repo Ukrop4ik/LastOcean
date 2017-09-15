@@ -531,7 +531,7 @@ MonoBehaviour:
   _accelerationMax: 1
   _accelerationCur: 0
   _angularspeedMax: 15
-  _hullMaximumHP: 200
+  _hullMaximumHP: 5000
   _hullCurrentHP: 0
   _armorMaximumHP: 100
   _armorCurrentHP: 0

@@ -71,10 +71,27 @@ public class ShipStat : Photon.MonoBehaviour
         else
             _armorCurrentHP = value;
     }
+    public void SetSpeed(float value)
+    {
+            _maximumSpeed = value;
+    }
+    public void SetAcceleration(float value)
+    {
+        _accelerationMax = value;
+    }
+    public void SetAngularSpeed(float value)
+    {
+        _angularspeedMax = value;
+    }
+    public void SetBackSpeed(float value)
+    {
+        _reversSpeed = value;
+    }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         stream.Serialize(ref _hullCurrentHP);
+        stream.Serialize(ref _armorCurrentHP);
     }
 
     public void RestoreStat()
