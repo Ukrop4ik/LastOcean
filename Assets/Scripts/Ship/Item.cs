@@ -70,6 +70,10 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if (eventData.pointerEnter == null)
         {
             transform.SetParent(_startparent);
+
+            if (_startparent.name == "Slot")
+                _startparent.GetComponent<SlotDecorator>().SetToSlot(_itemId, Mass);
+            
             if (_startparent.name == "Inventory")
                 AddToStack(this, _startparent.GetComponent<Inventory>());
             return;
@@ -77,7 +81,11 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if(eventData.pointerEnter.tag != "DropField" && eventData.pointerEnter.name != "Inventory")
         {
             transform.SetParent(_startparent);
-            if(_startparent.name == "Inventory")
+
+            if (_startparent.name == "Slot")
+                _startparent.GetComponent<SlotDecorator>().SetToSlot(_itemId, Mass);
+
+            if (_startparent.name == "Inventory")
                 AddToStack(this, _startparent.GetComponent<Inventory>());
             return;
         }
@@ -99,6 +107,10 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 else
                 {
                     transform.SetParent(_startparent);
+
+                    if (_startparent.name == "Slot")
+                        _startparent.GetComponent<SlotDecorator>().SetToSlot(_itemId, Mass);
+
                     if (_startparent.name == "Inventory")
                         AddToStack(this, _startparent.GetComponent<Inventory>());
                     return;

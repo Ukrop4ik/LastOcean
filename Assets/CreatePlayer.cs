@@ -260,11 +260,14 @@ public class CreatePlayer : MonoBehaviour {
             if (PlayerPrefs.GetString("Name") != "")
             {
 
-                joineduserText.text = "Welcom, " + PlayerPrefs.GetString("Name") + "!";
+                joineduserText.text = PlayerPrefs.GetString("Name");
                 createuserpanel.SetActive(false);
                 joineduserpanel.SetActive(true);
 
             }
+
+            GameDB.Instance().Dounload();
+
             StopCoroutine(Init());
             isReady = true;
         }

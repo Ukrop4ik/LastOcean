@@ -34,9 +34,13 @@ public class ShipMain : Photon.MonoBehaviour {
     public ShipMain Lastdamageship;
     [SerializeField]
     private int goldToHead;
+ 
     private void Start()
     {
         Stats = gameObject.GetComponent<ShipStat>();
+
+        if(_onlineType == ShipOnlineType.Bot)
+          playerName = GameDB.Instance().name_generator.Generate();
 
         if (_onlineType == ShipOnlineType.Player & photonView.isMine)
         {
@@ -57,7 +61,7 @@ public class ShipMain : Photon.MonoBehaviour {
         if (photonView.isMine && _onlineType != ShipOnlineType.Bot)
         {
             if(!PhotonNetwork.offlineMode)
-                 this.photonView.RPC("CreateFromServer", PhotonTargets.OthersBuffered, PhotonNetwork.player.NickName, PhotonNetwork.player.CustomProperties);
+                 this.photonView.RPC("CreateFromServer", PhotonTargets.OthersBuffered, PlayerPrefs.GetString("Name"), PhotonNetwork.player.CustomProperties);
 
 
             MissionManager.Instance().SetPlayer(PhotonNetwork.player.ID, PhotonNetwork.player.NickName);
@@ -84,11 +88,28 @@ public class ShipMain : Photon.MonoBehaviour {
 
     } 
 
+    public void ShowDamage(float value)
+    {
+       DAMAGESHOU(value);
+    }
 
+    [PunRPC]
+    public void DAMAGESHOU(float value)
+    {
+
+        HUD hud = GameObject.Find("HUD").GetComponent<HUD>();
+        hud.ShowDamage(value, transform);
+    
+    }
+
+    public PhotonView GetPhotonView()
+    {
+        return _photonView;
+    }
     [PunRPC]
     public void CreateFromServer(string player, ExitGames.Client.Photon.Hashtable shipdata)
     {
-
+        Debug.Log("CreateShipFromServer");
         playerName = player;
 
         foreach(DictionaryEntry dict in shipdata)
@@ -119,9 +140,10 @@ public class ShipMain : Photon.MonoBehaviour {
 
         shipReady = true;
     }
-    public void CreateFromServer(ExitGames.Client.Photon.Hashtable shipdata)
+    public void CreateFromClient(ExitGames.Client.Photon.Hashtable shipdata)
     {
-
+        Debug.Log("CreateShipFromClient");
+        playerName = PlayerPrefs.GetString("Name");
         foreach (DictionaryEntry dict in shipdata)
         {
             if (string.IsNullOrEmpty((string)dict.Value)) continue;

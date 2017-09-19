@@ -18,8 +18,8 @@ MonoBehaviour:
   PreferredRegion: 0
   EnabledRegions: -1
   Protocol: 0
-  ServerAddress: 
-  ServerPort: 5055
+  ServerAddress: https://35.189.208.123
+  ServerPort: 5056
   VoiceServerPort: 5055
   JoinLobby: 1
   EnableLobbyStatistics: 0
@@ -28,22 +28,17 @@ MonoBehaviour:
   RunInBackground: 1
   RpcList:
   - Chat
-  - ColorRpc
+  - CreateFromServer
+  - Dead
   - DestroyRpc
-  - DoJump
-  - Flash
   - InstantiateRpc
-  - Marco
   - PickupItemInit
-  - Polo
   - PunPickup
   - PunPickupSimple
   - PunRespawn
   - RequestForPickupItems
   - RequestForPickupTimes
-  - TaggedPlayer
-  - CreateFromServer
-  - Dead
   - Set
   - Win
+  - DAMAGESHOU
   DisableAutoOpenWizard: 1

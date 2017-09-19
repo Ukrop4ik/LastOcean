@@ -68,12 +68,12 @@ public class DockUI : MonoBehaviour {
 
     private IEnumerator UpdateUI()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
 
-        _goldText.text = "Gold: " + PlayerDB.Instance().GetPlayerGold();
-        _metalText.text = "Metal: " + PlayerDB.Instance().GetPlayerMetal();
-        _fuelText.text = "Fuel: " + PlayerDB.Instance().GetPlayerFuel();
-        _gemsText.text = "Gems: " + PlayerDB.Instance().GetPlayerGems();
+        _goldText.text =  PlayerDB.Instance().GetPlayerGold().ToString();
+        _metalText.text =  PlayerDB.Instance().GetPlayerMetal().ToString();
+        _fuelText.text =  PlayerDB.Instance().GetPlayerFuel().ToString();
+        _gemsText.text =  PlayerDB.Instance().GetPlayerGems().ToString();
 
         if (PlayerDB.Instance().GetTasks().Count > 0)
         {

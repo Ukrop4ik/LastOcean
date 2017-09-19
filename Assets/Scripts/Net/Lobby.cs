@@ -11,7 +11,7 @@ public class Lobby : Photon.MonoBehaviour {
 
         if (!PhotonNetwork.connected)
         {
-            PhotonNetwork.ConnectUsingSettings("0.1");
+            PhotonNetwork.ConnectUsingSettings("0.2");
             PhotonNetwork.autoJoinLobby = true;
             PhotonNetwork.automaticallySyncScene = true;
             PhotonNetwork.offlineMode = false;
@@ -23,7 +23,7 @@ public class Lobby : Photon.MonoBehaviour {
         PhotonNetwork.playerName = Player.Instance().NickName;
 
         Debug.Log("JoinLobby");
-
+        Debug.Log("Photon Ready!");
        
     }
 

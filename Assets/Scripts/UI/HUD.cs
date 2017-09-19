@@ -22,6 +22,14 @@ public class HUD : Photon.MonoBehaviour {
     private Button lFireButton;
     [SerializeField]
     private Button RFireButton;
+    [SerializeField]
+    private List<Sprite> _reverssticksprite = new List<Sprite>();
+    [SerializeField]
+    private List<Sprite> _reversLedSprits = new List<Sprite>();
+    [SerializeField]
+    private Image _reversstickimage;
+    [SerializeField]
+    private Image _reversLed;
 
     [System.Serializable]
     public struct WeaponsOnSids
@@ -72,6 +80,9 @@ public class HUD : Photon.MonoBehaviour {
     private ShipStat _shipStat;
 
     public WeaponsOnSids weaponsOnSides = new WeaponsOnSids();
+
+    [SerializeField]
+    private GameObject _hpValue;
 
 
     public LayerMask layerMask;
@@ -262,6 +273,8 @@ public class HUD : Photon.MonoBehaviour {
         _playerShip.GetMoveController().SetEnginPower(0);
         _engineScrollbar.value = 0;
         _playerShip.GetMoveController().Revers(_isRevers);
+        _reversstickimage.sprite = _isRevers ? _reverssticksprite[1] : _reverssticksprite[0];
+        _reversLed.sprite = _isRevers ? _reversLedSprits[1] : _reversLedSprits[0];
     }
 
     private IEnumerator UpdateShipStatus()
@@ -279,6 +292,8 @@ public class HUD : Photon.MonoBehaviour {
                     if (!weponInd.weapon) continue;
                     if(weponInd.weapon._ammocount != weponInd.bulletisactive)
                         weponInd.EnableBullet(weponInd.weapon._ammocount);
+
+                    weponInd.Feel();
                 }
 
 
@@ -288,6 +303,8 @@ public class HUD : Photon.MonoBehaviour {
                     if (!weponInd.weapon) continue;
                     if (weponInd.weapon._ammocount != weponInd.bulletisactive)
                         weponInd.EnableBullet(weponInd.weapon._ammocount);
+
+                    weponInd.Feel();
                 }
         }
 
@@ -305,7 +322,11 @@ public class HUD : Photon.MonoBehaviour {
         StartCoroutine(UpdateShipStatus());
 
     }
-
+    public void ShowDamage(float value, Transform target)
+    {
+        GameObject o = Instantiate(_hpValue, transform);
+        o.GetComponent<DamageValueText>().SetValue(value, target);
+    }
     private IEnumerator StartSetup()
     {
         yield return new WaitForSeconds(0.1f);
@@ -360,6 +381,7 @@ public class HUD : Photon.MonoBehaviour {
                     {
                         LSireWeaponIndicator[weaponnum].obj.SetActive(true);
                         LSireWeaponIndicator[weaponnum].weapon = w;
+                        LSireWeaponIndicator[weaponnum].reloadtime = w._reloadspeed;
                         LSireWeaponIndicator[weaponnum].EnableBullet(w._ammocountMax);
                         weaponnum++;
 
@@ -376,6 +398,7 @@ public class HUD : Photon.MonoBehaviour {
                     {
                         RSireWeaponIndicator[weaponnum].obj.SetActive(true);
                         RSireWeaponIndicator[weaponnum].weapon = w;
+                        RSireWeaponIndicator[weaponnum].reloadtime = w._reloadspeed;
                         RSireWeaponIndicator[weaponnum].EnableBullet(w._ammocountMax);
                         weaponnum++;
 
@@ -422,13 +445,17 @@ public class HUD : Photon.MonoBehaviour {
         public List<GameObject> bulletlist = new List<GameObject>();
         public Weapon weapon;
         public int bulletisactive;
+        public Image _reloadProggressBar;
+        public bool isReload = false;
+        public float reloadtime;
+        private float reloadbuffer;
 
         public WeaponHUDIndicator(GameObject o, Image im, GameObject bul)
         {
             obj = o;
             weaponimage = im;
             bullet_field = bul;
-
+            
 
         }
 
@@ -456,6 +483,22 @@ public class HUD : Photon.MonoBehaviour {
                     bullet_field.transform.GetChild(i).gameObject.SetActive(true);
                 }
         
+
+        }
+
+        public void Feel()
+        {
+
+            if (weapon._isReloading)
+            {
+                Debug.Log("Reloading");
+                if(weapon._reloadspeedCurr > 0)
+                    _reloadProggressBar.fillAmount = weapon._reloadspeedCurr / weapon._reloadspeed;
+            }
+            else
+            {
+                _reloadProggressBar.fillAmount = 0;
+            }
 
         }
     }

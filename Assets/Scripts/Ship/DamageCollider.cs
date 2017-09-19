@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageCollider : MonoBehaviour {
+public class DamageCollider : Photon.MonoBehaviour {
 
     [SerializeField]
     private ShipMain _ship;
     [SerializeField]
     private PhotonView view;
+    float value;
 
     private void Start()
     {
@@ -22,7 +23,7 @@ public class DamageCollider : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!view.isMine) return;
+
 
         Bullet _bullet;
 
@@ -34,14 +35,28 @@ public class DamageCollider : MonoBehaviour {
 
             if (_ship != _bullet._ShootShip)
             {
-                _ship.SetDamage(_bullet._damage);
-                _bullet.SetTime(0.5f);
-                _bullet.SetDamage(0f);
-                _bullet.gameObject.tag = "Trash";
-                _ship.Lastdamageship = _bullet._ShootShip;
+                
+
+                if (view.isMine)
+                {
+                    value = Random.Range(_bullet._damageMin, _bullet._damageMax);
+                    _ship.SetDamage(value);
+                    _bullet.SetTime(0.5f);
+                    _bullet.SetDamage(0f, 0f);
+                    _bullet.gameObject.tag = "Trash";
+                    _ship.Lastdamageship = _bullet._ShootShip;
+                  
+                }
+
+                  _ship.ShowDamage(value);
             }
 
            
         }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        stream.Serialize(ref value);
     }
 }

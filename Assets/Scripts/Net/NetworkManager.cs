@@ -32,7 +32,7 @@ public class NetworkManager : Photon.MonoBehaviour {
             Transform pos = spawnpoints[Random.Range(0, spawnpoints.Count)].transform;
             GameObject ship = Instantiate(Resources.Load(Player.Instance().GetShipDecorator().GetShipId()) as GameObject, pos.position, pos.rotation);
             ship.name = PhotonNetwork.player.NickName + "_PlayerShip";
-            ship.GetComponent<ShipMain>().CreateFromServer(Player.Instance().GetPlayerShipProp());
+            ship.GetComponent<ShipMain>().CreateFromClient(Player.Instance().GetPlayerShipProp());
         }
 
     }
@@ -54,7 +54,7 @@ public class NetworkManager : Photon.MonoBehaviour {
         Transform pos = spawnpoints[Random.Range(0, spawnpoints.Count)].transform;
         GameObject ship = PhotonNetwork.Instantiate(Player.Instance().GetShipDecorator().GetShipId(), pos.position , pos.rotation, 0);
         ship.name = PhotonNetwork.player.NickName + "_PlayerShip";
-        ship.GetComponent<ShipMain>().CreateFromServer(Player.Instance().GetPlayerShipProp());
+        ship.GetComponent<ShipMain>().CreateFromClient(Player.Instance().GetPlayerShipProp());
 
         Player.Instance().GetShipDecorator().DestroyDecorator();
     }

@@ -191,6 +191,46 @@ Prefab:
       propertyPath: Logick
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMIN
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMIN
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMAX
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMAX
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _angularSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _angularSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114344640314985878, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _hullMaximumHP
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 114344640314985878, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _armorMaximumHP
+      value: 250
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0b019b75067d8844abe7145bc984ee4b, type: 2}
   m_IsPrefabParent: 0
@@ -356,6 +396,46 @@ Prefab:
       propertyPath: Logick
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMIN
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMIN
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMAX
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMAX
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _angularSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _angularSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114344640314985878, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _hullMaximumHP
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 114344640314985878, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _armorMaximumHP
+      value: 250
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0b019b75067d8844abe7145bc984ee4b, type: 2}
   m_IsPrefabParent: 0
@@ -441,6 +521,46 @@ Prefab:
         type: 2}
       propertyPath: Logick
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMIN
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMIN
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMAX
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMAX
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _angularSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _angularSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114344640314985878, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _hullMaximumHP
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 114344640314985878, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _armorMaximumHP
+      value: 250
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0b019b75067d8844abe7145bc984ee4b, type: 2}
@@ -706,6 +826,46 @@ Prefab:
       propertyPath: Logick
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMIN
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMIN
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMAX
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMAX
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _angularSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _angularSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114344640314985878, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _hullMaximumHP
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 114344640314985878, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _armorMaximumHP
+      value: 250
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0b019b75067d8844abe7145bc984ee4b, type: 2}
   m_IsPrefabParent: 0
@@ -792,6 +952,46 @@ Prefab:
       propertyPath: m_Name
       value: bot_scout_lvl_1 (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMIN
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMIN
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMAX
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMAX
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _angularSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _angularSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114344640314985878, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _hullMaximumHP
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 114344640314985878, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _armorMaximumHP
+      value: 250
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0b019b75067d8844abe7145bc984ee4b, type: 2}
   m_IsPrefabParent: 0
@@ -877,6 +1077,46 @@ Prefab:
         type: 2}
       propertyPath: Logick
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMIN
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMIN
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMAX
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMAX
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _angularSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _angularSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114344640314985878, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _hullMaximumHP
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 114344640314985878, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _armorMaximumHP
+      value: 250
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0b019b75067d8844abe7145bc984ee4b, type: 2}
@@ -1493,6 +1733,46 @@ Prefab:
       propertyPath: Logick
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMIN
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMIN
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMAX
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMAX
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _angularSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _angularSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114344640314985878, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _hullMaximumHP
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 114344640314985878, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _armorMaximumHP
+      value: 250
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0b019b75067d8844abe7145bc984ee4b, type: 2}
   m_IsPrefabParent: 0
@@ -1578,6 +1858,46 @@ Prefab:
         type: 2}
       propertyPath: Logick
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMIN
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMIN
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMAX
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _damageMAX
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114276502969385026, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _angularSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114920476054704228, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _angularSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114344640314985878, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _hullMaximumHP
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 114344640314985878, guid: 0b019b75067d8844abe7145bc984ee4b,
+        type: 2}
+      propertyPath: _armorMaximumHP
+      value: 250
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0b019b75067d8844abe7145bc984ee4b, type: 2}

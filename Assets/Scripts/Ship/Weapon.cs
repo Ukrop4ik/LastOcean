@@ -10,46 +10,60 @@ public class Weapon : Photon.MonoBehaviour {
         Vertical
     }
 
+    public string weaponid;
+    #region("PARAMS")
+
+    [SerializeField]
+    private float _MaxDist;
+    [SerializeField]
+    private float _bulletSpeed;
+    [SerializeField]
+    private float _damageMIN;
+    [SerializeField]
+    private float _damageMAX;
+    public float _reloadspeed;
+    [SerializeField]
+    public int _ammocountMax;
+    [SerializeField]
+    private float _reloadTime = 0f;
+    [SerializeField]
+    private float _angularSpeed;
+
+    #endregion
+
     [SerializeField]
     private Slot _slot;
     [SerializeField]
     private float _MinMaxAngle_Y;
-    [SerializeField]
-    private float _angularSpeed;
+
     private float _angleY;
     [SerializeField]
     private Transform _target;
     private float _angleTest = 0f;
-    [SerializeField]
-    private float _reloadTime = 0f;
-    [SerializeField]
-    private float _MaxDist;
+
+
     [SerializeField]
     private GameObject _bullet;
-    [SerializeField]
-    private float _bulletSpeed;
+
     [SerializeField]
     private Transform _firepoint;
     [SerializeField]
     private GameObject _tower;
     public bool isCanShoot;
-    [SerializeField]
-    private float _damage;
+
     [SerializeField]
     private PhotonView _photonView;
-    [SerializeField]
-    private float _reloadspeed;
-    private float _reloadspeedCurr;
-    [SerializeField]
-    public int _ammocountMax;
+
+    public float _reloadspeedCurr;
+
     [HideInInspector]
     public int _ammocount;
 
     private float _shootTimeBufer;
     [SerializeField]
     private bool _targetinline;
-    [SerializeField]
-    private bool _isReloading = false;
+
+    public bool _isReloading = false;
 
     private bool _testAngle;
 
@@ -68,15 +82,30 @@ public class Weapon : Photon.MonoBehaviour {
     }
     private void Start()
     {
-        _ammocount = _ammocountMax;
+
 
         _slot = transform.GetComponentInParent<Slot>();
-        _MinMaxAngle_Y = _slot.GetWeaponAngleMinMax();
-        _angleY = transform.localRotation.y;
         _photonView = _slot.GetSlotShip().GetComponent<PhotonView>();
         _photonView.ObservedComponents.Add(_tower.GetComponent<ServerObj>());
         _slot.GetSlotShip().gameObject.GetComponent<PhotonView>().ObservedComponents.Add(this);
 
+
+        if (_slot.GetSlotShip().GetOnlineType() != ShipOnlineType.Bot)
+        {
+            GameDB.WeaponDate param = GameDB.Instance().GetWeaponDate(weaponid);
+            _MaxDist = param.DIST;
+            _bulletSpeed = param.BULLETSPEED;
+            _damageMIN = param.MINDAMAGE;
+            _damageMAX = param.MAXDAMAGE;
+            _reloadspeed = param.RELOADSPEED;
+            _ammocountMax = (int)param.AMMO;
+            _reloadTime = param.RPM;
+            _angularSpeed = param.ANGULARSPEED;
+        }
+        _ammocount = _ammocountMax;
+        _reloadspeedCurr = _reloadspeed;
+        _MinMaxAngle_Y = _slot.GetWeaponAngleMinMax();
+        _angleY = transform.localRotation.y;
 
     }
     public void SetTarget(Transform target)
@@ -87,6 +116,14 @@ public class Weapon : Photon.MonoBehaviour {
     {
         if (_photonView.isMine)
         {
+            if(_isReloading)
+            {
+                _reloadspeedCurr -= Time.deltaTime;
+            }
+            else
+            {
+                _reloadspeedCurr = _reloadspeed;
+            }
             if (_shootTimeBufer > 0)
             {
                 _shootTimeBufer -= Time.deltaTime;
@@ -181,7 +218,7 @@ public class Weapon : Photon.MonoBehaviour {
         _shootTimeBufer = _reloadTime;
         GameObject bullet = Instantiate(_bullet, _firepoint.position, Quaternion.identity);
 
-        bullet.GetComponent<Bullet>().CreateBullet(_slot.GetSlotShip(), _damage, _target, _MaxDist);
+        bullet.GetComponent<Bullet>().CreateBullet(_slot.GetSlotShip(), _damageMIN, _damageMAX, _target, _MaxDist);
         bullet.gameObject.GetComponent<Rigidbody>().AddForce(_firepoint.forward * _bulletSpeed, ForceMode.Impulse);
 
         _ammocount--;

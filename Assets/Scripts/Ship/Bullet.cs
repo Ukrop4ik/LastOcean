@@ -5,7 +5,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
 
     private float _destroyTime = 5f;
-    public float _damage { get; private set; }
+    public float _damageMin { get; private set; }
+    public float _damageMax { get; private set; }
     public ShipMain _ShootShip { get; private set; }
     private Transform _target;
     private float dist;
@@ -35,10 +36,11 @@ public class Bullet : MonoBehaviour {
         
     }
 
-    public void CreateBullet(ShipMain ship, float damage, Transform target, float dist)
+    public void CreateBullet(ShipMain ship, float mindamage, float maxdamage, Transform target, float dist)
     {
         _ShootShip = ship;
-        _damage = damage;
+        _damageMin = mindamage;
+        _damageMax = maxdamage;
         _target = target;
         _maxdist = dist;
     }
@@ -46,8 +48,9 @@ public class Bullet : MonoBehaviour {
     {
         _destroyTime = time;
     }
-    public void SetDamage(float value)
+    public void SetDamage(float min, float max)
     {
-        _damage = value;
+        _damageMin = min;
+        _damageMax = max;
     }
 }

@@ -91,6 +91,8 @@ public class ShipStat : Photon.MonoBehaviour
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         stream.Serialize(ref _hullCurrentHP);
+        stream.Serialize(ref _hullMaximumHP);
+        stream.Serialize(ref _armorMaximumHP);
         stream.Serialize(ref _armorCurrentHP);
     }
 

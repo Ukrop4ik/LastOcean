@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShipDecorator : MonoBehaviour {
 
@@ -17,14 +18,48 @@ public class ShipDecorator : MonoBehaviour {
     private float _currentShipMass;
 
     [SerializeField]
+    private Image massSlider;
+    [SerializeField]
+    private Image speedSlider;
+    [SerializeField]
+    private Text speedText;
+    [SerializeField]
+    private Text massText;
+    [SerializeField]
+    private Text hullText;
+    [SerializeField]
+    private Text armorText;
+
+    [SerializeField]
     public ShipStat _stats;
 
     public bool isReady = false;
 
+    [SerializeField]
+    private float SpeedStart = 0f;
+    [SerializeField]
+    private float _massCoef;
 
     private void OnEnable()
     {
         Player.Instance().SetShipDecorator(this);
+        StartCoroutine(UpdateUI());
+    }
+    public void nDisable()
+    {
+        StopCoroutine(UpdateUI());
+    }
+
+    private IEnumerator UpdateUI()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        speedText.text = _stats.GetSpeed().ToString() + " M";
+        massText.text = _currentShipMass + " / " + _maximumShipMass;
+        hullText.text = "HULL: " + _stats.GetHullValue(true).ToString();
+        armorText.text = "ARMOR: " + _stats.GetArmorValue(true).ToString();
+
+        StartCoroutine(UpdateUI());
     }
 
     private void Update()
@@ -32,11 +67,25 @@ public class ShipDecorator : MonoBehaviour {
         if(_maximumShipMass >= _currentShipMass)
         {
             isReady = true;
+            massSlider.color = Color.white;
         }
         else
         {
             isReady = false;
+            massSlider.color = Color.red;
+            massSlider.fillAmount = 1;
         }
+        if(_currentShipMass > 0)
+        {
+            massSlider.fillAmount = _currentShipMass / _maximumShipMass;
+        }
+        else
+        {
+            massSlider.fillAmount = 0;
+        }
+        
+
+        
     }
 
     public void DestroyDecorator()
@@ -76,6 +125,9 @@ public class ShipDecorator : MonoBehaviour {
                 }
                 slot.IteminslotId = itemId;
                 _currentShipMass += mass;
+                _stats.SetSpeed(SpeedStart);
+                _stats.SetSpeed(_stats.GetSpeed() - (_currentShipMass /_maximumShipMass) * _massCoef);
+                speedSlider.fillAmount = (_stats.GetSpeed() / SpeedStart);
                 return;
             }
         }
@@ -116,6 +168,9 @@ public class ShipDecorator : MonoBehaviour {
 
                 slot.IteminslotId = "";
                 _currentShipMass -= mass;
+                _stats.SetSpeed(SpeedStart);
+                _stats.SetSpeed(_stats.GetSpeed() - (_currentShipMass / _maximumShipMass) * _massCoef);
+                speedSlider.fillAmount = (_stats.GetSpeed() / SpeedStart);
                 return;
             }
         }
