@@ -2824,6 +2824,7 @@ MonoBehaviour:
   Data:
     Weapons: []
   weaponsidlist: []
+  name_generator: {fileID: 1966917332}
 --- !u!114 &1966917332
 MonoBehaviour:
   m_ObjectHideFlags: 0

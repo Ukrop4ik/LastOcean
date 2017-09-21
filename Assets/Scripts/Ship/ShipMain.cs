@@ -34,6 +34,10 @@ public class ShipMain : Photon.MonoBehaviour {
     public ShipMain Lastdamageship;
     [SerializeField]
     private int goldToHead;
+
+    public bool isVisible = false;
+    [SerializeField]
+    private List<GameObject> bodyrenderers = new List<GameObject>();
  
     private void Start()
     {
@@ -87,6 +91,17 @@ public class ShipMain : Photon.MonoBehaviour {
         }
 
     } 
+
+
+    public void Visibility(bool status)
+    {
+        isVisible = status;
+
+        foreach(GameObject obj in bodyrenderers)
+        {
+            obj.SetActive(status);
+        }
+    }
 
     public void ShowDamage(float value)
     {

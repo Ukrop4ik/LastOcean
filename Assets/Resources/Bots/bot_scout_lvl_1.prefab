@@ -966,7 +966,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1089487915608416}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.552807, y: 0, z: 31.705297}
+  m_LocalPosition: {x: -11.779726, y: 0, z: -3.1185408}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4450263334097672}
@@ -1886,8 +1886,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 114328325900072976}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 2
+  instantiationId: 2
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114151642466890074
@@ -1926,21 +1926,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1741d276690a14fab9f4df0ecfee82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TypeOfShoot: 0
+  weaponid: 
+  _MaxDist: 20
+  _bulletSpeed: 0.3
+  _damageMIN: 10
+  _damageMAX: 22
+  _reloadspeed: 5
+  _ammocountMax: 20
+  _reloadTime: 0.4
+  _angularSpeed: 10
   _slot: {fileID: 0}
   _MinMaxAngle_Y: 90
-  _angularSpeed: 10
   _target: {fileID: 0}
-  _reloadTime: 0.4
-  _MaxDist: 20
   _bullet: {fileID: 1857471814301246, guid: ca06a3a3caa25bc4784a4d4914c393e3, type: 2}
-  _bulletSpeed: 0.3
   _firepoint: {fileID: 4666297618796582}
   _tower: {fileID: 1978446476500494}
   isCanShoot: 0
-  _damage: 2
   _photonView: {fileID: 114895025541577616}
-  _reloadspeed: 5
-  _ammocountMax: 20
+  _reloadspeedCurr: 0
   _ammocount: 0
   _targetinline: 0
   _isReloading: 0
@@ -2148,11 +2152,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b4bda28c149031418ffc1dc11ac0f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Logick: 0
+  State: 0
   _target: {fileID: 0}
+  _movecontroller: {fileID: 0}
   _targets: []
   _myWeapons:
   - {fileID: 114276502969385026}
   - {fileID: 114920476054704228}
+  _agroRange: 0
 --- !u!114 &114645221769259402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2222,6 +2230,9 @@ MonoBehaviour:
   OpponentReady: 0
   Lastdamageship: {fileID: 0}
   goldToHead: 100
+  isVisible: 0
+  bodyrenderers:
+  - {fileID: 1509538355362996}
 --- !u!114 &114850140351798302
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2323,8 +2334,8 @@ MonoBehaviour:
   - {fileID: 114277450740891190}
   - {fileID: 114344640314985878}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 3
+  instantiationId: 3
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114895318893599760
@@ -2349,8 +2360,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 114850140351798302}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 4
+  instantiationId: 4
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &114920476054704228
@@ -2364,21 +2375,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1741d276690a14fab9f4df0ecfee82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TypeOfShoot: 0
+  weaponid: 
+  _MaxDist: 20
+  _bulletSpeed: 0.3
+  _damageMIN: 10
+  _damageMAX: 22
+  _reloadspeed: 5
+  _ammocountMax: 20
+  _reloadTime: 0.4
+  _angularSpeed: 10
   _slot: {fileID: 0}
   _MinMaxAngle_Y: 90
-  _angularSpeed: 10
   _target: {fileID: 0}
-  _reloadTime: 0.4
-  _MaxDist: 20
   _bullet: {fileID: 1857471814301246, guid: ca06a3a3caa25bc4784a4d4914c393e3, type: 2}
-  _bulletSpeed: 0.3
   _firepoint: {fileID: 4721833050781592}
   _tower: {fileID: 1686198364658284}
   isCanShoot: 0
-  _damage: 2
   _photonView: {fileID: 114895025541577616}
-  _reloadspeed: 5
-  _ammocountMax: 20
+  _reloadspeedCurr: 0
   _ammocount: 0
   _targetinline: 0
   _isReloading: 0

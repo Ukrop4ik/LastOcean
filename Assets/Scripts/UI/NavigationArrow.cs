@@ -45,4 +45,6 @@ public class NavigationArrow : MonoBehaviour {
 
         transform.rotation = rotator;
     }
+
+
 }

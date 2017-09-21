@@ -17,7 +17,6 @@ public class DamageValueText : MonoBehaviour {
     Transform textTr;
     private void Start()
     {
-
         Ypos = transform.position.y;
     }
     public void SetValue(float value, Transform target, bool isArmor = false)
@@ -30,7 +29,7 @@ public class DamageValueText : MonoBehaviour {
 
     private void Update()
     {
-        if (!_target)
+        if (!_target || ShipManager.CheckDistToPlayership(_target.position) > 50f)
         {
             Destroy(gameObject);
             return;

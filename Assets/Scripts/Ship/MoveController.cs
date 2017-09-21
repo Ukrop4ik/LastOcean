@@ -12,6 +12,7 @@ public class MoveController : Photon.MonoBehaviour {
     [SerializeField]
     private float _speed;
     private float _angularSpeed;
+    private float _angularSpeedBuffer;
     [Range(0.001f, 1.0f)]
     public float _enginePower;
     [Range(0.001f, 1.0f)]
@@ -21,7 +22,7 @@ public class MoveController : Photon.MonoBehaviour {
     Vector3 oldDirection;
     Vector3 forceDirection;
     bool _isRevers = false;
-
+    float contr;
     public void SetParameters(ShipMain ship, Rigidbody rBody, float drag)
     {
         _ship = ship;
@@ -29,6 +30,7 @@ public class MoveController : Photon.MonoBehaviour {
         _rgBody.angularDrag = drag / 2f;
         oldDirection = transform.forward;
         forceDirection = transform.forward;
+        _angularSpeed = _ship.GetStats().GetAngularSpeed();
     }
 
     private void FixedUpdate()
@@ -76,11 +78,21 @@ public class MoveController : Photon.MonoBehaviour {
         {
 
             float h = CrossPlatformInputManager.GetAxis("Horizontal") * _ship.GetStats().GetAngularSpeed() * Time.deltaTime;
+            contr = Mathf.Lerp(contr, h, Time.deltaTime);
 
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             {
-                h = Input.GetAxis("Horizontal") * _ship.GetStats().GetAngularSpeed() * Time.deltaTime;
+                contr = Mathf.Lerp(contr, Input.GetAxis("Horizontal"), Time.deltaTime);
+                _angularSpeedBuffer = Mathf.Lerp(_angularSpeedBuffer, _angularSpeed, Time.deltaTime);
+                _angularSpeedBuffer = Mathf.Clamp(_angularSpeedBuffer, 0, _angularSpeed);
+
             }
+            else
+            {
+                _angularSpeedBuffer = Mathf.Lerp(_angularSpeedBuffer, 0, Time.deltaTime * 2f);
+            }
+
+            h = contr * _angularSpeedBuffer * Time.deltaTime;
 
             transform.Rotate(0, h, 0);
             newDirection = transform.forward;
@@ -90,6 +102,20 @@ public class MoveController : Photon.MonoBehaviour {
         if (_ship.GetOnlineType() == ShipOnlineType.Bot)
         {
             float h = rotation * _ship.GetStats().GetAngularSpeed() * Time.deltaTime;
+
+            if (rotation != 0)
+            {
+                contr = Mathf.Lerp(contr, rotation, Time.deltaTime);
+                _angularSpeedBuffer = Mathf.Lerp(_angularSpeedBuffer, _angularSpeed, Time.deltaTime);
+                _angularSpeedBuffer = Mathf.Clamp(_angularSpeedBuffer, 0, _angularSpeed);
+            }
+            else
+            {
+                _angularSpeedBuffer = Mathf.Lerp(_angularSpeedBuffer, 0, Time.deltaTime * 2f);
+            }
+
+            h = contr * _angularSpeedBuffer * Time.deltaTime;
+
             transform.Rotate(0, h, 0);
             newDirection = transform.forward;
         }

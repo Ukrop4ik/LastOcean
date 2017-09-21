@@ -1563,6 +1563,9 @@ MonoBehaviour:
   OpponentReady: 0
   Lastdamageship: {fileID: 0}
   goldToHead: 100
+  isVisible: 0
+  bodyrenderers:
+  - {fileID: 1321037173807974}
 --- !u!114 &114786547741204064
 MonoBehaviour:
   m_ObjectHideFlags: 1

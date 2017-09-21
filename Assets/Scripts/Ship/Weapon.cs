@@ -10,6 +10,13 @@ public class Weapon : Photon.MonoBehaviour {
         Vertical
     }
 
+    public enum ShootType
+    {
+        MachineGun_1
+    }
+
+    public ShootType TypeOfShoot;
+
     public string weaponid;
     #region("PARAMS")
 
@@ -50,8 +57,8 @@ public class Weapon : Photon.MonoBehaviour {
     [SerializeField]
     private GameObject _tower;
     public bool isCanShoot;
-
-    [SerializeField]
+    ShotEffects effect;
+       [SerializeField]
     private PhotonView _photonView;
 
     public float _reloadspeedCurr;
@@ -82,7 +89,7 @@ public class Weapon : Photon.MonoBehaviour {
     }
     private void Start()
     {
-
+        effect = new ShotEffects(this);
 
         _slot = transform.GetComponentInParent<Slot>();
         _photonView = _slot.GetSlotShip().GetComponent<PhotonView>();
@@ -116,7 +123,7 @@ public class Weapon : Photon.MonoBehaviour {
     {
         if (_photonView.isMine)
         {
-            if(_isReloading)
+            if (_isReloading)
             {
                 _reloadspeedCurr -= Time.deltaTime;
             }
@@ -216,11 +223,9 @@ public class Weapon : Photon.MonoBehaviour {
         }
 
         _shootTimeBufer = _reloadTime;
-        GameObject bullet = Instantiate(_bullet, _firepoint.position, Quaternion.identity);
 
-        bullet.GetComponent<Bullet>().CreateBullet(_slot.GetSlotShip(), _damageMIN, _damageMAX, _target, _MaxDist);
-        bullet.gameObject.GetComponent<Rigidbody>().AddForce(_firepoint.forward * _bulletSpeed, ForceMode.Impulse);
-
+        effect.UseEffect(TypeOfShoot);
+        
         _ammocount--;
         isCanShoot = false;
 
@@ -234,7 +239,7 @@ public class Weapon : Photon.MonoBehaviour {
         stream.Serialize(ref _targetinline);
         stream.Serialize(ref targetPos);
 
-        if(stream.isWriting)
+        if (stream.isWriting)
         {
             stream.SendNext(_netPlayerShoot);
 
@@ -244,7 +249,7 @@ public class Weapon : Photon.MonoBehaviour {
         {
             _netPlayerShoot = (bool)stream.ReceiveNext();
 
-            if(_netPlayerShoot)
+            if (_netPlayerShoot)
             {
                 Shoot();
             }
@@ -253,4 +258,34 @@ public class Weapon : Photon.MonoBehaviour {
     }
 
 
+    public class ShotEffects
+    {
+        private Weapon weapon;
+
+        public ShotEffects(Weapon weap)
+        {
+            weapon = weap;
+        }
+
+        public void UseEffect(ShootType typeofshoot)
+        {
+            switch(typeofshoot)
+            {
+                case ShootType.MachineGun_1:
+                    MachineGunShoot_1();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void MachineGunShoot_1()
+        {
+            GameObject bullet = Instantiate(weapon._bullet, weapon._firepoint.position, Quaternion.identity);
+
+            bullet.GetComponent<Bullet>().CreateBullet(weapon._slot.GetSlotShip(), weapon._damageMIN, weapon._damageMAX, weapon._target, weapon._MaxDist);
+            bullet.gameObject.GetComponent<Rigidbody>().AddForce(weapon._firepoint.forward * weapon._bulletSpeed, ForceMode.Impulse);
+        }
+    }
+       
 }

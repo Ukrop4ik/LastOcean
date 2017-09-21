@@ -16,6 +16,9 @@ public class TargetText : MonoBehaviour {
     [SerializeField]
     private bool _active = false;
     ShipMain _ship;
+    [SerializeField]
+    private GameObject body;
+    private bool isVisible;
 
     public void CreateText(ShipMain ship)
     {
@@ -23,14 +26,15 @@ public class TargetText : MonoBehaviour {
         text.text = ship.playerName;
         Target = ship.transform;
         _active = true;
+        StartCoroutine(CheckVisible());
     }
 
     void LateUpdate()
     {
         if (!_active) return;
+        if (!isVisible) return;
+        if (!Target) return;
 
-        if (!Target)
-            Destroy(this.gameObject);
         else
         {
             this.transform.position = Camera.main.WorldToScreenPoint(Target.position);
@@ -39,4 +43,29 @@ public class TargetText : MonoBehaviour {
         }
             
     }
+
+    private IEnumerator CheckVisible()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        if(!Target)
+        {
+            Destroy(this.gameObject);
+            yield return null;
+        }
+
+        if (ShipManager.CheckDistToPlayership(Target.position) < 50f)
+        {
+            isVisible = true;
+            body.SetActive(true);
+        }
+        else
+        {
+            isVisible = false;
+            body.SetActive(false);
+        }
+
+        StartCoroutine(CheckVisible());
+    }
+
 }

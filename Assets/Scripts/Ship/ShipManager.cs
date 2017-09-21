@@ -11,6 +11,8 @@ public class ShipManager : MonoBehaviour {
 
     private static HUD _HUD;
 
+    private static ShipMain _playership;
+
     private void Awake()
     {
         _HUD = GameObject.Find("HUD").GetComponent<HUD>();
@@ -18,9 +20,36 @@ public class ShipManager : MonoBehaviour {
 
     private void Start()
     {
-       
+        StartCoroutine(CheckVisibleShips());
     }
 
+    public static float CheckDistToPlayership(Vector3 vect)
+    {
+         if(_playership) { return Vector3.Distance(vect, _playership.transform.position); } else return 1000f; 
+    }
+
+    private IEnumerator CheckVisibleShips()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        if(_playership)
+        foreach(ShipMain ship in _ships)
+        {
+                if (ship)
+                {
+                    if (Vector3.Distance(ship.transform.position, _playership.transform.position) < 50f)
+                    {
+                        ship.Visibility(true);
+                    }
+                    else
+                    {
+                        ship.Visibility(false);
+                    }
+                }
+        }
+
+        StartCoroutine(CheckVisibleShips());
+    }
 
     public static List<ShipMain> GetAllShips()
     {
@@ -50,6 +79,8 @@ public class ShipManager : MonoBehaviour {
                 _HUD.CreateTargetText(ship, ship.transform);
             }
             _ships.Add(ship);
+            if (ship.GetOnlineType() == ShipOnlineType.Player)
+                _playership = ship;
             _shipcount++;
         }
            

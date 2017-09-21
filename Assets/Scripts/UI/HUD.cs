@@ -157,6 +157,7 @@ public class HUD : Photon.MonoBehaviour {
     {
         GameObject tt = Instantiate(_targetText, Vector3.zero, Quaternion.identity) as GameObject;
         tt.transform.SetParent(this.transform);
+        tt.transform.SetSiblingIndex(0);
         tt.transform.localScale = Vector3.one;
         tt.GetComponent<TargetText>().CreateText(_ship);
 
