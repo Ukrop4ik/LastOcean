@@ -99,6 +99,7 @@ public class HUD : Photon.MonoBehaviour {
         _selectedShip = null;
         _shipStat = null;
         consolestring = "";
+
     }
 
     private void Start()
@@ -119,6 +120,7 @@ public class HUD : Photon.MonoBehaviour {
     {
         StartCoroutine(StartSetup());
        _engineScrollbar.onValueChanged.AddListener(delegate { EngineValueChange(); });
+
     }
 
     private void OnDisable()
@@ -162,6 +164,7 @@ public class HUD : Photon.MonoBehaviour {
         tt.GetComponent<TargetText>().CreateText(_ship);
 
     }
+
 
     public void CreateNavigationArrow(Transform target)
     {
