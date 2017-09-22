@@ -1,22 +1,24 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class InputAxisShared : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class InputAxisShared : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField]
     private AxisShared _sharedAxis;
     [SerializeField]
     private float _targetValue;
 
-    public void OnPointerDown(PointerEventData data)
+    public void OnPointerEnter(PointerEventData eventData)
     {
         _sharedAxis.SetTargetValue(_targetValue);
     }
 
-
-    public void OnPointerUp(PointerEventData data)
+    public void OnPointerExit(PointerEventData eventData)
     {
-        _sharedAxis.SetTargetValue(0); // no input
+        _sharedAxis.SetTargetValue(0);
     }
+
+
 }

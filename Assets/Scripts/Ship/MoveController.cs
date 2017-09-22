@@ -76,32 +76,47 @@ public class MoveController : Photon.MonoBehaviour {
     {
         if (_ship.GetOnlineType() == ShipOnlineType.Player)
         {
+            float android_h = CrossPlatformInputManager.GetAxis("Horizontal") * _angularSpeed;
+            float axis_h = Input.GetAxis("Horizontal") * _angularSpeed;
+            _angularSpeedBuffer = Mathf.Clamp(_angularSpeedBuffer, 0, _angularSpeed);
+            _angularSpeedBuffer = Mathf.Lerp(_angularSpeedBuffer, _angularSpeed, Time.deltaTime);
 
-            float h = CrossPlatformInputManager.GetAxis("Horizontal") * _ship.GetStats().GetAngularSpeed() * Time.deltaTime;
-            contr = Mathf.Lerp(contr, h, Time.deltaTime);
 
+#if UNITY_ANDROID
+            if(android_h != 0)
+                 contr = Mathf.Lerp(contr, CrossPlatformInputManager.GetAxis("Horizontal"), Time.deltaTime);
+
+#endif
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             {
+               
                 contr = Mathf.Lerp(contr, Input.GetAxis("Horizontal"), Time.deltaTime);
-                _angularSpeedBuffer = Mathf.Lerp(_angularSpeedBuffer, _angularSpeed, Time.deltaTime);
-                _angularSpeedBuffer = Mathf.Clamp(_angularSpeedBuffer, 0, _angularSpeed);
 
             }
-            else
+
+            float _h = android_h != 0 ? android_h : axis_h;
+
+            _h = contr * _angularSpeedBuffer * Time.deltaTime;
+
+            if(axis_h != 0)
+                Debug.Log("Buffer axis: " + _angularSpeedBuffer + "  h: " + axis_h);
+            if(android_h != 0)
+                Debug.Log("Buffer android: " + _angularSpeedBuffer + "  h: " + android_h);
+
+            transform.Rotate(0, _h, 0);
+            newDirection = transform.forward;
+
+            if (android_h == 0 && axis_h == 0)
             {
                 _angularSpeedBuffer = Mathf.Lerp(_angularSpeedBuffer, 0, Time.deltaTime * 2f);
+                contr = Mathf.Lerp(contr, 0, Time.deltaTime);
             }
-
-            h = contr * _angularSpeedBuffer * Time.deltaTime;
-
-            transform.Rotate(0, h, 0);
-            newDirection = transform.forward;
         }
 
 
         if (_ship.GetOnlineType() == ShipOnlineType.Bot)
         {
-            float h = rotation * _ship.GetStats().GetAngularSpeed() * Time.deltaTime;
+            float h = rotation * _ship.GetStats().GetAngularSpeed();
 
             if (rotation != 0)
             {
