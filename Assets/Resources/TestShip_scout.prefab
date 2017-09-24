@@ -291,6 +291,7 @@ GameObject:
   - component: {fileID: 4181458592406758}
   - component: {fileID: 33749708226119978}
   - component: {fileID: 23508005064413974}
+  - component: {fileID: 114934596361987410}
   m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
@@ -1563,9 +1564,13 @@ MonoBehaviour:
   OpponentReady: 0
   Lastdamageship: {fileID: 0}
   goldToHead: 100
+  _desfroy_FX: {fileID: 1602481137730962, guid: 2abaa268bdea37842b98d55d79d6dc48,
+    type: 2}
   isVisible: 0
+  isVisibleBar: 0
   bodyrenderers:
   - {fileID: 1321037173807974}
+  _targetbar: {fileID: 0}
 --- !u!114 &114786547741204064
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1706,6 +1711,17 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &114934596361987410
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1446781044649398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 265b94b7171b1554e8982b65d93c6f77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114944150066141414
 MonoBehaviour:
   m_ObjectHideFlags: 1

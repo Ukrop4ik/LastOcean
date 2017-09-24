@@ -18,6 +18,7 @@ public class Weapon : Photon.MonoBehaviour {
     public ShootType TypeOfShoot;
 
     public string weaponid;
+    public bool NonTargetShoot = false;
     #region("PARAMS")
 
     [SerializeField]
@@ -37,6 +38,9 @@ public class Weapon : Photon.MonoBehaviour {
     private float _angularSpeed;
 
     #endregion
+
+    [SerializeField]
+    private bool isAutotarget;
 
     [SerializeField]
     private Slot _slot;
@@ -77,6 +81,9 @@ public class Weapon : Photon.MonoBehaviour {
     public bool _netPlayerShoot = false;
 
     Vector3 targetPos;
+
+    [SerializeField]
+    private GameObject _FX_shoot;
 
     public GameObject GetTower()
     {
@@ -123,6 +130,10 @@ public class Weapon : Photon.MonoBehaviour {
     {
         if (_photonView.isMine)
         {
+            if(isAutotarget)
+            {
+                _target = ShipManager.GetClosestShip(_slot.GetSlotShip()).transform;
+            }
             if (_isReloading)
             {
                 _reloadspeedCurr -= Time.deltaTime;
@@ -147,8 +158,11 @@ public class Weapon : Photon.MonoBehaviour {
                 StartCoroutine(Reloading());
             }
 
-            if (!_target) return;
-            if (Vector3.Distance(_target.position, transform.position) > _MaxDist) return;
+            if (!NonTargetShoot)
+            {
+                if (!_target) return;
+                if (Vector3.Distance(_target.position, transform.position) > _MaxDist) return;
+            }
 
             RaycastHit hit;
 
@@ -168,6 +182,7 @@ public class Weapon : Photon.MonoBehaviour {
             {
                 _targetinline = false;
             }
+
         }
         else
         {
@@ -195,11 +210,14 @@ public class Weapon : Photon.MonoBehaviour {
         // Debug.Log(Vector3.Distance(_target.position, transform.position));
         if (_photonView.isMine)
         {
-            _testAngle = TestAngle(_MinMaxAngle_Y, _target, transform);
-            if (!_testAngle) return;
-            Vector3 targetdirection = _target.transform.position - _firepoint.position;
-            Vector3 newDir = Vector3.RotateTowards(_tower.transform.forward, targetdirection, ((_angularSpeed * 0.1f) * Time.deltaTime), 0.0F);
-            _tower.transform.rotation = Quaternion.LookRotation(newDir);
+            if (!NonTargetShoot)
+            {
+                _testAngle = TestAngle(_MinMaxAngle_Y, _target, transform);
+                if (!_testAngle) return;
+                Vector3 targetdirection = _target.transform.position - _firepoint.position;
+                Vector3 newDir = Vector3.RotateTowards(_tower.transform.forward, targetdirection, ((_angularSpeed * 0.1f) * Time.deltaTime), 0.0F);
+                _tower.transform.rotation = Quaternion.LookRotation(newDir);
+            }
             Shoot();
         }
 
@@ -215,15 +233,18 @@ public class Weapon : Photon.MonoBehaviour {
         if (_photonView.isMine)
         {
             if (!isCanShoot) return;
-            if (!_slot._isCanUse) return;
+            if (!_slot._isCanUse && !isAutotarget) return;
             if (_isReloading) return;
-            if (!_testAngle) return;
-
+            if (!NonTargetShoot)
+            {
+                if (!_testAngle) return;
+            }
             _netPlayerShoot = true;
         }
 
         _shootTimeBufer = _reloadTime;
 
+        Instantiate(_FX_shoot, _firepoint.transform.position, Quaternion.identity);
         effect.UseEffect(TypeOfShoot);
         
         _ammocount--;
@@ -282,7 +303,6 @@ public class Weapon : Photon.MonoBehaviour {
         private void MachineGunShoot_1()
         {
             GameObject bullet = Instantiate(weapon._bullet, weapon._firepoint.position, Quaternion.identity);
-
             bullet.GetComponent<Bullet>().CreateBullet(weapon._slot.GetSlotShip(), weapon._damageMIN, weapon._damageMAX, weapon._target, weapon._MaxDist);
             bullet.gameObject.GetComponent<Rigidbody>().AddForce(weapon._firepoint.forward * weapon._bulletSpeed, ForceMode.Impulse);
         }

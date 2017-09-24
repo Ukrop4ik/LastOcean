@@ -25,7 +25,6 @@ GameObject:
   - component: {fileID: 114904962271142440}
   - component: {fileID: 54464702585174706}
   - component: {fileID: 96083743264693412}
-  - component: {fileID: 114372324362114454}
   - component: {fileID: 114081174883470318}
   - component: {fileID: 114689198736961296}
   m_Layer: 0
@@ -213,17 +212,6 @@ MonoBehaviour:
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
---- !u!114 &114372324362114454
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1857471814301246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b7ec57adf3cc9b46adbeb188f8153e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114689198736961296
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -300,6 +288,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7ec57adf3cc9b46adbeb188f8153e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _effectFX_damage: {fileID: 1602481137730962, guid: 2abaa268bdea37842b98d55d79d6dc48,
+    type: 2}
 --- !u!135 &135160731258508574
 SphereCollider:
   m_ObjectHideFlags: 1

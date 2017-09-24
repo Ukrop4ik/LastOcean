@@ -456,7 +456,7 @@ MonoBehaviour:
   slotId: 2
   itemId: 
   Type: 0
-  SpecialType: 0
+  SpecialType: 00000000
   SlotMass: 0
   decorator: {fileID: 114581098657837366}
 --- !u!114 &114006542235355874
@@ -550,7 +550,7 @@ MonoBehaviour:
   slotId: 1
   itemId: 
   Type: 0
-  SpecialType: 0
+  SpecialType: 00000000
   SlotMass: 0
   decorator: {fileID: 114581098657837366}
 --- !u!114 &114092896987950150
@@ -846,7 +846,7 @@ MonoBehaviour:
   slotId: 4
   itemId: 
   Type: 2
-  SpecialType: 0
+  SpecialType: 0400000000000000
   SlotMass: 0
   decorator: {fileID: 114581098657837366}
 --- !u!114 &114375250430291352
@@ -863,7 +863,7 @@ MonoBehaviour:
   slotId: 3
   itemId: 
   Type: 1
-  SpecialType: 0
+  SpecialType: 
   SlotMass: 0
   decorator: {fileID: 114581098657837366}
 --- !u!114 &114403527672008538
@@ -1063,7 +1063,7 @@ MonoBehaviour:
   slotId: 5
   itemId: 
   Type: 4
-  SpecialType: 0
+  SpecialType: 
   SlotMass: 0
   decorator: {fileID: 114581098657837366}
 --- !u!114 &114497066835163280

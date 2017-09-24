@@ -305,15 +305,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1741d276690a14fab9f4df0ecfee82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TypeOfShoot: 0
+  weaponid: small_gun_art
+  NonTargetShoot: 1
+  _MaxDist: 5000
+  _bulletSpeed: 0.8
+  _damageMIN: 50
+  _damageMAX: 100
+  _reloadspeed: 10
+  _ammocountMax: 1
+  _reloadTime: 2
+  _angularSpeed: 0
+  isAutotarget: 0
   _slot: {fileID: 0}
   _MinMaxAngle_Y: 45
-  _angularSpeed: 8
   _target: {fileID: 0}
-  _reloadTime: 2
-  _MaxDist: 20
   _bullet: {fileID: 1857471814301246, guid: 86b7cebc53d9cd745831d3ae626fc8e2, type: 2}
-  _bulletSpeed: 0.1
   _firepoint: {fileID: 4193421032867326}
   _tower: {fileID: 1112977754455466}
   isCanShoot: 0
-  _damage: 10
+  _photonView: {fileID: 0}
+  _reloadspeedCurr: 0
+  _ammocount: 0
+  _targetinline: 0
+  _isReloading: 0
+  _netPlayerShoot: 0
+  _FX_shoot: {fileID: 1499784428492820, guid: 3d291d5fa878184408aff751bfbdbf31, type: 2}

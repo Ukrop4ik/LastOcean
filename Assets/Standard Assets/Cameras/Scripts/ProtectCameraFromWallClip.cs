@@ -39,6 +39,8 @@ namespace UnityStandardAssets.Cameras
 
         private void LateUpdate()
         {
+            closestDistance += -Input.GetAxis("Mouse ScrollWheel") * 2f;
+            closestDistance = Mathf.Clamp(closestDistance, 5f, 10f);
             // initially set the target distance
             float targetDist = m_OriginalDist;
 

@@ -158,6 +158,7 @@ public class HUD : Photon.MonoBehaviour {
     public void CreateTargetText(ShipMain _ship, Transform target)
     {
         GameObject tt = Instantiate(_targetText, Vector3.zero, Quaternion.identity) as GameObject;
+        _ship.SetTargetbar(tt);
         tt.transform.SetParent(this.transform);
         tt.transform.SetSiblingIndex(0);
         tt.transform.localScale = Vector3.one;

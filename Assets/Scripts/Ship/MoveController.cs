@@ -98,11 +98,6 @@ public class MoveController : Photon.MonoBehaviour {
 
             _h = contr * _angularSpeedBuffer * Time.deltaTime;
 
-            if(axis_h != 0)
-                Debug.Log("Buffer axis: " + _angularSpeedBuffer + "  h: " + axis_h);
-            if(android_h != 0)
-                Debug.Log("Buffer android: " + _angularSpeedBuffer + "  h: " + android_h);
-
             transform.Rotate(0, _h, 0);
             newDirection = transform.forward;
 

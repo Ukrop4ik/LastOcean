@@ -326,6 +326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1741d276690a14fab9f4df0ecfee82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TypeOfShoot: 0
   weaponid: small_gun_tutorial
   _MaxDist: 20
   _bulletSpeed: 0.5
@@ -348,3 +349,4 @@ MonoBehaviour:
   _targetinline: 0
   _isReloading: 0
   _netPlayerShoot: 0
+  _FX_shoot: {fileID: 1499784428492820, guid: 3d291d5fa878184408aff751bfbdbf31, type: 2}

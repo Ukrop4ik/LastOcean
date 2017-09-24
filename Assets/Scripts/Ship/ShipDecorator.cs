@@ -45,7 +45,7 @@ public class ShipDecorator : MonoBehaviour {
         Player.Instance().SetShipDecorator(this);
         StartCoroutine(UpdateUI());
     }
-    public void nDisable()
+    public void OnDisable()
     {
         StopCoroutine(UpdateUI());
     }
@@ -128,6 +128,7 @@ public class ShipDecorator : MonoBehaviour {
                 _stats.SetSpeed(SpeedStart);
                 _stats.SetSpeed(_stats.GetSpeed() - (_currentShipMass /_maximumShipMass) * _massCoef);
                 speedSlider.fillAmount = (_stats.GetSpeed() / SpeedStart);
+               // CreateItemInSlot(GetSlotFromId(slot.SlotId), itemId);
                 return;
             }
         }

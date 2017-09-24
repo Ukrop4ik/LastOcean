@@ -6,7 +6,7 @@ public class Inventory : MonoBehaviour {
 
     [SerializeField]
     private List<ItemStack> _items = new List<ItemStack>();
-
+    private List<GameObject> _obj = new List<GameObject>();
     private void Start()
     {
 
@@ -17,11 +17,17 @@ public class Inventory : MonoBehaviour {
         LoadFromPlayerData();
        StartCoroutine(InvUpdateRoutine());
     }
-    private void OnDesable()
+    private void OnDisable()
     {
+
+        for (int i = 0; i < transform.childCount + 1; i++)
+            Destroy(transform.GetChild(0).gameObject);
+        _items.Clear();
         StopCoroutine(InvUpdateRoutine());
         SaveToPlayerData();
         PlayerDB.Instance().Save();
+
+
 
     }
     public bool IsInventoryContainsItem(string id)
@@ -117,6 +123,8 @@ public class Inventory : MonoBehaviour {
                 if(!isFound)
                     PlayerDB.Instance().AddNewItem(new PlayerDB.ItemData(item.ID, item.Count));
             }
+
+
         }
     }
 
@@ -136,7 +144,6 @@ public class Inventory : MonoBehaviour {
             itemObj.name = item.ItemId;
             itemObj.transform.SetParent(transform);
             itemObj.transform.localScale = Vector3.one;
-
             Item i = itemObj.GetComponent<Item>();
             i.SetCount(item.ItemCount);
         }

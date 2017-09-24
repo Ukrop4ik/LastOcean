@@ -7,12 +7,17 @@ public class SlotDecorator : MonoBehaviour
     public int slotId;
     public string itemId;
     public SlotType Type;
-    public SpecialType SpecialType;
+    public List<SpecialType> SpecialType;
     public int SlotMass;
 
 
     [SerializeField]
     ShipDecorator decorator;
+
+    public ShipDecorator GetShipDecorator()
+    {
+        return decorator;
+    }
 
     public void SetToSlot(string id, int mass)
     {

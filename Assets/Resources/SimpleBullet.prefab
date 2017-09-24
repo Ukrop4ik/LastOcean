@@ -230,6 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7ec57adf3cc9b46adbeb188f8153e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _effectFX_damage: {fileID: 0}
 --- !u!114 &114689198736961296
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -306,6 +307,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7ec57adf3cc9b46adbeb188f8153e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _effectFX_damage: {fileID: 1971755443902394, guid: 3c2f7a1d783078f43ac36b69ef2945d7,
+    type: 2}
 --- !u!135 &135160731258508574
 SphereCollider:
   m_ObjectHideFlags: 1

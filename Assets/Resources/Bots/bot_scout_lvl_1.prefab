@@ -1949,6 +1949,7 @@ MonoBehaviour:
   _targetinline: 0
   _isReloading: 0
   _netPlayerShoot: 0
+  _FX_shoot: {fileID: 1499784428492820, guid: 3d291d5fa878184408aff751bfbdbf31, type: 2}
 --- !u!114 &114277450740891190
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2230,6 +2231,8 @@ MonoBehaviour:
   OpponentReady: 0
   Lastdamageship: {fileID: 0}
   goldToHead: 100
+  _desfroy_FX: {fileID: 1602481137730962, guid: 2abaa268bdea37842b98d55d79d6dc48,
+    type: 2}
   isVisible: 0
   bodyrenderers:
   - {fileID: 1509538355362996}
@@ -2398,6 +2401,7 @@ MonoBehaviour:
   _targetinline: 0
   _isReloading: 0
   _netPlayerShoot: 0
+  _FX_shoot: {fileID: 1499784428492820, guid: 3d291d5fa878184408aff751bfbdbf31, type: 2}
 --- !u!114 &114922268377701834
 MonoBehaviour:
   m_ObjectHideFlags: 1

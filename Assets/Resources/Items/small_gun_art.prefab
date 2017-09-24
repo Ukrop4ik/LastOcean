@@ -49,7 +49,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 4db017495c69e8140a56a0e2b669e3f8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7f8b63466fffcda4e85c6e61d2a43f84, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -68,10 +68,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68bf0a75231ba2b44a721ece9b0f2861, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Mass: 300
   _itemId: small_gun_art
-  _sprite: {fileID: 21300000, guid: 9866a92691696b346901281f2b329034, type: 3}
-  _count: 0
+  _sprite: {fileID: 21300000, guid: 7f8b63466fffcda4e85c6e61d2a43f84, type: 3}
+  _count: 1
   _startparent: {fileID: 0}
+  Type: 0
+  SpecialType: 0
 --- !u!222 &222397040281183700
 CanvasRenderer:
   m_ObjectHideFlags: 1

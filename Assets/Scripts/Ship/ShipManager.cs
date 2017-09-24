@@ -37,7 +37,7 @@ public class ShipManager : MonoBehaviour {
         {
                 if (ship)
                 {
-                    if (Vector3.Distance(ship.transform.position, _playership.transform.position) < 50f)
+                    if (Vector3.Distance(ship.transform.position, _playership.transform.position) < 100f)
                     {
                         ship.Visibility(true);
                     }
@@ -67,6 +67,28 @@ public class ShipManager : MonoBehaviour {
         }
 
         return ships;
+    }
+
+    public static ShipMain GetClosestShip(ShipMain testShip)
+    {
+
+        float dist = 10000f;
+        ShipMain shipResult = null;
+
+        foreach(ShipMain ship in _ships)
+        {
+            if (testShip == ship) continue;
+
+            float distdelta = Vector3.Distance(testShip.transform.position, ship.transform.position);
+
+            if (dist < distdelta)
+            {
+                dist = distdelta;
+                shipResult = ship;
+            }
+        }
+
+        return shipResult;
     }
 
     public static void AddShip(ShipMain ship)

@@ -35,7 +35,7 @@ public class DamageCollider : Photon.MonoBehaviour {
 
             if (_ship != _bullet._ShootShip)
             {
-                
+                _bullet.DamageFX();
 
                 if (view.isMine)
                 {

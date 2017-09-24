@@ -40,10 +40,15 @@ namespace UnityStandardAssets.Cameras
 			m_TransformTargetRot = transform.localRotation;
         }
 
+        public override void SetTarget(Transform newTransform)
+        {
+            m_Target = newTransform;
+        }
 
         protected void Update()
         {
-            HandleRotationMovement();
+            if(Input.GetMouseButton(1))
+                 HandleRotationMovement();
             if (m_LockCursor && Input.GetMouseButtonUp(0))
             {
                 Cursor.lockState = m_LockCursor ? CursorLockMode.Locked : CursorLockMode.None;

@@ -46,7 +46,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if(_startparent.name == "Slot")
         {
             transform.SetParent(transform.root);
-            _startparent.GetComponent<SlotDecorator>().RemoveFromSlot(Mass);
+            RemoveFromSlot(Mass, _startparent.GetComponent<SlotDecorator>());
         }
         if(_startparent.name == "Inventory")
         {
@@ -72,8 +72,8 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             transform.SetParent(_startparent);
 
             if (_startparent.name == "Slot")
-                _startparent.GetComponent<SlotDecorator>().SetToSlot(_itemId, Mass);
-            
+                 SetToSlot( _itemId, Mass, _startparent.GetComponent<SlotDecorator>());
+
             if (_startparent.name == "Inventory")
                 AddToStack(this, _startparent.GetComponent<Inventory>());
             return;
@@ -83,7 +83,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             transform.SetParent(_startparent);
 
             if (_startparent.name == "Slot")
-                _startparent.GetComponent<SlotDecorator>().SetToSlot(_itemId, Mass);
+                SetToSlot( _itemId, Mass, _startparent.GetComponent<SlotDecorator>());
 
             if (_startparent.name == "Inventory")
                 AddToStack(this, _startparent.GetComponent<Inventory>());
@@ -99,9 +99,9 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             }
             if (eventData.pointerEnter.name == "Slot")
             {
-                if (eventData.pointerEnter.GetComponent<SlotDecorator>().Type == Type && eventData.pointerEnter.GetComponent<SlotDecorator>().SpecialType == SpecialType)
+                if (eventData.pointerEnter.GetComponent<SlotDecorator>().Type == Type && eventData.pointerEnter.GetComponent<SlotDecorator>().SpecialType.Contains(SpecialType))
                 {
-                    eventData.pointerEnter.GetComponent<SlotDecorator>().SetToSlot(_itemId, Mass);
+                    SetToSlot(_itemId, Mass, eventData.pointerEnter.GetComponent<SlotDecorator>());
                     transform.SetParent(eventData.pointerEnter.transform);
                 }
                 else
@@ -109,7 +109,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                     transform.SetParent(_startparent);
 
                     if (_startparent.name == "Slot")
-                        _startparent.GetComponent<SlotDecorator>().SetToSlot(_itemId, Mass);
+                        SetToSlot( _itemId, Mass, _startparent.GetComponent<SlotDecorator>());
 
                     if (_startparent.name == "Inventory")
                         AddToStack(this, _startparent.GetComponent<Inventory>());
@@ -126,6 +126,40 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             }
             else
                 transform.SetParent(_startparent);
+        }
+    }
+
+    public void SetToSlot(string id, int mass, SlotDecorator decorator = null, ShipDecorator shipDecorator = null)
+    {
+        if(decorator)
+            decorator.SetToSlot(id, mass);
+
+        switch(SpecialType)
+        {
+            case SpecialType.Shild:
+                if(!shipDecorator)
+                     decorator.GetShipDecorator()._stats.SetArmorValue(decorator.GetShipDecorator()._stats.GetArmorValue(true) + 500, true);
+                else
+                     shipDecorator._stats.SetArmorValue(shipDecorator._stats.GetArmorValue(true) + 500, true);
+                break;
+            default:
+                break;
+        }
+    }
+    public void RemoveFromSlot(int mass, SlotDecorator decorator = null, ShipDecorator shipDecorator = null)
+    {
+        if (decorator)
+            decorator.RemoveFromSlot(mass);
+        switch (SpecialType)
+        {
+            case SpecialType.Shild:
+                if (!shipDecorator)
+                    decorator.GetShipDecorator()._stats.SetArmorValue(decorator.GetShipDecorator()._stats.GetArmorValue(true) - 500, true);
+                else
+                    shipDecorator._stats.SetArmorValue(shipDecorator._stats.GetArmorValue(true) - 500, true);
+                break;
+            default:
+                break;
         }
     }
 

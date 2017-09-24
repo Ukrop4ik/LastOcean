@@ -125,6 +125,7 @@ public class DockUI : MonoBehaviour {
                 if (slot.IteminslotId != "")
                 {
                     Item i = decorator.CreateItemInSlot(decorator.GetSlotFromId(slot.SlotId), slot.IteminslotId);
+                    i.SetToSlot(i.GetId(), i.Mass, shipDecorator: decorator);
                     decorator.AddItemToSlot(slot.SlotId, slot.IteminslotId, i.Mass);
                 }
             }

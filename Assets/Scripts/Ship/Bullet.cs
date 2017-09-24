@@ -11,7 +11,8 @@ public class Bullet : MonoBehaviour {
     private Transform _target;
     private float dist;
     private float _maxdist;
-
+    [SerializeField]
+    private GameObject _effectFX_damage;
 
     private void Update()
     {
@@ -34,6 +35,11 @@ public class Bullet : MonoBehaviour {
         }
 
         
+    }
+
+    public void DamageFX()
+    {
+        GameObject fx = Instantiate(_effectFX_damage, transform.position, Quaternion.identity);
     }
 
     public void CreateBullet(ShipMain ship, float mindamage, float maxdamage, Transform target, float dist)

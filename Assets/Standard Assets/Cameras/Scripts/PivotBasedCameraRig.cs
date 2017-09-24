@@ -24,5 +24,7 @@ namespace UnityStandardAssets.Cameras
             m_Cam = GetComponentInChildren<Camera>().transform;
             m_Pivot = m_Cam.parent;
         }
+
+     
     }
 }

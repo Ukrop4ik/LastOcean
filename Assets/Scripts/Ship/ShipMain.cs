@@ -34,10 +34,15 @@ public class ShipMain : Photon.MonoBehaviour {
     public ShipMain Lastdamageship;
     [SerializeField]
     private int goldToHead;
+    [SerializeField]
+    private GameObject _desfroy_FX;
 
     public bool isVisible = false;
+    public bool isVisibleBar = false;
     [SerializeField]
     private List<GameObject> bodyrenderers = new List<GameObject>();
+    [SerializeField]
+    private GameObject _targetbar;
  
     private void Start()
     {
@@ -90,7 +95,34 @@ public class ShipMain : Photon.MonoBehaviour {
             ShipManager.AddShip(this);
         }
 
-    } 
+
+
+    }
+
+
+    private void Update()
+    {
+
+        //if (_onlineType == ShipOnlineType.Player)
+        //{
+        //    if (!_target) return;
+
+        //    Debug.Log(Vector3.Dot(transform.right, _target.position - transform.position));
+        //}
+    }
+
+    public void SetTargetbar(GameObject bar)
+    {
+        _targetbar = bar;
+    }
+
+    public void TargetbarEnable(bool isEnable)
+    {
+        if (_onlineType == ShipOnlineType.Player) return;
+        _targetbar.SetActive(isEnable);
+        isVisibleBar = isEnable;
+    }
+
 
 
     public void Visibility(bool status)
@@ -274,9 +306,13 @@ public class ShipMain : Photon.MonoBehaviour {
 
         List<GameObject> points = NetworkManager.Instance().GetPoints();
 
+        Instantiate(_desfroy_FX, transform.position, Quaternion.identity);
+
         transform.position = points[UnityEngine.Random.Range(0, points.Count)].transform.position;
 
         Stats.RestoreStat();
+
+  
 
         if (photonView.isMine)
         {
